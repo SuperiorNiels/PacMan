@@ -1,0 +1,1 @@
+/usr/bin/c++  -g   CMakeFiles/ECS.dir/main.cpp.o CMakeFiles/ECS.dir/Ghost.cpp.o CMakeFiles/ECS.dir/PositionSystem.cpp.o  -o ECS -L/usr/local/lib -Wl,-rpath,/usr/local/lib -Wl,--enable-new-dtags -lSDL2 /usr/lib/x86_64-linux-gnu/libSDL2_image.so /usr/lib/x86_64-linux-gnu/libSDL2_ttf.so 
