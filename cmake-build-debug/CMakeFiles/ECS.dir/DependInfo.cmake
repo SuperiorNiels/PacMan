@@ -4,15 +4,15 @@ set(CMAKE_DEPENDS_LANGUAGES
   )
 # The set of files for implicit dependencies of each language:
 set(CMAKE_DEPENDS_CHECK_CXX
-  "/home/niels/ClionProjects/ECS/Ghost.cpp" "/home/niels/ClionProjects/ECS/cmake-build-debug/CMakeFiles/ECS.dir/Ghost.cpp.o"
-  "/home/niels/ClionProjects/ECS/PositionSystem.cpp" "/home/niels/ClionProjects/ECS/cmake-build-debug/CMakeFiles/ECS.dir/PositionSystem.cpp.o"
-  "/home/niels/ClionProjects/ECS/main.cpp" "/home/niels/ClionProjects/ECS/cmake-build-debug/CMakeFiles/ECS.dir/main.cpp.o"
+  "/home/niels/CLionProjects/ECS/SDL_Factory.cpp" "/home/niels/CLionProjects/ECS/cmake-build-debug/CMakeFiles/ECS.dir/SDL_Factory.cpp.o"
+  "/home/niels/CLionProjects/ECS/SDL_RenderSystem.cpp" "/home/niels/CLionProjects/ECS/cmake-build-debug/CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o"
+  "/home/niels/CLionProjects/ECS/SystemManager.cpp" "/home/niels/CLionProjects/ECS/cmake-build-debug/CMakeFiles/ECS.dir/SystemManager.cpp.o"
+  "/home/niels/CLionProjects/ECS/main.cpp" "/home/niels/CLionProjects/ECS/cmake-build-debug/CMakeFiles/ECS.dir/main.cpp.o"
   )
 set(CMAKE_CXX_COMPILER_ID "GNU")
 
 # The include file search paths:
 set(CMAKE_CXX_TARGET_INCLUDE_PATH
-  "/usr/local/include/SDL2"
   "/usr/include/SDL2"
   )
 

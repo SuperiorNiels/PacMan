@@ -48,10 +48,10 @@ RM = /home/niels/Programs/clion-2017.3.3/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/niels/ClionProjects/ECS
+CMAKE_SOURCE_DIR = /home/niels/CLionProjects/ECS
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/niels/ClionProjects/ECS/cmake-build-debug
+CMAKE_BINARY_DIR = /home/niels/CLionProjects/ECS/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/niels/ClionProjects/ECS/cmake-build-debug/CMakeFiles /home/niels/ClionProjects/ECS/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/niels/CLionProjects/ECS/cmake-build-debug/CMakeFiles /home/niels/CLionProjects/ECS/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/niels/ClionProjects/ECS/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/niels/CLionProjects/ECS/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -123,59 +123,86 @@ ECS/fast:
 	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/build
 .PHONY : ECS/fast
 
-Ghost.o: Ghost.cpp.o
+SDL_Factory.o: SDL_Factory.cpp.o
 
-.PHONY : Ghost.o
-
-# target to build an object file
-Ghost.cpp.o:
-	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/Ghost.cpp.o
-.PHONY : Ghost.cpp.o
-
-Ghost.i: Ghost.cpp.i
-
-.PHONY : Ghost.i
-
-# target to preprocess a source file
-Ghost.cpp.i:
-	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/Ghost.cpp.i
-.PHONY : Ghost.cpp.i
-
-Ghost.s: Ghost.cpp.s
-
-.PHONY : Ghost.s
-
-# target to generate assembly for a file
-Ghost.cpp.s:
-	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/Ghost.cpp.s
-.PHONY : Ghost.cpp.s
-
-PositionSystem.o: PositionSystem.cpp.o
-
-.PHONY : PositionSystem.o
+.PHONY : SDL_Factory.o
 
 # target to build an object file
-PositionSystem.cpp.o:
-	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/PositionSystem.cpp.o
-.PHONY : PositionSystem.cpp.o
+SDL_Factory.cpp.o:
+	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/SDL_Factory.cpp.o
+.PHONY : SDL_Factory.cpp.o
 
-PositionSystem.i: PositionSystem.cpp.i
+SDL_Factory.i: SDL_Factory.cpp.i
 
-.PHONY : PositionSystem.i
+.PHONY : SDL_Factory.i
 
 # target to preprocess a source file
-PositionSystem.cpp.i:
-	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/PositionSystem.cpp.i
-.PHONY : PositionSystem.cpp.i
+SDL_Factory.cpp.i:
+	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/SDL_Factory.cpp.i
+.PHONY : SDL_Factory.cpp.i
 
-PositionSystem.s: PositionSystem.cpp.s
+SDL_Factory.s: SDL_Factory.cpp.s
 
-.PHONY : PositionSystem.s
+.PHONY : SDL_Factory.s
 
 # target to generate assembly for a file
-PositionSystem.cpp.s:
-	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/PositionSystem.cpp.s
-.PHONY : PositionSystem.cpp.s
+SDL_Factory.cpp.s:
+	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/SDL_Factory.cpp.s
+.PHONY : SDL_Factory.cpp.s
+
+SDL_RenderSystem.o: SDL_RenderSystem.cpp.o
+
+.PHONY : SDL_RenderSystem.o
+
+# target to build an object file
+SDL_RenderSystem.cpp.o:
+	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o
+.PHONY : SDL_RenderSystem.cpp.o
+
+SDL_RenderSystem.i: SDL_RenderSystem.cpp.i
+
+.PHONY : SDL_RenderSystem.i
+
+# target to preprocess a source file
+SDL_RenderSystem.cpp.i:
+	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.i
+.PHONY : SDL_RenderSystem.cpp.i
+
+SDL_RenderSystem.s: SDL_RenderSystem.cpp.s
+
+.PHONY : SDL_RenderSystem.s
+
+# target to generate assembly for a file
+SDL_RenderSystem.cpp.s:
+	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.s
+.PHONY : SDL_RenderSystem.cpp.s
+
+SystemManager.o: SystemManager.cpp.o
+
+.PHONY : SystemManager.o
+
+# target to build an object file
+SystemManager.cpp.o:
+	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/SystemManager.cpp.o
+.PHONY : SystemManager.cpp.o
+
+SystemManager.i: SystemManager.cpp.i
+
+.PHONY : SystemManager.i
+
+# target to preprocess a source file
+SystemManager.cpp.i:
+	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/SystemManager.cpp.i
+.PHONY : SystemManager.cpp.i
+
+SystemManager.s: SystemManager.cpp.s
+
+.PHONY : SystemManager.s
+
+# target to generate assembly for a file
+SystemManager.cpp.s:
+	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/SystemManager.cpp.s
+.PHONY : SystemManager.cpp.s
 
 main.o: main.cpp.o
 
@@ -213,12 +240,15 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... ECS"
-	@echo "... Ghost.o"
-	@echo "... Ghost.i"
-	@echo "... Ghost.s"
-	@echo "... PositionSystem.o"
-	@echo "... PositionSystem.i"
-	@echo "... PositionSystem.s"
+	@echo "... SDL_Factory.o"
+	@echo "... SDL_Factory.i"
+	@echo "... SDL_Factory.s"
+	@echo "... SDL_RenderSystem.o"
+	@echo "... SDL_RenderSystem.i"
+	@echo "... SDL_RenderSystem.s"
+	@echo "... SystemManager.o"
+	@echo "... SystemManager.i"
+	@echo "... SystemManager.s"
 	@echo "... main.o"
 	@echo "... main.i"
 	@echo "... main.s"

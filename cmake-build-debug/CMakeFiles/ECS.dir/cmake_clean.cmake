@@ -1,7 +1,8 @@
 file(REMOVE_RECURSE
   "CMakeFiles/ECS.dir/main.cpp.o"
-  "CMakeFiles/ECS.dir/Ghost.cpp.o"
-  "CMakeFiles/ECS.dir/PositionSystem.cpp.o"
+  "CMakeFiles/ECS.dir/SDL_Factory.cpp.o"
+  "CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o"
+  "CMakeFiles/ECS.dir/SystemManager.cpp.o"
   "ECS.pdb"
   "ECS"
 )

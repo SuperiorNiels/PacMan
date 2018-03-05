@@ -6,5 +6,5 @@ CXX_FLAGS = -g   -std=gnu++11
 
 CXX_DEFINES = 
 
-CXX_INCLUDES = -I/usr/local/include/SDL2 -I/usr/include/SDL2 
+CXX_INCLUDES = -I/usr/include/SDL2 
 

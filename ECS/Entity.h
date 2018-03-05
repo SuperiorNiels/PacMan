@@ -9,13 +9,21 @@
 #include <vector>
 #include "Component.h"
 
+using entityID = int16_t;
+
+inline entityID getEntityID() {
+    static entityID id = 0;
+    return id++;
+};
+
 class Entity {
 public:
     void addComponent(Component* c);
     template <class T> T* getComponentById(componentID id);
     template <class T> T* getComponentByType(int8_t type);
     void removeComponentById(componentID id);
-    //void removeComponentByType(int8_t type);
+    void removeComponentByType(int8_t type);
+    entityID id = getEntityID();
 private:
     std::vector<Component*> components;
 };
@@ -52,6 +60,30 @@ T* Entity::getComponentByType(int8_t type)
         }
     }
     return nullptr;
+}
+
+inline void Entity::removeComponentById(componentID id)
+{
+    for(auto it = components.begin(); it < components.end(); it++)
+    {
+        if(it.operator*()->id == id)
+        {
+            components.erase(it);
+            break;
+        }
+    }
+}
+
+inline void Entity::removeComponentByType(int8_t type)
+{
+    for(auto it = components.begin(); it < components.end(); it++)
+    {
+        if(it.operator*()->type == type)
+        {
+            components.erase(it);
+            break;
+        }
+    }
 }
 
 #endif //ECS_ENTITY_H

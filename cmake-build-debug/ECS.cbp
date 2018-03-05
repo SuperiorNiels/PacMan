@@ -5,46 +5,45 @@
 		<Option title="ECS"/>
 		<Option makefile_is_custom="1"/>
 		<Option compiler="gcc"/>
-		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\usr\;CMake Files\..\..\..\..\usr\local\;CMake Files\..\..\..\..\usr\local\lib\;CMake Files\..\..\..\..\usr\local\lib\cmake\;CMake Files\..\..\..\..\usr\local\lib\cmake\SDL2\;CMake Files\cmake\;"/>
+		<Option virtualFolders="CMake Files\;CMake Files\..\;CMake Files\..\..\;CMake Files\..\..\..\;CMake Files\..\..\..\..\;CMake Files\..\..\..\..\usr\;CMake Files\..\..\..\..\usr\lib\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\;CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\SDL2\;CMake Files\cmake\;"/>
 		<Build>
 			<Target title="all">
-				<Option working_dir="/home/niels/ClionProjects/ECS/cmake-build-debug"/>
+				<Option working_dir="/home/niels/CLionProjects/ECS/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/niels/ClionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/niels/ClionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/niels/ClionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/niels/ClionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/niels/CLionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 all"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/niels/CLionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/niels/CLionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/niels/CLionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="edit_cache">
-				<Option working_dir="/home/niels/ClionProjects/ECS/cmake-build-debug"/>
+				<Option working_dir="/home/niels/CLionProjects/ECS/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/niels/ClionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/niels/ClionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/niels/ClionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/niels/ClionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/niels/CLionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 edit_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/niels/CLionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/niels/CLionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/niels/CLionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="rebuild_cache">
-				<Option working_dir="/home/niels/ClionProjects/ECS/cmake-build-debug"/>
+				<Option working_dir="/home/niels/CLionProjects/ECS/cmake-build-debug"/>
 				<Option type="4"/>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/niels/ClionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/niels/ClionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/niels/ClionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/niels/ClionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/niels/CLionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 rebuild_cache"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/niels/CLionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/niels/CLionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/niels/CLionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="ECS">
-				<Option output="/home/niels/ClionProjects/ECS/cmake-build-debug/ECS" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/niels/ClionProjects/ECS/cmake-build-debug"/>
+				<Option output="/home/niels/CLionProjects/ECS/cmake-build-debug/ECS" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/niels/CLionProjects/ECS/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/usr/local/include/SDL2"/>
 					<Add directory="/usr/include/SDL2"/>
 					<Add directory="/usr/include/c++/7"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
@@ -56,20 +55,19 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/niels/ClionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 ECS"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/niels/ClionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/niels/ClionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/niels/ClionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/niels/CLionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 ECS"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/niels/CLionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/niels/CLionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/niels/CLionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 			<Target title="ECS/fast">
-				<Option output="/home/niels/ClionProjects/ECS/cmake-build-debug/ECS" prefix_auto="0" extension_auto="0"/>
-				<Option working_dir="/home/niels/ClionProjects/ECS/cmake-build-debug"/>
+				<Option output="/home/niels/CLionProjects/ECS/cmake-build-debug/ECS" prefix_auto="0" extension_auto="0"/>
+				<Option working_dir="/home/niels/CLionProjects/ECS/cmake-build-debug"/>
 				<Option object_output="./"/>
 				<Option type="1"/>
 				<Option compiler="gcc"/>
 				<Compiler>
-					<Add directory="/usr/local/include/SDL2"/>
 					<Add directory="/usr/include/SDL2"/>
 					<Add directory="/usr/include/c++/7"/>
 					<Add directory="/usr/include/x86_64-linux-gnu/c++/7"/>
@@ -81,47 +79,62 @@
 					<Add directory="/usr/include"/>
 				</Compiler>
 				<MakeCommands>
-					<Build command="/usr/bin/make -j4 -f &quot;/home/niels/ClionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 ECS/fast"/>
-					<CompileFile command="/usr/bin/make -j4 -f &quot;/home/niels/ClionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
-					<Clean command="/usr/bin/make -j4 -f &quot;/home/niels/ClionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
-					<DistClean command="/usr/bin/make -j4 -f &quot;/home/niels/ClionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<Build command="/usr/bin/make -j8 -f &quot;/home/niels/CLionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 ECS/fast"/>
+					<CompileFile command="/usr/bin/make -j8 -f &quot;/home/niels/CLionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 &quot;$file&quot;"/>
+					<Clean command="/usr/bin/make -j8 -f &quot;/home/niels/CLionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
+					<DistClean command="/usr/bin/make -j8 -f &quot;/home/niels/CLionProjects/ECS/cmake-build-debug/Makefile&quot;  VERBOSE=1 clean"/>
 				</MakeCommands>
 			</Target>
 		</Build>
-		<Unit filename="/home/niels/ClionProjects/ECS/Component.h">
+		<Unit filename="/home/niels/CLionProjects/ECS/AbstractFactory.h">
 			<Option target="ECS"/>
 		</Unit>
-		<Unit filename="/home/niels/ClionProjects/ECS/Entity.h">
+		<Unit filename="/home/niels/CLionProjects/ECS/ECS/Component.h">
 			<Option target="ECS"/>
 		</Unit>
-		<Unit filename="/home/niels/ClionProjects/ECS/Ghost.cpp">
+		<Unit filename="/home/niels/CLionProjects/ECS/ECS/ECS.h">
 			<Option target="ECS"/>
 		</Unit>
-		<Unit filename="/home/niels/ClionProjects/ECS/Ghost.h">
+		<Unit filename="/home/niels/CLionProjects/ECS/ECS/Entity.h">
 			<Option target="ECS"/>
 		</Unit>
-		<Unit filename="/home/niels/ClionProjects/ECS/PositionSystem.cpp">
+		<Unit filename="/home/niels/CLionProjects/ECS/ECS/System.h">
 			<Option target="ECS"/>
 		</Unit>
-		<Unit filename="/home/niels/ClionProjects/ECS/PositionSystem.h">
+		<Unit filename="/home/niels/CLionProjects/ECS/SDL_Components.h">
 			<Option target="ECS"/>
 		</Unit>
-		<Unit filename="/home/niels/ClionProjects/ECS/System.h">
+		<Unit filename="/home/niels/CLionProjects/ECS/SDL_Factory.cpp">
 			<Option target="ECS"/>
 		</Unit>
-		<Unit filename="/home/niels/ClionProjects/ECS/main.cpp">
+		<Unit filename="/home/niels/CLionProjects/ECS/SDL_Factory.h">
 			<Option target="ECS"/>
 		</Unit>
-		<Unit filename="/home/niels/ClionProjects/ECS/CMakeLists.txt">
+		<Unit filename="/home/niels/CLionProjects/ECS/SDL_RenderSystem.cpp">
+			<Option target="ECS"/>
+		</Unit>
+		<Unit filename="/home/niels/CLionProjects/ECS/SDL_RenderSystem.h">
+			<Option target="ECS"/>
+		</Unit>
+		<Unit filename="/home/niels/CLionProjects/ECS/SystemManager.cpp">
+			<Option target="ECS"/>
+		</Unit>
+		<Unit filename="/home/niels/CLionProjects/ECS/SystemManager.h">
+			<Option target="ECS"/>
+		</Unit>
+		<Unit filename="/home/niels/CLionProjects/ECS/main.cpp">
+			<Option target="ECS"/>
+		</Unit>
+		<Unit filename="/home/niels/CLionProjects/ECS/CMakeLists.txt">
 			<Option virtualFolder="CMake Files\"/>
 		</Unit>
-		<Unit filename="/home/niels/ClionProjects/ECS/../../../../usr/local/lib/cmake/SDL2/sdl2-config.cmake">
-			<Option virtualFolder="CMake Files\..\..\..\..\usr\local\lib\cmake\SDL2\"/>
+		<Unit filename="/home/niels/CLionProjects/ECS/../../../../usr/lib/x86_64-linux-gnu/cmake/SDL2/sdl2-config.cmake">
+			<Option virtualFolder="CMake Files\..\..\..\..\usr\lib\x86_64-linux-gnu\cmake\SDL2\"/>
 		</Unit>
-		<Unit filename="/home/niels/ClionProjects/ECS/cmake/FindSDL2_image.cmake">
+		<Unit filename="/home/niels/CLionProjects/ECS/cmake/FindSDL2_image.cmake">
 			<Option virtualFolder="CMake Files\cmake\"/>
 		</Unit>
-		<Unit filename="/home/niels/ClionProjects/ECS/cmake/FindSDL2_ttf.cmake">
+		<Unit filename="/home/niels/CLionProjects/ECS/cmake/FindSDL2_ttf.cmake">
 			<Option virtualFolder="CMake Files\cmake\"/>
 		</Unit>
 	</Project>

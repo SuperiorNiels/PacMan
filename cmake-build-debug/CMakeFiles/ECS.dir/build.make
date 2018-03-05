@@ -43,10 +43,10 @@ RM = /home/niels/Programs/clion-2017.3.3/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/niels/ClionProjects/ECS
+CMAKE_SOURCE_DIR = /home/niels/CLionProjects/ECS
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/niels/ClionProjects/ECS/cmake-build-debug
+CMAKE_BINARY_DIR = /home/niels/CLionProjects/ECS/cmake-build-debug
 
 # Include any dependencies generated for this target.
 include CMakeFiles/ECS.dir/depend.make
@@ -59,16 +59,16 @@ include CMakeFiles/ECS.dir/flags.make
 
 CMakeFiles/ECS.dir/main.cpp.o: CMakeFiles/ECS.dir/flags.make
 CMakeFiles/ECS.dir/main.cpp.o: ../main.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/niels/ClionProjects/ECS/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/ECS.dir/main.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ECS.dir/main.cpp.o -c /home/niels/ClionProjects/ECS/main.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/niels/CLionProjects/ECS/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_1) "Building CXX object CMakeFiles/ECS.dir/main.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ECS.dir/main.cpp.o -c /home/niels/CLionProjects/ECS/main.cpp
 
 CMakeFiles/ECS.dir/main.cpp.i: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ECS.dir/main.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/niels/ClionProjects/ECS/main.cpp > CMakeFiles/ECS.dir/main.cpp.i
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/niels/CLionProjects/ECS/main.cpp > CMakeFiles/ECS.dir/main.cpp.i
 
 CMakeFiles/ECS.dir/main.cpp.s: cmake_force
 	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ECS.dir/main.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/niels/ClionProjects/ECS/main.cpp -o CMakeFiles/ECS.dir/main.cpp.s
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/niels/CLionProjects/ECS/main.cpp -o CMakeFiles/ECS.dir/main.cpp.s
 
 CMakeFiles/ECS.dir/main.cpp.o.requires:
 
@@ -81,71 +81,97 @@ CMakeFiles/ECS.dir/main.cpp.o.provides: CMakeFiles/ECS.dir/main.cpp.o.requires
 CMakeFiles/ECS.dir/main.cpp.o.provides.build: CMakeFiles/ECS.dir/main.cpp.o
 
 
-CMakeFiles/ECS.dir/Ghost.cpp.o: CMakeFiles/ECS.dir/flags.make
-CMakeFiles/ECS.dir/Ghost.cpp.o: ../Ghost.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/niels/ClionProjects/ECS/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ECS.dir/Ghost.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ECS.dir/Ghost.cpp.o -c /home/niels/ClionProjects/ECS/Ghost.cpp
+CMakeFiles/ECS.dir/SDL_Factory.cpp.o: CMakeFiles/ECS.dir/flags.make
+CMakeFiles/ECS.dir/SDL_Factory.cpp.o: ../SDL_Factory.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/niels/CLionProjects/ECS/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_2) "Building CXX object CMakeFiles/ECS.dir/SDL_Factory.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ECS.dir/SDL_Factory.cpp.o -c /home/niels/CLionProjects/ECS/SDL_Factory.cpp
 
-CMakeFiles/ECS.dir/Ghost.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ECS.dir/Ghost.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/niels/ClionProjects/ECS/Ghost.cpp > CMakeFiles/ECS.dir/Ghost.cpp.i
+CMakeFiles/ECS.dir/SDL_Factory.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ECS.dir/SDL_Factory.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/niels/CLionProjects/ECS/SDL_Factory.cpp > CMakeFiles/ECS.dir/SDL_Factory.cpp.i
 
-CMakeFiles/ECS.dir/Ghost.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ECS.dir/Ghost.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/niels/ClionProjects/ECS/Ghost.cpp -o CMakeFiles/ECS.dir/Ghost.cpp.s
+CMakeFiles/ECS.dir/SDL_Factory.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ECS.dir/SDL_Factory.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/niels/CLionProjects/ECS/SDL_Factory.cpp -o CMakeFiles/ECS.dir/SDL_Factory.cpp.s
 
-CMakeFiles/ECS.dir/Ghost.cpp.o.requires:
+CMakeFiles/ECS.dir/SDL_Factory.cpp.o.requires:
 
-.PHONY : CMakeFiles/ECS.dir/Ghost.cpp.o.requires
+.PHONY : CMakeFiles/ECS.dir/SDL_Factory.cpp.o.requires
 
-CMakeFiles/ECS.dir/Ghost.cpp.o.provides: CMakeFiles/ECS.dir/Ghost.cpp.o.requires
-	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/Ghost.cpp.o.provides.build
-.PHONY : CMakeFiles/ECS.dir/Ghost.cpp.o.provides
+CMakeFiles/ECS.dir/SDL_Factory.cpp.o.provides: CMakeFiles/ECS.dir/SDL_Factory.cpp.o.requires
+	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/SDL_Factory.cpp.o.provides.build
+.PHONY : CMakeFiles/ECS.dir/SDL_Factory.cpp.o.provides
 
-CMakeFiles/ECS.dir/Ghost.cpp.o.provides.build: CMakeFiles/ECS.dir/Ghost.cpp.o
+CMakeFiles/ECS.dir/SDL_Factory.cpp.o.provides.build: CMakeFiles/ECS.dir/SDL_Factory.cpp.o
 
 
-CMakeFiles/ECS.dir/PositionSystem.cpp.o: CMakeFiles/ECS.dir/flags.make
-CMakeFiles/ECS.dir/PositionSystem.cpp.o: ../PositionSystem.cpp
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/niels/ClionProjects/ECS/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ECS.dir/PositionSystem.cpp.o"
-	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ECS.dir/PositionSystem.cpp.o -c /home/niels/ClionProjects/ECS/PositionSystem.cpp
+CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o: CMakeFiles/ECS.dir/flags.make
+CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o: ../SDL_RenderSystem.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/niels/CLionProjects/ECS/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_3) "Building CXX object CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o -c /home/niels/CLionProjects/ECS/SDL_RenderSystem.cpp
 
-CMakeFiles/ECS.dir/PositionSystem.cpp.i: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ECS.dir/PositionSystem.cpp.i"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/niels/ClionProjects/ECS/PositionSystem.cpp > CMakeFiles/ECS.dir/PositionSystem.cpp.i
+CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/niels/CLionProjects/ECS/SDL_RenderSystem.cpp > CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.i
 
-CMakeFiles/ECS.dir/PositionSystem.cpp.s: cmake_force
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ECS.dir/PositionSystem.cpp.s"
-	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/niels/ClionProjects/ECS/PositionSystem.cpp -o CMakeFiles/ECS.dir/PositionSystem.cpp.s
+CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/niels/CLionProjects/ECS/SDL_RenderSystem.cpp -o CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.s
 
-CMakeFiles/ECS.dir/PositionSystem.cpp.o.requires:
+CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o.requires:
 
-.PHONY : CMakeFiles/ECS.dir/PositionSystem.cpp.o.requires
+.PHONY : CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o.requires
 
-CMakeFiles/ECS.dir/PositionSystem.cpp.o.provides: CMakeFiles/ECS.dir/PositionSystem.cpp.o.requires
-	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/PositionSystem.cpp.o.provides.build
-.PHONY : CMakeFiles/ECS.dir/PositionSystem.cpp.o.provides
+CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o.provides: CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o.requires
+	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o.provides.build
+.PHONY : CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o.provides
 
-CMakeFiles/ECS.dir/PositionSystem.cpp.o.provides.build: CMakeFiles/ECS.dir/PositionSystem.cpp.o
+CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o.provides.build: CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o
+
+
+CMakeFiles/ECS.dir/SystemManager.cpp.o: CMakeFiles/ECS.dir/flags.make
+CMakeFiles/ECS.dir/SystemManager.cpp.o: ../SystemManager.cpp
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --progress-dir=/home/niels/CLionProjects/ECS/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Building CXX object CMakeFiles/ECS.dir/SystemManager.cpp.o"
+	/usr/bin/c++  $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -o CMakeFiles/ECS.dir/SystemManager.cpp.o -c /home/niels/CLionProjects/ECS/SystemManager.cpp
+
+CMakeFiles/ECS.dir/SystemManager.cpp.i: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Preprocessing CXX source to CMakeFiles/ECS.dir/SystemManager.cpp.i"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -E /home/niels/CLionProjects/ECS/SystemManager.cpp > CMakeFiles/ECS.dir/SystemManager.cpp.i
+
+CMakeFiles/ECS.dir/SystemManager.cpp.s: cmake_force
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green "Compiling CXX source to assembly CMakeFiles/ECS.dir/SystemManager.cpp.s"
+	/usr/bin/c++ $(CXX_DEFINES) $(CXX_INCLUDES) $(CXX_FLAGS) -S /home/niels/CLionProjects/ECS/SystemManager.cpp -o CMakeFiles/ECS.dir/SystemManager.cpp.s
+
+CMakeFiles/ECS.dir/SystemManager.cpp.o.requires:
+
+.PHONY : CMakeFiles/ECS.dir/SystemManager.cpp.o.requires
+
+CMakeFiles/ECS.dir/SystemManager.cpp.o.provides: CMakeFiles/ECS.dir/SystemManager.cpp.o.requires
+	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/SystemManager.cpp.o.provides.build
+.PHONY : CMakeFiles/ECS.dir/SystemManager.cpp.o.provides
+
+CMakeFiles/ECS.dir/SystemManager.cpp.o.provides.build: CMakeFiles/ECS.dir/SystemManager.cpp.o
 
 
 # Object files for target ECS
 ECS_OBJECTS = \
 "CMakeFiles/ECS.dir/main.cpp.o" \
-"CMakeFiles/ECS.dir/Ghost.cpp.o" \
-"CMakeFiles/ECS.dir/PositionSystem.cpp.o"
+"CMakeFiles/ECS.dir/SDL_Factory.cpp.o" \
+"CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o" \
+"CMakeFiles/ECS.dir/SystemManager.cpp.o"
 
 # External object files for target ECS
 ECS_EXTERNAL_OBJECTS =
 
 ECS: CMakeFiles/ECS.dir/main.cpp.o
-ECS: CMakeFiles/ECS.dir/Ghost.cpp.o
-ECS: CMakeFiles/ECS.dir/PositionSystem.cpp.o
+ECS: CMakeFiles/ECS.dir/SDL_Factory.cpp.o
+ECS: CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o
+ECS: CMakeFiles/ECS.dir/SystemManager.cpp.o
 ECS: CMakeFiles/ECS.dir/build.make
 ECS: /usr/lib/x86_64-linux-gnu/libSDL2_image.so
 ECS: /usr/lib/x86_64-linux-gnu/libSDL2_ttf.so
 ECS: CMakeFiles/ECS.dir/link.txt
-	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/niels/ClionProjects/ECS/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_4) "Linking CXX executable ECS"
+	@$(CMAKE_COMMAND) -E cmake_echo_color --switch=$(COLOR) --green --bold --progress-dir=/home/niels/CLionProjects/ECS/cmake-build-debug/CMakeFiles --progress-num=$(CMAKE_PROGRESS_5) "Linking CXX executable ECS"
 	$(CMAKE_COMMAND) -E cmake_link_script CMakeFiles/ECS.dir/link.txt --verbose=$(VERBOSE)
 
 # Rule to build all files generated by this target.
@@ -154,8 +180,9 @@ CMakeFiles/ECS.dir/build: ECS
 .PHONY : CMakeFiles/ECS.dir/build
 
 CMakeFiles/ECS.dir/requires: CMakeFiles/ECS.dir/main.cpp.o.requires
-CMakeFiles/ECS.dir/requires: CMakeFiles/ECS.dir/Ghost.cpp.o.requires
-CMakeFiles/ECS.dir/requires: CMakeFiles/ECS.dir/PositionSystem.cpp.o.requires
+CMakeFiles/ECS.dir/requires: CMakeFiles/ECS.dir/SDL_Factory.cpp.o.requires
+CMakeFiles/ECS.dir/requires: CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o.requires
+CMakeFiles/ECS.dir/requires: CMakeFiles/ECS.dir/SystemManager.cpp.o.requires
 
 .PHONY : CMakeFiles/ECS.dir/requires
 
@@ -164,6 +191,6 @@ CMakeFiles/ECS.dir/clean:
 .PHONY : CMakeFiles/ECS.dir/clean
 
 CMakeFiles/ECS.dir/depend:
-	cd /home/niels/ClionProjects/ECS/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/niels/ClionProjects/ECS /home/niels/ClionProjects/ECS /home/niels/ClionProjects/ECS/cmake-build-debug /home/niels/ClionProjects/ECS/cmake-build-debug /home/niels/ClionProjects/ECS/cmake-build-debug/CMakeFiles/ECS.dir/DependInfo.cmake --color=$(COLOR)
+	cd /home/niels/CLionProjects/ECS/cmake-build-debug && $(CMAKE_COMMAND) -E cmake_depends "Unix Makefiles" /home/niels/CLionProjects/ECS /home/niels/CLionProjects/ECS /home/niels/CLionProjects/ECS/cmake-build-debug /home/niels/CLionProjects/ECS/cmake-build-debug /home/niels/CLionProjects/ECS/cmake-build-debug/CMakeFiles/ECS.dir/DependInfo.cmake --color=$(COLOR)
 .PHONY : CMakeFiles/ECS.dir/depend
 

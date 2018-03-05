@@ -30,11 +30,4 @@ public:
     int y = 0;
 };
 
-class RenderComponent : public Component
-{
-public:
-    RenderComponent() { type = 1; };
-    std::string image = "./";
-};
-
 #endif //ECS_COMPONENT_H
