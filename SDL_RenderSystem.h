@@ -6,13 +6,13 @@
 #define ECS_SDL_RENDERSYSTEM_H
 
 
-#include <SDL_render.h>
+#include <SDL2/SDL.h>
 #include "ECS/System.h"
 
 class SDL_RenderSystem : public System
 {
 public:
-    SDL_Renderer* renderer;
+    SDL_Renderer* renderer = nullptr;
 
     void update() override;
 };

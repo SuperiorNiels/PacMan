@@ -6,5 +6,5 @@
 
 void SDL_RenderSystem::update()
 {
-    std::cout << " SDL render." << std::endl;
+    std::cout << "SDL render." << std::endl;
 }
