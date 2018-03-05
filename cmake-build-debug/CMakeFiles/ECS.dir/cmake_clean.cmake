@@ -3,6 +3,8 @@ file(REMOVE_RECURSE
   "CMakeFiles/ECS.dir/SDL_Factory.cpp.o"
   "CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o"
   "CMakeFiles/ECS.dir/SystemManager.cpp.o"
+  "CMakeFiles/ECS.dir/Game.cpp.o"
+  "CMakeFiles/ECS.dir/MovementSystem.cpp.o"
   "ECS.pdb"
   "ECS"
 )

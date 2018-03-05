@@ -4,6 +4,14 @@
 
 #include "SystemManager.h"
 
+void SystemManager::updateSystems()
+{
+    for(auto& s : systems)
+    {
+        s->update();
+    }
+}
+
 void SystemManager::registerSystem(System *s)
 {
     systems.insert(s);

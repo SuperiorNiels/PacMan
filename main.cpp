@@ -1,11 +1,10 @@
-#include <iostream>
-#include "ECS/ECS.h"
-#include "SystemManager.h"
-#include "SDL_RenderSystem.h"
+
+#include "Game.h"
+#include "SDL_Factory.h"
 
 int main() {
-    SystemManager manager = SystemManager();
-    manager.registerSystem(new SDL_RenderSystem());
-    manager.registerEntity(new Entity());
+    auto* game = new Game(new SDL_Factory());
+    game->init();
+    game->run();
     return 0;
 }

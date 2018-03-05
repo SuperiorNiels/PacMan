@@ -10,6 +10,6 @@ find_package(SDL2_ttf REQUIRED)
 
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIR})
 
-add_executable(ECS main.cpp ECS/Component.h ECS/Entity.h ECS/System.h AbstractFactory.h ECS/ECS.h SDL_Factory.cpp SDL_Factory.h SDL_Components.h SDL_RenderSystem.cpp SDL_RenderSystem.h SystemManager.cpp SystemManager.h)
+add_executable(ECS main.cpp ECS/Component.h ECS/Entity.h ECS/System.h AbstractFactory.h ECS/ECS.h SDL_Factory.cpp SDL_Factory.h SDL_Components.h SDL_RenderSystem.cpp SDL_RenderSystem.h SystemManager.cpp SystemManager.h Game.cpp Game.h MovementSystem.cpp MovementSystem.h)
 
 target_link_libraries(ECS ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})

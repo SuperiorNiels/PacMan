@@ -7,12 +7,15 @@
 
 #include "ECS/Component.h"
 #include "SDL2/SDL.h"
+#include "SDL2/SDL_image.h"
 
 class SDL_RenderComponent : public Component
 {
 public:
     SDL_RenderComponent() { type = 10; }
     SDL_Texture* texture = nullptr;
+    int width = 0;
+    int height = 0;
 };
 
 // TODO: add sdl input component

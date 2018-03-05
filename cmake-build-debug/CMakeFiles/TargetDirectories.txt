@@ -1,3 +1,3 @@
-/home/niels/CLionProjects/ECS/cmake-build-debug/CMakeFiles/edit_cache.dir
-/home/niels/CLionProjects/ECS/cmake-build-debug/CMakeFiles/rebuild_cache.dir
-/home/niels/CLionProjects/ECS/cmake-build-debug/CMakeFiles/ECS.dir
+/home/niels/ClionProjects/ECS/cmake-build-debug/CMakeFiles/edit_cache.dir
+/home/niels/ClionProjects/ECS/cmake-build-debug/CMakeFiles/rebuild_cache.dir
+/home/niels/ClionProjects/ECS/cmake-build-debug/CMakeFiles/ECS.dir

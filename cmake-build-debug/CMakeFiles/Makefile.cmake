@@ -34,7 +34,7 @@ set(CMAKE_MAKEFILE_DEPENDS
   "/home/niels/Programs/clion-2017.3.3/bin/cmake/share/cmake-3.9/Modules/Platform/Linux.cmake"
   "/home/niels/Programs/clion-2017.3.3/bin/cmake/share/cmake-3.9/Modules/Platform/UnixPaths.cmake"
   "/home/niels/Programs/clion-2017.3.3/bin/cmake/share/cmake-3.9/Modules/ProcessorCount.cmake"
-  "/usr/lib/x86_64-linux-gnu/cmake/SDL2/sdl2-config.cmake"
+  "/usr/local/lib/cmake/SDL2/sdl2-config.cmake"
   )
 
 # The corresponding makefile is:

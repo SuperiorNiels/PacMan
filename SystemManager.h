@@ -11,11 +11,13 @@
 
 class SystemManager {
 public:
+    void updateSystems();
     void registerSystem(System* s);
     void registerEntity(Entity* e);
     void unregisterEntity(Entity* e);
 private:
     std::unordered_set<System*> systems = std::unordered_set<System*>();
+    // TODO: add list of all entities?
 };
 
 

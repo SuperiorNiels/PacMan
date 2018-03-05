@@ -5,17 +5,17 @@
 #ifndef ECS_SDL_FACTORY_H
 #define ECS_SDL_FACTORY_H
 
-
-#include <SDL2/SDL.h>
 #include "AbstractFactory.h"
+#include "SDL_RenderSystem.h"
+#include "SDL_Components.h"
 
 class SDL_Factory : public AbstractFactory {
 public:
     Entity* createPacMan() override;
-    System* createRenderSystem() override = 0;
+    System* createRenderSystem() override;
 private:
-    SDL_Texture* createTexture();
-
+    SDL_RenderComponent* createRenderComponent(std::string path);
+    SDL_RenderSystem* renderSystem = nullptr;
 };
 
 

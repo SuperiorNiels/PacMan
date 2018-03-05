@@ -48,10 +48,10 @@ RM = /home/niels/Programs/clion-2017.3.3/bin/cmake/bin/cmake -E remove -f
 EQUALS = =
 
 # The top-level source directory on which CMake was run.
-CMAKE_SOURCE_DIR = /home/niels/CLionProjects/ECS
+CMAKE_SOURCE_DIR = /home/niels/ClionProjects/ECS
 
 # The top-level build directory on which CMake was run.
-CMAKE_BINARY_DIR = /home/niels/CLionProjects/ECS/cmake-build-debug
+CMAKE_BINARY_DIR = /home/niels/ClionProjects/ECS/cmake-build-debug
 
 #=============================================================================
 # Targets provided globally by CMake.
@@ -80,9 +80,9 @@ rebuild_cache/fast: rebuild_cache
 
 # The main all target
 all: cmake_check_build_system
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/niels/CLionProjects/ECS/cmake-build-debug/CMakeFiles /home/niels/CLionProjects/ECS/cmake-build-debug/CMakeFiles/progress.marks
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/niels/ClionProjects/ECS/cmake-build-debug/CMakeFiles /home/niels/ClionProjects/ECS/cmake-build-debug/CMakeFiles/progress.marks
 	$(MAKE) -f CMakeFiles/Makefile2 all
-	$(CMAKE_COMMAND) -E cmake_progress_start /home/niels/CLionProjects/ECS/cmake-build-debug/CMakeFiles 0
+	$(CMAKE_COMMAND) -E cmake_progress_start /home/niels/ClionProjects/ECS/cmake-build-debug/CMakeFiles 0
 .PHONY : all
 
 # The main clean target
@@ -122,6 +122,60 @@ ECS: cmake_check_build_system
 ECS/fast:
 	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/build
 .PHONY : ECS/fast
+
+Game.o: Game.cpp.o
+
+.PHONY : Game.o
+
+# target to build an object file
+Game.cpp.o:
+	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/Game.cpp.o
+.PHONY : Game.cpp.o
+
+Game.i: Game.cpp.i
+
+.PHONY : Game.i
+
+# target to preprocess a source file
+Game.cpp.i:
+	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/Game.cpp.i
+.PHONY : Game.cpp.i
+
+Game.s: Game.cpp.s
+
+.PHONY : Game.s
+
+# target to generate assembly for a file
+Game.cpp.s:
+	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/Game.cpp.s
+.PHONY : Game.cpp.s
+
+MovementSystem.o: MovementSystem.cpp.o
+
+.PHONY : MovementSystem.o
+
+# target to build an object file
+MovementSystem.cpp.o:
+	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/MovementSystem.cpp.o
+.PHONY : MovementSystem.cpp.o
+
+MovementSystem.i: MovementSystem.cpp.i
+
+.PHONY : MovementSystem.i
+
+# target to preprocess a source file
+MovementSystem.cpp.i:
+	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/MovementSystem.cpp.i
+.PHONY : MovementSystem.cpp.i
+
+MovementSystem.s: MovementSystem.cpp.s
+
+.PHONY : MovementSystem.s
+
+# target to generate assembly for a file
+MovementSystem.cpp.s:
+	$(MAKE) -f CMakeFiles/ECS.dir/build.make CMakeFiles/ECS.dir/MovementSystem.cpp.s
+.PHONY : MovementSystem.cpp.s
 
 SDL_Factory.o: SDL_Factory.cpp.o
 
@@ -240,6 +294,12 @@ help:
 	@echo "... edit_cache"
 	@echo "... rebuild_cache"
 	@echo "... ECS"
+	@echo "... Game.o"
+	@echo "... Game.i"
+	@echo "... Game.s"
+	@echo "... MovementSystem.o"
+	@echo "... MovementSystem.i"
+	@echo "... MovementSystem.s"
 	@echo "... SDL_Factory.o"
 	@echo "... SDL_Factory.i"
 	@echo "... SDL_Factory.s"
