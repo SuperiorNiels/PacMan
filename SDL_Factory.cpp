@@ -10,7 +10,18 @@ Entity* SDL_Factory::createPacMan()
     // Create empty entity and add components
     auto* e = new Entity();
     e->addComponent(new PositionComponent());
-    e->addComponent(createRenderComponent("../pacman.png"));
+    e->addComponent(createRenderComponent("../sprites.png"));
+    return e;
+}
+
+Entity* SDL_Factory::createGhost()
+{
+    auto* e = new Entity();
+    auto* p = new PositionComponent();
+    p->x = 200;
+    p->y = 250;
+    e->addComponent(p);
+    e->addComponent(createRenderComponent("../sprites.png"));
     return e;
 }
 

@@ -22,12 +22,4 @@ public:
     virtual ~Component() = default;
 };
 
-class PositionComponent : public Component
-{
-public:
-    PositionComponent() { type = 0; };
-    int x = 0;
-    int y = 0;
-};
-
 #endif //ECS_COMPONENT_H

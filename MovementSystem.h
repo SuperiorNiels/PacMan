@@ -6,7 +6,7 @@
 #define ECS_MOVEMENTSYSTEM_H
 
 
-#include "ECS/ECS.h"
+#include "PacMan_Components.h"
 
 class MovementSystem : public System {
 public:

@@ -7,7 +7,7 @@
 
 
 #include "SDL_Components.h"
-#include "ECS/System.h"
+#include "PacMan_Components.h"
 
 class SDL_RenderSystem : public System
 {

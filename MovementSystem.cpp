@@ -14,8 +14,11 @@ void MovementSystem::update()
     for(auto& e : entities)
     {
         auto* p = e->getComponentByType<PositionComponent>(0);
-        p->x += 5;
-        p->y += 5;
+        int to_add = 3;
+        if(e->id == 1)
+            to_add = -1;
+        p->x += to_add;
+        p->y += to_add;
         std::cout << "[Movement] \t Moved entity with id: " << e->id << std::endl;
     }
 }

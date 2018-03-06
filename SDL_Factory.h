@@ -12,6 +12,7 @@
 class SDL_Factory : public AbstractFactory {
 public:
     Entity* createPacMan() override;
+    Entity* createGhost() override;
     System* createRenderSystem() override;
 private:
     SDL_RenderComponent* createRenderComponent(std::string path);

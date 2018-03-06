@@ -16,6 +16,8 @@ public:
     SDL_Texture* texture = nullptr;
     int width = 0;
     int height = 0;
+    std::vector<SDL_Rect*> clips = std::vector<SDL_Rect*>();
+    int current_frame = 0;
 };
 
 // TODO: add sdl input component

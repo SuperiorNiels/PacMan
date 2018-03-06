@@ -9,6 +9,7 @@ CMakeFiles/ECS.dir/Game.cpp.o: ../ECS/System.h
 CMakeFiles/ECS.dir/Game.cpp.o: ../Game.cpp
 CMakeFiles/ECS.dir/Game.cpp.o: ../Game.h
 CMakeFiles/ECS.dir/Game.cpp.o: ../MovementSystem.h
+CMakeFiles/ECS.dir/Game.cpp.o: ../PacMan_Components.h
 CMakeFiles/ECS.dir/Game.cpp.o: ../SystemManager.h
 
 CMakeFiles/ECS.dir/MovementSystem.cpp.o: ../ECS/Component.h
@@ -17,19 +18,24 @@ CMakeFiles/ECS.dir/MovementSystem.cpp.o: ../ECS/Entity.h
 CMakeFiles/ECS.dir/MovementSystem.cpp.o: ../ECS/System.h
 CMakeFiles/ECS.dir/MovementSystem.cpp.o: ../MovementSystem.cpp
 CMakeFiles/ECS.dir/MovementSystem.cpp.o: ../MovementSystem.h
+CMakeFiles/ECS.dir/MovementSystem.cpp.o: ../PacMan_Components.h
 
 CMakeFiles/ECS.dir/SDL_Factory.cpp.o: ../AbstractFactory.h
 CMakeFiles/ECS.dir/SDL_Factory.cpp.o: ../ECS/Component.h
+CMakeFiles/ECS.dir/SDL_Factory.cpp.o: ../ECS/ECS.h
 CMakeFiles/ECS.dir/SDL_Factory.cpp.o: ../ECS/Entity.h
 CMakeFiles/ECS.dir/SDL_Factory.cpp.o: ../ECS/System.h
+CMakeFiles/ECS.dir/SDL_Factory.cpp.o: ../PacMan_Components.h
 CMakeFiles/ECS.dir/SDL_Factory.cpp.o: ../SDL_Components.h
 CMakeFiles/ECS.dir/SDL_Factory.cpp.o: ../SDL_Factory.cpp
 CMakeFiles/ECS.dir/SDL_Factory.cpp.o: ../SDL_Factory.h
 CMakeFiles/ECS.dir/SDL_Factory.cpp.o: ../SDL_RenderSystem.h
 
 CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o: ../ECS/Component.h
+CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o: ../ECS/ECS.h
 CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o: ../ECS/Entity.h
 CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o: ../ECS/System.h
+CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o: ../PacMan_Components.h
 CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o: ../SDL_Components.h
 CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o: ../SDL_RenderSystem.cpp
 CMakeFiles/ECS.dir/SDL_RenderSystem.cpp.o: ../SDL_RenderSystem.h
@@ -48,6 +54,7 @@ CMakeFiles/ECS.dir/main.cpp.o: ../ECS/Entity.h
 CMakeFiles/ECS.dir/main.cpp.o: ../ECS/System.h
 CMakeFiles/ECS.dir/main.cpp.o: ../Game.h
 CMakeFiles/ECS.dir/main.cpp.o: ../MovementSystem.h
+CMakeFiles/ECS.dir/main.cpp.o: ../PacMan_Components.h
 CMakeFiles/ECS.dir/main.cpp.o: ../SDL_Components.h
 CMakeFiles/ECS.dir/main.cpp.o: ../SDL_Factory.h
 CMakeFiles/ECS.dir/main.cpp.o: ../SDL_RenderSystem.h

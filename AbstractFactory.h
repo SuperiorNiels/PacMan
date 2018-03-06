@@ -12,6 +12,7 @@
 class AbstractFactory {
 public:
     virtual Entity* createPacMan() = 0;
+    virtual Entity* createGhost() = 0;
     virtual System* createRenderSystem() = 0;
 };
 

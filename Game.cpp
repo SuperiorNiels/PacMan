@@ -2,7 +2,6 @@
 // Created by niels on 05/03/18.
 //
 
-#include <zconf.h>
 #include "Game.h"
 
 Game::Game(AbstractFactory *factory)
@@ -22,10 +21,9 @@ void Game::init()
 
 void Game::run()
 {
-    for(int i=0;i<10;i++)
+    for(int i=0;i<100;i++)
     {
         manager->updateSystems();
-        usleep(1000000);
     }
 }
 

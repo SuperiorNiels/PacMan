@@ -15,9 +15,10 @@ public:
     void registerSystem(System* s);
     void registerEntity(Entity* e);
     void unregisterEntity(Entity* e);
+    ~SystemManager();
 private:
     std::unordered_set<System*> systems = std::unordered_set<System*>();
-    // TODO: add list of all entities?
+    std::unordered_set<Entity*> entities = std::unordered_set<Entity*>();
 };
 
 
