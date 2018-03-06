@@ -67,6 +67,11 @@ void SDL_RenderSystem::update()
         // Create render position and render
         SDL_Rect position = {p->x, p->y, rc->width, rc->height};
 
+        if(rc->clips.size() != 0)
+        {
+            // TODO: add clip rendering
+        }
+
         SDL_RenderCopy(renderer, rc->texture, nullptr, &position);
         std::cout << "[SDL_Render] Entity id: " << e->id << " rendered." << std::endl;
     }
