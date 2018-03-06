@@ -57,24 +57,53 @@ SDL_RenderSystem::SDL_RenderSystem()
 void SDL_RenderSystem::update()
 {
     // Clear screen
-    SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xFF);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
     SDL_RenderClear(renderer);
 
     for(auto& e : entities)
     {
         auto* rc = e->getComponentByType<SDL_RenderComponent>(10);
         auto* p = e->getComponentByType<PositionComponent>(0);
+        auto* m = e->getComponentByType<MovableComponent>(1);
         // Create render position and render
         SDL_Rect position = {p->x, p->y, rc->width, rc->height};
 
-        if(rc->clip != nullptr)
+        SDL_Rect* clip = nullptr;
+        if(!rc->clips.empty())
         {
-            position.w = rc->clip->w;
-            position.h = rc->clip->h;
+            if(m != nullptr)
+            {
+                if(m->x_speed != 0 || m->y_speed != 0)
+                {
+                    // Entity is moving, animate
+                    if(rc->count > rc->animation_speed)
+                    {
+                        rc->current_frame = (rc->current_frame + 1) % rc->animation_length;
+                        rc->count = 0;
+                    }
+                    clip = rc->clips[rc->current_frame+rc->frame_offset];
+                }
+                else
+                {
+                    clip = rc->clips[0]; // still image should be at this position
+                }
+            }
+            else
+            {
+                if(rc->count > rc->animation_speed)
+                {
+                    rc->current_frame = (rc->current_frame + 1) % rc->animation_length;
+                    rc->count = 0;
+                }
+                clip = rc->clips[rc->current_frame+rc->frame_offset];
+            }
+            position.w = clip->w;
+            position.h = clip->h;
+            rc->count++;
         }
 
-        SDL_RenderCopy(renderer, rc->texture, rc->clip, &position);
-        std::cout << "[SDL_Render] Entity id: " << e->id << " rendered." << std::endl;
+        SDL_RenderCopy(renderer, rc->texture, clip, &position);
+        //std::cout << "[SDL_Render] Entity id: " << e->id << " rendered." << std::endl;
     }
 
     SDL_RenderPresent(renderer);

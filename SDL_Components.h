@@ -16,12 +16,18 @@ public:
     SDL_Texture* texture = nullptr;
     int width = 0;
     int height = 0;
-    SDL_Rect* clip = nullptr;
+    std::vector<SDL_Rect*> clips = std::vector<SDL_Rect*>();
+    int animation_length = 0;
+    int animation_speed = 10;
     int current_frame = 0;
+    int count = 0;
+    int frame_offset = 0;
+    int direction_offsets[4] = {0,0,0,0}; // left,right,up,down
     ~SDL_RenderComponent() override
     {
         SDL_DestroyTexture(texture);
-        delete clip;
+        for(auto& c : clips)
+            delete c;
     };
 };
 

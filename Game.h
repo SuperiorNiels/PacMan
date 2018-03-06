@@ -9,6 +9,7 @@
 #include "AbstractFactory.h"
 #include "SystemManager.h"
 #include "MovementSystem.h"
+#include "EventSystem.h"
 
 class Game {
 public:
@@ -20,6 +21,7 @@ private:
     Game() = default;
     AbstractFactory* factory = nullptr;
     SystemManager* manager = nullptr;
+    EventSystem* events = nullptr;
 };
 
 

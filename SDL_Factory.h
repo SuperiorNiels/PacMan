@@ -5,18 +5,24 @@
 #ifndef ECS_SDL_FACTORY_H
 #define ECS_SDL_FACTORY_H
 
+#include <iostream>
+#include <unordered_map>
 #include "AbstractFactory.h"
 #include "SDL_RenderSystem.h"
 #include "SDL_Components.h"
+#include "SDL_EventSystem.h"
 
 class SDL_Factory : public AbstractFactory {
 public:
-    Entity* createPacMan() override;
-    Entity* createGhost() override;
+    Entity* createPacMan(int x,int y) override;
+    Entity* createGhost(int x,int y) override;
     System* createRenderSystem() override;
+    EventSystem* createEventSystem() override;
+    ~SDL_Factory() override;
 private:
-    SDL_RenderComponent* createRenderComponent(std::string path, SDL_Rect* clip = nullptr);
+    SDL_RenderComponent* createRenderComponent(std::string path, std::vector<SDL_Rect*> clips = std::vector<SDL_Rect*>());
     SDL_RenderSystem* renderSystem = nullptr;
+    std::unordered_map<std::string,SDL_Texture*> loadedTextures = std::unordered_map<std::string,SDL_Texture*>();
 };
 
 
