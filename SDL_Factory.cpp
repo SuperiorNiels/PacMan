@@ -66,6 +66,7 @@ Entity* SDL_Factory::createGhost(int x, int y)
     rc->direction_offsets[3] = 2;
     e->addComponent(rc);
     e->addComponent(new MovableComponent());
+    e->addComponent(new AIComponent());
     return e;
 }
 

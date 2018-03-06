@@ -4,6 +4,7 @@
 
 #include "Game.h"
 
+
 Game::Game(AbstractFactory *factory)
 {
     Game::factory = factory;
@@ -17,6 +18,7 @@ void Game::init()
     manager->registerSystem(factory->createRenderSystem());
     manager->registerSystem(Game::events);
     manager->registerSystem(new MovementSystem());
+    manager->registerSystem(new AISystem());
     // Add a pacman
     manager->registerEntity(factory->createPacMan(283,283));
     manager->registerEntity(factory->createGhost(0,0));

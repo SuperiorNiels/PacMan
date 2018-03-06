@@ -9,6 +9,7 @@
 #include "AbstractFactory.h"
 #include "SystemManager.h"
 #include "MovementSystem.h"
+#include "AISystem.h"
 #include "EventSystem.h"
 
 class Game {

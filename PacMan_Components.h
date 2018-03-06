@@ -11,6 +11,7 @@
  * types:
  *  0 - position
  *  1 - movable
+ *  2 - AI
  */
 
 class PositionComponent : public Component
@@ -29,5 +30,13 @@ public:
     int y_speed = 0;
 };
 
+class AIComponent : public Component
+{
+public:
+    AIComponent() { type = 2; }
+    int count = 0;
+};
+
+// TODO: make event input component
 
 #endif //ECS_PACMAN_COMPONENTS_H
