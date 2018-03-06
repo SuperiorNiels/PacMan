@@ -15,7 +15,7 @@ public:
     Entity* createGhost() override;
     System* createRenderSystem() override;
 private:
-    SDL_RenderComponent* createRenderComponent(std::string path, std::vector<SDL_Rect*> clips=std::vector<SDL_Rect*>());
+    SDL_RenderComponent* createRenderComponent(std::string path, SDL_Rect* clip = nullptr);
     SDL_RenderSystem* renderSystem = nullptr;
 };
 

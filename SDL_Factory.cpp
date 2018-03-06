@@ -12,12 +12,12 @@ Entity* SDL_Factory::createPacMan()
     // Create empty entity and add components
     auto* e = new Entity();
     e->addComponent(new PositionComponent());
-    SDL_Rect rect = SDL_Rect();
-    rect.x = 7;
-    rect.y = 858;
-    rect.w = 34;
-    rect.h = 34;
-    e->addComponent(createRenderComponent("../sprites.png"));
+    auto* rect = new SDL_Rect();
+    rect->x = 858;
+    rect->y = 7;
+    rect->w = 34;
+    rect->h = 34;
+    e->addComponent(createRenderComponent("../sprites.png",rect));
     return e;
 }
 
@@ -42,7 +42,7 @@ System* SDL_Factory::createRenderSystem()
     return renderSystem;
 }
 
-SDL_RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::vector<SDL_Rect*> clips)
+SDL_RenderComponent* SDL_Factory::createRenderComponent(std::string path, SDL_Rect* clip)
 {
     auto* to_return = new SDL_RenderComponent();
     SDL_Texture* newTexture = nullptr;
@@ -71,6 +71,6 @@ SDL_RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::v
     // Remove the newSurface form memory
     to_return->texture = newTexture;
     SDL_FreeSurface(currentImage);
-    to_return->clips = std::move(clips);
+    to_return->clip = clip;
     return to_return;
 }

@@ -57,7 +57,7 @@ SDL_RenderSystem::SDL_RenderSystem()
 void SDL_RenderSystem::update()
 {
     // Clear screen
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
+    SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xFF);
     SDL_RenderClear(renderer);
 
     for(auto& e : entities)
@@ -67,12 +67,13 @@ void SDL_RenderSystem::update()
         // Create render position and render
         SDL_Rect position = {p->x, p->y, rc->width, rc->height};
 
-        if(rc->clips.size() != 0)
+        if(rc->clip != nullptr)
         {
-            // TODO: add clip rendering
+            position.w = rc->clip->w;
+            position.h = rc->clip->h;
         }
 
-        SDL_RenderCopy(renderer, rc->texture, nullptr, &position);
+        SDL_RenderCopy(renderer, rc->texture, rc->clip, &position);
         std::cout << "[SDL_Render] Entity id: " << e->id << " rendered." << std::endl;
     }
 

@@ -23,9 +23,17 @@ public:
     template <class T> T* getComponentByType(int8_t type);
     void removeComponentById(componentID id);
     void removeComponentByType(int8_t type);
+    ~Entity();
     entityID id = getEntityID();
 private:
     std::vector<Component*> components;
+};
+
+inline Entity::~Entity()
+{
+    for(auto& c : components)
+        delete c;
+    components.clear();
 };
 
 inline void Entity::addComponent(Component *c)
@@ -69,6 +77,7 @@ inline void Entity::removeComponentById(componentID id)
         if(it.operator*()->id == id)
         {
             components.erase(it);
+            delete it.operator*();
             break;
         }
     }
@@ -81,6 +90,7 @@ inline void Entity::removeComponentByType(int8_t type)
         if(it.operator*()->type == type)
         {
             components.erase(it);
+            delete it.operator*();
             break;
         }
     }

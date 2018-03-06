@@ -14,7 +14,7 @@ void MovementSystem::update()
     for(auto& e : entities)
     {
         auto* p = e->getComponentByType<PositionComponent>(0);
-        int to_add = 3;
+        int to_add = 0;
         if(e->id == 1)
             to_add = -1;
         p->x += to_add;

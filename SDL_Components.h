@@ -5,7 +5,7 @@
 #ifndef ECS_SDL_COMPONENTS_H
 #define ECS_SDL_COMPONENTS_H
 
-#include "ECS/Component.h"
+#include "ECS/ECS.h"
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
 
@@ -16,8 +16,13 @@ public:
     SDL_Texture* texture = nullptr;
     int width = 0;
     int height = 0;
-    std::vector<SDL_Rect*> clips = std::vector<SDL_Rect*>();
+    SDL_Rect* clip = nullptr;
     int current_frame = 0;
+    ~SDL_RenderComponent() override
+    {
+        SDL_DestroyTexture(texture);
+        delete clip;
+    };
 };
 
 // TODO: add sdl input component
