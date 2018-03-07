@@ -17,7 +17,7 @@ void MovementSystem::update()
     {
         auto* p = e->getComponentByType<PositionComponent>(0);
         auto* m = e->getComponentByType<MovableComponent>(1);
-        auto* rc = e->getComponentByType<SDL_RenderComponent>(10);
+        auto* rc = e->getComponentByType<RenderComponent>(10);
         if(p != nullptr && m != nullptr)
         {
             p->x += m->x_speed;
@@ -27,17 +27,17 @@ void MovementSystem::update()
             {
                 p->x = 0;
             }
-            if(p->x+rc->clips[rc->current_frame+rc->frame_offset]->w < 0)
+            if(p->x+rc->width < 0)
             {
-                p->x = WINDOW_WIDTH/SCALE_FACTOR;
+                p->x = (int)floor(WINDOW_WIDTH/SCALE_FACTOR);
             }
             if(p->y > WINDOW_HEIGHT/SCALE_FACTOR)
             {
                 p->y = 0;
             }
-            if(p->y+rc->clips[rc->current_frame+rc->frame_offset]->w < 0)
+            if(p->y+rc->width < 0)
             {
-                p->y = WINDOW_HEIGHT/SCALE_FACTOR;
+                p->y = (int)floor(WINDOW_HEIGHT/SCALE_FACTOR);
             }
             //std::cout << "[Movement] \t Moved entity with id: " << e->id << std::endl;
         }

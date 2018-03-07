@@ -18,7 +18,7 @@ void AISystem::update()
     {
         auto* m = e->getComponentByType<MovableComponent>(1);
         auto* a = e->getComponentByType<AIComponent>(3);
-        auto* rc = e->getComponentByType<SDL_RenderComponent>(10);
+        auto* rc = e->getComponentByType<RenderComponent>(10);
         if(m != nullptr && a != nullptr && rc != nullptr)
         {
             if(a->count > a->length)

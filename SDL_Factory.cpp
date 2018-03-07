@@ -4,9 +4,8 @@
 
 #include "SDL_Factory.h"
 
-#include <utility>
 #include <fstream>
-#include "SDL_Components.h"
+#include "PacMan_Constants.h"
 
 Entity* SDL_Factory::createPacMan(int x, int y)
 {
@@ -21,26 +20,26 @@ Entity* SDL_Factory::createPacMan(int x, int y)
     for(int i = 0; i < 12 ; i++)
     {
         auto* rect1 = new SDL_Rect();
-        rect1->x = 858; // 908
-        rect1->y = 7+(i*50);
-        rect1->w = 34;
-        rect1->h = 34;
+        rect1->x = pacman[i][0]; // 908
+        rect1->y = pacman[i][1];
+        rect1->w = pacman[i][2];
+        rect1->h = pacman[i][3];
         clips.push_back(rect1);
     }
     auto* rc = createRenderComponent("../sprites.png",clips);
     rc->animation_length = 3;
     rc->animation_speed = 4;
-    rc->direction_offsets[0] = 6;
+    rc->direction_offsets[0] = 3;
     rc->direction_offsets[1] = 0;
-    rc->direction_offsets[2] = 9;
-    rc->direction_offsets[3] = 3;
+    rc->direction_offsets[2] = 6;
+    rc->direction_offsets[3] = 9;
     e->addComponent(rc);
     e->addComponent(new MovableComponent());
     e->addComponent(new PlayerInputComponent());
     return e;
 }
 
-Entity* SDL_Factory::createGhost(int x, int y)
+Entity* SDL_Factory::createGhost(int x, int y, int color)
 {
     // Create empty entity and add components
     auto* e = new Entity();
@@ -53,19 +52,19 @@ Entity* SDL_Factory::createGhost(int x, int y)
     for(int i = 0; i < 8 ; i++)
     {
         auto* rect1 = new SDL_Rect();
-        rect1->x = 5;
-        rect1->y = 6+(i*50);
-        rect1->w = 37;
-        rect1->h = 34;
+        rect1->x = ghost[i][0];
+        rect1->y = ghost[i][1]+(16*(color%4));
+        rect1->w = ghost[i][2];
+        rect1->h = ghost[i][3];
         clips.push_back(rect1);
     }
     auto* rc = createRenderComponent("../sprites.png",clips);
     rc->animation_length = 2;
     rc->animation_speed = 4;
-    rc->direction_offsets[0] = 4;
+    rc->direction_offsets[0] = 2;
     rc->direction_offsets[1] = 0;
-    rc->direction_offsets[2] = 6;
-    rc->direction_offsets[3] = 2;
+    rc->direction_offsets[2] = 4;
+    rc->direction_offsets[3] = 6;
     e->addComponent(rc);
     e->addComponent(new MovableComponent());
     e->addComponent(new AIComponent());
@@ -84,13 +83,13 @@ std::vector<Entity*> SDL_Factory::createWorld()
             p->x = x * 8;
             p->y = y * 8;
             auto *rect = new SDL_Rect();
-            rect->x = 342;
-            rect->y = 18;
+            rect->x = p->x;
+            rect->y = p->y;
             rect->w = 8;
             rect->h = 8;
             std::vector<SDL_Rect*> clips;
             clips.push_back(rect);
-            auto* rc = createRenderComponent("../map.png",clips);
+            auto* rc = createRenderComponent("../sprites.png",clips);
             e->addComponent(p);
             e->addComponent(rc);
             world.push_back(e);
@@ -143,8 +142,13 @@ SDL_RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::v
         newTexture = loadedTextures[path];
     }
 
-    SDL_QueryTexture(newTexture, nullptr, nullptr, &to_return->width, &to_return->height);
-
+    if(clips.empty())
+        SDL_QueryTexture(newTexture, nullptr, nullptr, &to_return->width, &to_return->height);
+    else
+    {
+        to_return->width = clips[0]->w;
+        to_return->height = clips[0]->h;
+    }
     to_return->texture = newTexture;
     to_return->clips = std::move(clips);
     return to_return;

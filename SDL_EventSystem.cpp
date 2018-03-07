@@ -31,25 +31,25 @@ void SDL_EventSystem::update()
                 {
                     case SDLK_LEFT:
                         y_speed = 0;
-                        x_speed =  -2;
+                        x_speed =  -1;
                         direction = 0;
                         change = true;
                         break;
                     case SDLK_RIGHT:
                         y_speed = 0;
-                        x_speed  = 2;
+                        x_speed  = 1;
                         direction = 1;
                         change = true;
                         break;
                     case SDLK_UP:
                         x_speed = 0;
-                        y_speed = -2;
+                        y_speed = -1;
                         direction = 2;
                         change = true;
                         break;
                     case SDLK_DOWN:
                         x_speed = 0;
-                        y_speed = 2;
+                        y_speed = 1;
                         direction = 3;
                         change = true;
                         break;

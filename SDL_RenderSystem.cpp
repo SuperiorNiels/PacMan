@@ -18,7 +18,7 @@ SDL_RenderSystem::SDL_RenderSystem()
     {
         // Create the window
         window = SDL_CreateWindow("PacMan", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                                  WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
+                                  (int)floor(WINDOW_WIDTH), (int)floor(WINDOW_HEIGHT), SDL_WINDOW_SHOWN);
         if(window == nullptr)
         {
             std::cout << "Window could not be created! Error: " << SDL_GetError() << std::endl;

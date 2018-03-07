@@ -13,6 +13,7 @@
  *  1 - movable
  *  2 - player input
  *  3 - ai
+ *  10 - render
  */
 
 class PositionComponent : public Component
@@ -43,6 +44,20 @@ public:
     AIComponent() { type = 3; }
     int count = 0;
     int length = 50;
+};
+
+class RenderComponent : public Component
+{
+public:
+    RenderComponent() { type = 10; }
+    int width = 0;
+    int height = 0;
+    int animation_length = 1;
+    int animation_speed = 10;
+    int current_frame = 0;
+    int count = 0;
+    int frame_offset = 0;
+    int direction_offsets[4] = {0,0,0,0}; // left,right,up,down
 };
 
 
