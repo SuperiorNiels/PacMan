@@ -8,16 +8,16 @@
 
 MovementSystem::MovementSystem()
 {
-    component_types = {0, 1}; // position component, movable component
+    component_types = {POSITION_COMPONENT, MOVABLE_COMPONENT};
 }
 
 void MovementSystem::update()
 {
     for(auto& e : entities)
     {
-        auto* p = e->getComponentByType<PositionComponent>(0);
-        auto* m = e->getComponentByType<MovableComponent>(1);
-        auto* rc = e->getComponentByType<RenderComponent>(10);
+        auto* p = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+        auto* m = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
+        auto* rc = e->getComponentByType<RenderComponent>(RENDER_COMPONENT);
         if(p != nullptr && m != nullptr)
         {
             p->x += m->x_speed;

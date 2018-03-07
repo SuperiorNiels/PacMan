@@ -7,19 +7,19 @@
 
 #include "ECS/ECS.h"
 
-/*
- * types:
- *  0 - position
- *  1 - movable
- *  2 - player input
- *  3 - ai
- *  10 - render
- */
+enum ComponentTypes
+{
+    POSITION_COMPONENT,
+    MOVABLE_COMPONENT,
+    PLAYER_INPUT_COMPONENT,
+    AI_COMPONENT,
+    RENDER_COMPONENT,
+};
 
 class PositionComponent : public Component
 {
 public:
-    PositionComponent() { type = 0; };
+    PositionComponent() { type = POSITION_COMPONENT; };
     int x = 0;
     int y = 0;
 };
@@ -27,7 +27,7 @@ public:
 class MovableComponent : public Component
 {
 public:
-    MovableComponent() { type = 1; };
+    MovableComponent() { type = MOVABLE_COMPONENT; };
     int x_speed = 0;
     int y_speed = 0;
 };
@@ -35,13 +35,13 @@ public:
 class PlayerInputComponent : public Component
 {
 public:
-    PlayerInputComponent() { type = 2;}
+    PlayerInputComponent() { type = PLAYER_INPUT_COMPONENT;}
 };
 
 class AIComponent : public Component
 {
 public:
-    AIComponent() { type = 3; }
+    AIComponent() { type = AI_COMPONENT; }
     int count = 0;
     int length = 50;
 };
@@ -49,7 +49,7 @@ public:
 class RenderComponent : public Component
 {
 public:
-    RenderComponent() { type = 10; }
+    RenderComponent() { type = RENDER_COMPONENT; }
     int width = 0;
     int height = 0;
     int animation_length = 1;

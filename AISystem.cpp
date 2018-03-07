@@ -8,7 +8,7 @@
 
 AISystem::AISystem()
 {
-    component_types = {3};
+    component_types = {AI_COMPONENT};
     srand (time(NULL));
 }
 
@@ -16,9 +16,9 @@ void AISystem::update()
 {
     for(auto& e : entities)
     {
-        auto* m = e->getComponentByType<MovableComponent>(1);
-        auto* a = e->getComponentByType<AIComponent>(3);
-        auto* rc = e->getComponentByType<RenderComponent>(10);
+        auto* m = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
+        auto* a = e->getComponentByType<AIComponent>(AI_COMPONENT);
+        auto* rc = e->getComponentByType<RenderComponent>(RENDER_COMPONENT);
         if(m != nullptr && a != nullptr && rc != nullptr)
         {
             if(a->count > a->length)

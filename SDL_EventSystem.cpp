@@ -8,7 +8,7 @@
 
 SDL_EventSystem::SDL_EventSystem()
 {
-    component_types = {2}; // playerinput component
+    component_types = {PLAYER_INPUT_COMPONENT};
 }
 
 void SDL_EventSystem::update()
@@ -64,12 +64,12 @@ void SDL_EventSystem::update()
     {
         for (auto &en : entities)
         {
-            auto *m = en->getComponentByType<MovableComponent>(1);
+            auto *m = en->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
             if (m != nullptr) {
                 m->x_speed = x_speed;
                 m->y_speed = y_speed;
             }
-            auto *rc = en->getComponentByType<SDL_RenderComponent>(10);
+            auto *rc = en->getComponentByType<SDL_RenderComponent>(RENDER_COMPONENT);
             if (rc != nullptr) {
                 rc->frame_offset = rc->direction_offsets[direction];
             }

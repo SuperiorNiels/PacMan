@@ -7,7 +7,7 @@
 
 SDL_RenderSystem::SDL_RenderSystem()
 {
-    component_types = {0, 10}; // position component, sdl_rendercomponent
+    component_types = {RENDER_COMPONENT};
 
     // Initialze SDL
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -62,9 +62,9 @@ void SDL_RenderSystem::update()
 
     for(auto& e : entities)
     {
-        auto* rc = e->getComponentByType<SDL_RenderComponent>(10);
-        auto* p = e->getComponentByType<PositionComponent>(0);
-        auto* m = e->getComponentByType<MovableComponent>(1);
+        auto* rc = e->getComponentByType<SDL_RenderComponent>(RENDER_COMPONENT);
+        auto* p = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+        auto* m = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
         // Create render position and render
         SDL_Rect position = {p->x, p->y, rc->width, rc->height};
 
