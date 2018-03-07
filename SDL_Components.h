@@ -31,6 +31,4 @@ public:
     };
 };
 
-// TODO: add sdl input component
-
 #endif //ECS_SDL_COMPONENTS_H

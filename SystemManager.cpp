@@ -28,7 +28,6 @@ void SystemManager::registerEntity(Entity *e)
             auto* c = e->getComponentByType<Component>(itr.operator*());
             if(c != nullptr)
             {
-                // TODO: Be sure the entity is only added once to the same system
                 s->addEntity(e);
             }
         }

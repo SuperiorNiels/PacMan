@@ -8,7 +8,7 @@
 
 SDL_EventSystem::SDL_EventSystem()
 {
-    component_types = {1}; // Movable component
+    component_types = {2}; // playerinput component
 }
 
 void SDL_EventSystem::update()

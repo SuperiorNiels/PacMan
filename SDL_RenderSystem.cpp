@@ -10,7 +10,6 @@ SDL_RenderSystem::SDL_RenderSystem()
     component_types = {0, 10}; // position component, sdl_rendercomponent
 
     // Initialze SDL
-    // TODO: remove hardcoded variables
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
     {
         std::cout << "SDL not initialized! Error: " << SDL_GetError() << std::endl;
