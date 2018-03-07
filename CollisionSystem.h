@@ -16,6 +16,7 @@ public:
     CollisionSystem();
     void update() override;
     bool checkCollision(SDL_Rect a, SDL_Rect b);
+
     SDL_Renderer* renderer = nullptr;
 };
 
