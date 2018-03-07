@@ -18,13 +18,13 @@ void Game::init()
     manager->registerSystem(Game::events);
     manager->registerSystem(new MovementSystem());
     manager->registerSystem(new AISystem());
+    manager->registerSystem(factory->createCollisionSystem());
 
     std::vector<Entity*> world = factory->createWorld();
     for(auto* e : world)
         manager->registerEntity(e);
 
-    // Add a pacman
-    manager->registerEntity(factory->createPacMan(0, 0));
+    manager->registerEntity(factory->createPacMan(106, 182));
     manager->registerEntity(factory->createGhost(0, 0, 0));
     manager->registerEntity(factory->createGhost(0, 0, 1));
     manager->registerEntity(factory->createGhost(0, 0, 2));

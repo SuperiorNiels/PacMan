@@ -14,6 +14,7 @@ enum ComponentTypes
     PLAYER_INPUT_COMPONENT,
     AI_COMPONENT,
     RENDER_COMPONENT,
+    COLLISION_COMPONENT
 };
 
 class PositionComponent : public Component
@@ -58,6 +59,12 @@ public:
     int count = 0;
     int frame_offset = 0;
     int direction_offsets[4] = {0,0,0,0}; // left,right,up,down
+};
+
+class CollisionComponent : public Component
+{
+public:
+    CollisionComponent() { type = COLLISION_COMPONENT; }
 };
 
 

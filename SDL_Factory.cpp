@@ -6,6 +6,7 @@
 
 #include <fstream>
 #include "PacMan_Constants.h"
+#include "CollisionSystem.h"
 
 Entity* SDL_Factory::createPacMan(int x, int y)
 {
@@ -36,6 +37,7 @@ Entity* SDL_Factory::createPacMan(int x, int y)
     e->addComponent(rc);
     e->addComponent(new MovableComponent());
     e->addComponent(new PlayerInputComponent());
+    e->addComponent(new CollisionComponent());
     return e;
 }
 
@@ -68,6 +70,7 @@ Entity* SDL_Factory::createGhost(int x, int y, int color)
     e->addComponent(rc);
     e->addComponent(new MovableComponent());
     e->addComponent(new AIComponent());
+    e->addComponent(new CollisionComponent());
     return e;
 }
 
@@ -92,6 +95,8 @@ std::vector<Entity*> SDL_Factory::createWorld()
             auto* rc = createRenderComponent("../sprites.png",clips);
             e->addComponent(p);
             e->addComponent(rc);
+            if(x == 0 || x == 27 || y == 0 || y == 30)
+                e->addComponent(new CollisionComponent());
             world.push_back(e);
         }
     }
@@ -157,4 +162,11 @@ SDL_RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::v
 SDL_Factory::~SDL_Factory()
 {
     delete renderSystem;
+}
+
+System* SDL_Factory::createCollisionSystem()
+{
+    auto* s = new CollisionSystem();
+    s->renderer = renderSystem->renderer;
+    return s;
 }

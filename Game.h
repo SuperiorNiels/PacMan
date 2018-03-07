@@ -11,6 +11,7 @@
 #include "MovementSystem.h"
 #include "AISystem.h"
 #include "EventSystem.h"
+#include "CollisionSystem.h"
 
 class Game {
 public:
