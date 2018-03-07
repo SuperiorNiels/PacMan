@@ -57,34 +57,6 @@ void SDL_EventSystem::update()
                         break;
                 }
             }
-            if(e.type == SDL_KEYUP)
-            {
-                switch(e.key.keysym.sym)
-                {
-                    case SDLK_LEFT:
-                        if(x_speed < 0)
-                            x_speed = 0;
-                        change = true;
-                        break;
-                    case SDLK_RIGHT:
-                        if(x_speed > 0)
-                            x_speed = 0;
-                        change = true;
-                        break;
-                    case SDLK_UP:
-                        if(y_speed < 0)
-                            y_speed = 0;
-                        change = true;
-                        break;
-                    case SDLK_DOWN:
-                        if(y_speed > 0)
-                            y_speed = 0;
-                        change = true;
-                        break;
-                    default:
-                        break;
-                }
-            }
         }
     }
 

@@ -3,6 +3,7 @@
 //
 
 #include "SDL_RenderSystem.h"
+#include "PacMan_Constants.h"
 
 SDL_RenderSystem::SDL_RenderSystem()
 {
@@ -18,7 +19,7 @@ SDL_RenderSystem::SDL_RenderSystem()
     {
         // Create the window
         window = SDL_CreateWindow("PacMan", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                                  600, 600, SDL_WINDOW_SHOWN);
+                                  WINDOW_WIDTH, WINDOW_HEIGHT, SDL_WINDOW_SHOWN);
         if(window == nullptr)
         {
             std::cout << "Window could not be created! Error: " << SDL_GetError() << std::endl;
@@ -33,7 +34,7 @@ SDL_RenderSystem::SDL_RenderSystem()
             }
             else
             {
-                if(SDL_RenderSetScale(renderer,1, 1) < 0)
+                if(SDL_RenderSetScale(renderer,SCALE_FACTOR,SCALE_FACTOR) < 0)
                 {
                     std::cout << "Error setting renderer scale. Error: " << SDL_GetError() << std::endl;
                 }

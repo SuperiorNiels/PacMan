@@ -17,7 +17,7 @@ public:
     int width = 0;
     int height = 0;
     std::vector<SDL_Rect*> clips = std::vector<SDL_Rect*>();
-    int animation_length = 0;
+    int animation_length = 1;
     int animation_speed = 10;
     int current_frame = 0;
     int count = 0;

@@ -14,6 +14,7 @@ class AbstractFactory {
 public:
     virtual Entity* createPacMan(int x, int y) = 0;
     virtual Entity* createGhost(int x, int y) = 0;
+    virtual std::vector<Entity*> createWorld() =0;
     virtual System* createRenderSystem() = 0;
     virtual EventSystem* createEventSystem() = 0;
     virtual ~AbstractFactory() = default;

@@ -16,6 +16,7 @@ class SDL_Factory : public AbstractFactory {
 public:
     Entity* createPacMan(int x,int y) override;
     Entity* createGhost(int x,int y) override;
+    std::vector<Entity*> createWorld() override;
     System* createRenderSystem() override;
     EventSystem* createEventSystem() override;
     ~SDL_Factory() override;

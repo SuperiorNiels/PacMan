@@ -1,0 +1,13 @@
+//
+// Created by niels on 07/03/18.
+//
+
+#ifndef ECS_PACMAN_CONSTANTS_H
+#define ECS_PACMAN_CONSTANTS_H
+
+int SCALE_FACTOR = 3;
+int WINDOW_WIDTH = 224 * SCALE_FACTOR;
+int WINDOW_HEIGHT = 248 * SCALE_FACTOR;
+
+
+#endif //ECS_PACMAN_CONSTANTS_H

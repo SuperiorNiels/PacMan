@@ -5,6 +5,7 @@
 #include "SDL_Factory.h"
 
 #include <utility>
+#include <fstream>
 #include "SDL_Components.h"
 
 Entity* SDL_Factory::createPacMan(int x, int y)
@@ -20,7 +21,7 @@ Entity* SDL_Factory::createPacMan(int x, int y)
     for(int i = 0; i < 12 ; i++)
     {
         auto* rect1 = new SDL_Rect();
-        rect1->x = 858;
+        rect1->x = 858; // 908
         rect1->y = 7+(i*50);
         rect1->w = 34;
         rect1->h = 34;
@@ -65,9 +66,35 @@ Entity* SDL_Factory::createGhost(int x, int y)
     rc->direction_offsets[2] = 6;
     rc->direction_offsets[3] = 2;
     e->addComponent(rc);
-    e->addComponent(new MovableComponent());
     e->addComponent(new AIComponent());
     return e;
+}
+
+std::vector<Entity*> SDL_Factory::createWorld()
+{
+    std::vector<Entity*> world;
+    for(int x=0;x<28;x++)
+    {
+        for(int y=0;y<31;y++)
+        {
+            auto* e = new Entity();
+            auto* p = new PositionComponent();
+            p->x = x * 8;
+            p->y = y * 8;
+            auto *rect = new SDL_Rect();
+            rect->x = 342;
+            rect->y = 18;
+            rect->w = 8;
+            rect->h = 8;
+            std::vector<SDL_Rect*> clips;
+            clips.push_back(rect);
+            auto* rc = createRenderComponent("../map.png",clips);
+            e->addComponent(p);
+            e->addComponent(rc);
+            world.push_back(e);
+        }
+    }
+    return world;
 }
 
 System* SDL_Factory::createRenderSystem()
