@@ -41,7 +41,7 @@ Entity* SDL_Factory::createPacMan(int x, int y)
     return e;
 }
 
-Entity* SDL_Factory::createGhost(int x, int y, int color)
+Entity* SDL_Factory::createGhost(int x, int y, ghost_color color)
 {
     // Create empty entity and add components
     auto* e = new Entity();
@@ -116,6 +116,11 @@ System* SDL_Factory::createRenderSystem()
 EventSystem* SDL_Factory::createEventSystem()
 {
     return new SDL_EventSystem();
+}
+
+TimerSystem* SDL_Factory::createTimerSystem()
+{
+    return new SDL_TimerSystem();
 }
 
 SDL_RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::vector<SDL_Rect*> clips)

@@ -22,7 +22,6 @@ void MovementSystem::update()
         {
             p->x += m->x_speed;
             p->y += m->y_speed;
-            // TODO: use sdl rendercomponent here?
             if(p->x > WINDOW_WIDTH/SCALE_FACTOR)
             {
                 p->x = 0;

@@ -5,9 +5,17 @@
 #ifndef ECS_PACMAN_CONSTANTS_H
 #define ECS_PACMAN_CONSTANTS_H
 
-static float SCALE_FACTOR = 2;
+static float SCALE_FACTOR = 2.5;
 static float WINDOW_WIDTH = 224 * SCALE_FACTOR; // 224
 static float WINDOW_HEIGHT = 248 * SCALE_FACTOR; // 248
+
+enum ghost_color
+{
+    RED_GHOST,
+    PINK_GHOST,
+    BLUE_GHOST,
+    ORANGE_GHOST
+};
 
 static int pacman[12][4] = {
         {489,1,14,14},

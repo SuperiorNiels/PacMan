@@ -11,14 +11,16 @@
 #include "SDL_RenderSystem.h"
 #include "SDL_Components.h"
 #include "SDL_EventSystem.h"
+#include "SDL_TimerSystem.h"
 
 class SDL_Factory : public AbstractFactory {
 public:
     Entity* createPacMan(int x,int y) override;
-    Entity* createGhost(int x,int y, int color) override;
+    Entity* createGhost(int x,int y, ghost_color color) override;
     std::vector<Entity*> createWorld() override;
     System* createRenderSystem() override;
     EventSystem* createEventSystem() override;
+    TimerSystem* createTimerSystem() override;
     ~SDL_Factory() override;
 
     System* createCollisionSystem() override;
