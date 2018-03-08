@@ -7,6 +7,6 @@
 void SDL_TimerSystem::update()
 {
     Uint32 new_time = SDL_GetTicks();
-    std::cout << "[Timing] Average FPS:" << 1000.f / (new_time - time) << std::endl;
+    std::cout << "[Timing] Average FPS: " << 1000.f / (new_time - time) << std::endl;
     time = new_time;
 }
