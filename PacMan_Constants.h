@@ -5,7 +5,7 @@
 #ifndef ECS_PACMAN_CONSTANTS_H
 #define ECS_PACMAN_CONSTANTS_H
 
-static float SCALE_FACTOR = 2.5;
+static float SCALE_FACTOR = 3;
 static float WINDOW_WIDTH = 224 * SCALE_FACTOR; // 224
 static float WINDOW_HEIGHT = 248 * SCALE_FACTOR; // 248
 

@@ -12,8 +12,8 @@ class System
 {
 public:
     virtual void update() = 0;
-    void addEntity(Entity* e);
-    void removeEntity(entityID id);
+    virtual void addEntity(Entity* e);
+    virtual void removeEntity(entityID id);
     std::vector<int8_t> component_types = std::vector<int8_t>();
     virtual ~System() = default;
 protected:

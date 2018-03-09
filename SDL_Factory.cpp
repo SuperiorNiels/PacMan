@@ -26,7 +26,7 @@ Entity* SDL_Factory::createPacMan(int x, int y)
         rect1->h = pacman[i][3];
         clips.push_back(rect1);
     }
-    auto* rc = createRenderComponent("../sprites.png",clips);
+    auto* rc = createRenderComponent("../sprites2.png",clips);
     rc->animation_length = 3;
     rc->animation_speed = 4;
     rc->direction_offsets[0] = 3;
@@ -34,9 +34,14 @@ Entity* SDL_Factory::createPacMan(int x, int y)
     rc->direction_offsets[2] = 6;
     rc->direction_offsets[3] = 9;
     e->addComponent(rc);
+    auto *cc = new CollisionComponent();
+    cc->collision_box[0] = 2;
+    cc->collision_box[1] = 2;
+    cc->collision_box[2] = 8;
+    cc->collision_box[3] = 8;
+    e->addComponent(cc);
     e->addComponent(new MovableComponent());
     e->addComponent(new PlayerInputComponent());
-    e->addComponent(new CollisionComponent());
     return e;
 }
 
@@ -59,7 +64,7 @@ Entity* SDL_Factory::createGhost(int x, int y, ghost_color color)
         rect1->h = ghost[i][3];
         clips.push_back(rect1);
     }
-    auto* rc = createRenderComponent("../sprites.png",clips);
+    auto* rc = createRenderComponent("../sprites2.png",clips);
     rc->animation_length = 2;
     rc->animation_speed = 4;
     rc->direction_offsets[0] = 2;
@@ -67,6 +72,12 @@ Entity* SDL_Factory::createGhost(int x, int y, ghost_color color)
     rc->direction_offsets[2] = 4;
     rc->direction_offsets[3] = 6;
     e->addComponent(rc);
+    auto *cc = new CollisionComponent();
+    cc->collision_box[0] = 2;
+    cc->collision_box[1] = 2;
+    cc->collision_box[2] = 8;
+    cc->collision_box[3] = 8;
+    e->addComponent(cc);
     e->addComponent(new MovableComponent());
     e->addComponent(new AIComponent());
     e->addComponent(new CollisionComponent());
@@ -103,7 +114,24 @@ std::vector<Entity*> SDL_Factory::createWorld()
             std::vector<SDL_Rect*> clips;
             clips.push_back(rect);
             if(wall_types[x][y] == 1)
-                e->addComponent(new CollisionComponent());
+            {
+                auto *cc = new CollisionComponent();
+                cc->collision_box[0] = 0;
+                cc->collision_box[1] = 0;
+                cc->collision_box[2] = 8;
+                cc->collision_box[3] = 8;
+                e->addComponent(cc);
+            }
+            else if(wall_types[x][y] == 3)
+            {
+                auto *cc = new CollisionComponent();
+                cc->collision_box[0] = 2;
+                cc->collision_box[1] = 2;
+                cc->collision_box[2] = 4;
+                cc->collision_box[3] = 4;
+                e->addComponent(cc);
+                e->addComponent(new PointsComponent());
+            }
             auto* rc = createRenderComponent("../sprites.png",clips);
             e->addComponent(p);
             e->addComponent(rc);

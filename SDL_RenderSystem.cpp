@@ -65,45 +65,39 @@ void SDL_RenderSystem::update()
         auto* rc = e->getComponentByType<SDL_RenderComponent>(RENDER_COMPONENT);
         auto* p = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
         auto* m = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-        // Create render position and render
-        SDL_Rect position = {p->x, p->y, rc->width, rc->height};
-
-        SDL_Rect* clip = nullptr;
-        if(!rc->clips.empty())
+        if(rc->visable)
         {
-            if(m != nullptr)
-            {
-                if(m->x_speed != 0 || m->y_speed != 0)
-                {
-                    // Entity is moving, animate
-                    if(rc->count > rc->animation_speed)
-                    {
+            // Create render position and render
+            SDL_Rect position = {p->x, p->y, rc->width, rc->height};
+
+            SDL_Rect *clip = nullptr;
+            if (!rc->clips.empty()) {
+                if (m != nullptr) {
+                    if (m->x_speed != 0 || m->y_speed != 0) {
+                        // Entity is moving, animate
+                        if (rc->count > rc->animation_speed) {
+                            rc->current_frame = (rc->current_frame + 1) % rc->animation_length;
+                            rc->count = 0;
+                        }
+                        clip = rc->clips[rc->current_frame + rc->frame_offset];
+                    } else {
+                        clip = rc->clips[0]; // still image should be at this position
+                    }
+                } else {
+                    if (rc->count > rc->animation_speed) {
                         rc->current_frame = (rc->current_frame + 1) % rc->animation_length;
                         rc->count = 0;
                     }
-                    clip = rc->clips[rc->current_frame+rc->frame_offset];
+                    clip = rc->clips[rc->current_frame + rc->frame_offset];
                 }
-                else
-                {
-                    clip = rc->clips[0]; // still image should be at this position
-                }
+                position.w = clip->w;
+                position.h = clip->h;
+                rc->count++;
             }
-            else
-            {
-                if(rc->count > rc->animation_speed)
-                {
-                    rc->current_frame = (rc->current_frame + 1) % rc->animation_length;
-                    rc->count = 0;
-                }
-                clip = rc->clips[rc->current_frame+rc->frame_offset];
-            }
-            position.w = clip->w;
-            position.h = clip->h;
-            rc->count++;
-        }
 
-        SDL_RenderCopy(renderer, rc->texture, clip, &position);
-        //std::cout << "[SDL_Render] Entity id: " << e->id << " rendered." << std::endl;
+            SDL_RenderCopy(renderer, rc->texture, clip, &position);
+            //std::cout << "[SDL_Render] Entity id: " << e->id << " rendered." << std::endl;
+        }
     }
 
     SDL_RenderPresent(renderer);

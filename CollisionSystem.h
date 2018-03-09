@@ -10,13 +10,24 @@
 #include "PacMan_Components.h"
 #include "PacMan_Constants.h"
 
+struct box
+{
+    int x = 0;
+    int y = 0;
+    int w = 0;
+    int h = 0;
+};
+
 class CollisionSystem : public System
 {
 public:
     CollisionSystem();
     void update() override;
-    bool checkCollision(SDL_Rect a, SDL_Rect b);
+    void addEntity(Entity* e) override;
+    bool checkCollision(box a, box b);
     SDL_Renderer* renderer = nullptr;
+private:
+    std::vector<Entity*> to_check = std::vector<Entity*>();
 };
 
 

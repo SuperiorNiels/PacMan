@@ -6,6 +6,8 @@
 #define ECS_PACMAN_COMPONENTS_H
 
 #include "ECS/ECS.h"
+#include "PacMan_Constants.h"
+#include "CollisionSystem.h"
 
 enum ComponentTypes
 {
@@ -14,7 +16,8 @@ enum ComponentTypes
     PLAYER_INPUT_COMPONENT,
     AI_COMPONENT,
     RENDER_COMPONENT,
-    COLLISION_COMPONENT
+    COLLISION_COMPONENT,
+    POINTS_COMPONENT
 };
 
 class PositionComponent : public Component
@@ -53,6 +56,7 @@ public:
     RenderComponent() { type = RENDER_COMPONENT; }
     int width = 0;
     int height = 0;
+    bool visable = true;
     int animation_length = 1;
     int animation_speed = 10;
     int current_frame = 0;
@@ -65,6 +69,14 @@ class CollisionComponent : public Component
 {
 public:
     CollisionComponent() { type = COLLISION_COMPONENT; }
+    int collision_box[4] = {0,0,0,0}; // x offset, y_offset, width, height
+};
+
+class PointsComponent : public Component
+{
+public:
+    PointsComponent() { type = POINTS_COMPONENT; }
+    int points = 0;
 };
 
 
