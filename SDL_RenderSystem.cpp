@@ -57,8 +57,8 @@ SDL_RenderSystem::SDL_RenderSystem()
 void SDL_RenderSystem::update()
 {
     // Clear screen
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
-    SDL_RenderClear(renderer);
+    //SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
+    //SDL_RenderClear(renderer);
 
     for(auto& e : entities)
     {

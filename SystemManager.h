@@ -8,6 +8,7 @@
 
 #include "ECS/ECS.h"
 #include <unordered_set>
+#include <set>
 
 class SystemManager {
 public:
@@ -17,7 +18,7 @@ public:
     void unregisterEntity(Entity* e);
     ~SystemManager();
 private:
-    std::unordered_set<System*> systems = std::unordered_set<System*>();
+    std::vector<System*> systems = std::vector<System*>();
     std::unordered_set<Entity*> entities = std::unordered_set<Entity*>();
 };
 

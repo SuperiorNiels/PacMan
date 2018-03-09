@@ -22,6 +22,8 @@ public:
     EventSystem* createEventSystem() override;
     TimerSystem* createTimerSystem() override;
     ~SDL_Factory() override;
+
+    System* createCollisionSystem() override;
 private:
     SDL_RenderComponent* createRenderComponent(std::string path, std::vector<SDL_Rect*> clips = std::vector<SDL_Rect*>());
     SDL_RenderSystem* renderSystem = nullptr;

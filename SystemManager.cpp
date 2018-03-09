@@ -14,7 +14,17 @@ void SystemManager::updateSystems()
 
 void SystemManager::registerSystem(System *s)
 {
-    systems.insert(s);
+    // TODO: check if vector is best for keeping the systems (order is important, no doubles)
+    bool found = false;
+    for(auto& sys : systems)
+    {
+        if(sys == s) {
+            found = true;
+            break;
+        }
+    }
+    if(!found)
+        systems.push_back(s);
 }
 
 void SystemManager::registerEntity(Entity *e)
