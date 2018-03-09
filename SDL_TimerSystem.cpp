@@ -7,6 +7,19 @@
 void SDL_TimerSystem::update()
 {
     Uint32 new_time = SDL_GetTicks();
-    std::cout << "[Timing] Average FPS: " << 1000.f / (new_time - time) << std::endl;
+    if(fps.size() > 25)
+    {
+        double average = 0;
+        for(auto& t : fps)
+        {
+            average += t;
+        }
+        std::cout << "[Timing] Average FPS: " << average/25  << std::endl;
+        fps.clear();
+    }
+    else
+    {
+        fps.push_back(1000.f / (new_time - time));
+    }
     time = new_time;
 }

@@ -95,8 +95,16 @@ std::vector<Entity*> SDL_Factory::createWorld()
             auto* rc = createRenderComponent("../sprites.png",clips);
             e->addComponent(p);
             e->addComponent(rc);
-            if(x == 0 || x == 27 || y == 0 || y == 30)
+            if(x == 0 || x == 27)
+            {
+                rc->width = 6;
                 e->addComponent(new CollisionComponent());
+            }
+            if(y == 0 || y == 30)
+            {
+                rc->height = 6;
+                e->addComponent(new CollisionComponent());
+            }
             world.push_back(e);
         }
     }
@@ -167,11 +175,4 @@ SDL_RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::v
 SDL_Factory::~SDL_Factory()
 {
     delete renderSystem;
-}
-
-System* SDL_Factory::createCollisionSystem()
-{
-    auto* s = new CollisionSystem();
-    s->renderer = renderSystem->renderer;
-    return s;
 }

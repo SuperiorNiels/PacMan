@@ -22,9 +22,6 @@ void CollisionSystem::update()
         }
     }
 
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
-    SDL_RenderClear(renderer);
-
     if(player != nullptr)
     {
         auto* p = player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
@@ -49,8 +46,8 @@ void CollisionSystem::update()
                 {
                     //std::cout << "Player collided with entity: " << e->id << std::endl;
                     auto* m = player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-                    m->x_speed = 0;
-                    m->y_speed = 0;
+                    p->x -= m->x_speed;
+                    p->y -= m->y_speed;
                 }
             }
         }
@@ -72,10 +69,6 @@ bool CollisionSystem::checkCollision(SDL_Rect a, SDL_Rect b)
     rightB = b.x + b.w;
     topB = b.y;
     bottomB = b.y + b.h;
-
-    SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
-    SDL_RenderDrawRect(renderer, &a);
-    SDL_RenderDrawRect(renderer, &b);
 
     if( bottomA <= topB )
     {

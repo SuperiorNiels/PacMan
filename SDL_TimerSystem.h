@@ -15,6 +15,7 @@ public:
     void update() override;
 private:
     Uint32 time = 0;
+    std::vector<double> fps = std::vector<double>();
 };
 
 

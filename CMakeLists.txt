@@ -1,5 +1,5 @@
 cmake_minimum_required(VERSION 3.9)
-project(ECS)
+project(PacMan)
 
 set(CMAKE_CXX_STANDARD 11)
 set(CMAKE_MODULE_PATH ${CMAKE_MODULE_PATH} "${CMAKE_SOURCE_DIR}/cmake")
@@ -10,6 +10,6 @@ find_package(SDL2_ttf REQUIRED)
 
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIR})
 
-add_executable(ECS main.cpp ECS/Component.h ECS/Entity.h ECS/System.h AbstractFactory.h ECS/ECS.h SDL_Factory.cpp SDL_Factory.h SDL_Components.h SDL_RenderSystem.cpp SDL_RenderSystem.h SystemManager.cpp SystemManager.h Game.cpp Game.h MovementSystem.cpp MovementSystem.h PacMan_Components.h SDL_EventSystem.cpp SDL_EventSystem.h EventSystem.h AISystem.cpp AISystem.h PacMan_Constants.h CollisionSystem.cpp CollisionSystem.h TimerSystem.h SDL_TimerSystem.cpp SDL_TimerSystem.h)
+add_executable(PacMan main.cpp ECS/Component.h ECS/Entity.h ECS/System.h AbstractFactory.h ECS/ECS.h SDL_Factory.cpp SDL_Factory.h SDL_Components.h SDL_RenderSystem.cpp SDL_RenderSystem.h SystemManager.cpp SystemManager.h Game.cpp Game.h MovementSystem.cpp MovementSystem.h PacMan_Components.h SDL_EventSystem.cpp SDL_EventSystem.h EventSystem.h AISystem.cpp AISystem.h PacMan_Constants.h CollisionSystem.cpp CollisionSystem.h TimerSystem.h SDL_TimerSystem.cpp SDL_TimerSystem.h)
 
-target_link_libraries(ECS ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})
+target_link_libraries(PacMan ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})

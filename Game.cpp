@@ -18,7 +18,7 @@ void Game::init()
     manager->registerSystem(Game::events);
     manager->registerSystem(new MovementSystem());
     manager->registerSystem(new AISystem());
-    manager->registerSystem(factory->createCollisionSystem());
+    manager->registerSystem(new CollisionSystem());
     manager->registerSystem(factory->createTimerSystem());
 
     std::vector<Entity*> world = factory->createWorld();
