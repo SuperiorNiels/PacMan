@@ -5,8 +5,8 @@
 #ifndef ECS_AISYSTEM_H
 #define ECS_AISYSTEM_H
 
-#include "ECS/ECS.h"
-#include "PacMan_Components.h"
+#include "../ECS/ECS.h"
+#include "../PacMan_Components.h"
 
 class AISystem : public System {
 public:

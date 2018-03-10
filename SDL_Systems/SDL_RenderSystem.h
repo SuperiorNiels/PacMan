@@ -6,8 +6,8 @@
 #define ECS_SDL_RENDERSYSTEM_H
 
 
-#include "SDL_Components.h"
-#include "PacMan_Components.h"
+#include "../SDL_Components.h"
+#include "../PacMan_Components.h"
 
 class SDL_RenderSystem : public System
 {

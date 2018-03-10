@@ -3,7 +3,7 @@
 //
 
 #include "AISystem.h"
-#include "SDL_Components.h"
+#include "../SDL_Components.h"
 
 
 AISystem::AISystem()

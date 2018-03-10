@@ -5,7 +5,7 @@
 #ifndef ECS_EVENTSYSTEM_H
 #define ECS_EVENTSYSTEM_H
 
-#include "ECS/ECS.h"
+#include "../ECS/ECS.h"
 
 class EventSystem : public System
 {

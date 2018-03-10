@@ -8,7 +8,7 @@
 
 #include <SDL_types.h>
 #include <SDL_timer.h>
-#include "TimerSystem.h"
+#include "../Systems/TimerSystem.h"
 
 class SDL_TimerSystem : public TimerSystem {
 public:

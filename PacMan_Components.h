@@ -7,7 +7,7 @@
 
 #include "ECS/ECS.h"
 #include "PacMan_Constants.h"
-#include "CollisionSystem.h"
+#include "Systems/CollisionSystem.h"
 
 enum ComponentTypes
 {

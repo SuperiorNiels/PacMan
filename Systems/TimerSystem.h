@@ -5,7 +5,7 @@
 #ifndef ECS_TIMERSYSTEM_H
 #define ECS_TIMERSYSTEM_H
 
-#include "ECS/ECS.h"
+#include "../ECS/ECS.h"
 
 class TimerSystem : public System {};
 

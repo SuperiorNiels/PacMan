@@ -8,10 +8,10 @@
 #include <iostream>
 #include <unordered_map>
 #include "AbstractFactory.h"
-#include "SDL_RenderSystem.h"
+#include "SDL_Systems/SDL_RenderSystem.h"
 #include "SDL_Components.h"
-#include "SDL_EventSystem.h"
-#include "SDL_TimerSystem.h"
+#include "SDL_Systems/SDL_EventSystem.h"
+#include "SDL_Systems/SDL_TimerSystem.h"
 
 class SDL_Factory : public AbstractFactory {
 public:

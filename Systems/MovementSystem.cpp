@@ -3,8 +3,8 @@
 //
 
 #include "MovementSystem.h"
-#include "PacMan_Constants.h"
-#include "SDL_Components.h"
+#include "../PacMan_Constants.h"
+#include "../SDL_Components.h"
 
 MovementSystem::MovementSystem()
 {

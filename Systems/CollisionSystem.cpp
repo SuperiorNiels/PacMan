@@ -61,6 +61,7 @@ void CollisionSystem::update()
                         //std::cout << "Player collided with entity: " << e->id << std::endl;
                         auto *m = player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
                         auto *pc = e->getComponentByType<PointsComponent>(POINTS_COMPONENT);
+                        auto *ac = player->getComponentByType<AIComponent>(AI_COMPONENT);
                         if(m != nullptr && pc == nullptr)
                         {
                             p->x -= m->x_speed;
@@ -73,6 +74,10 @@ void CollisionSystem::update()
                             // add points
                             auto* render = e->getComponentByType<RenderComponent>(RENDER_COMPONENT);
                             render->visable = false;
+                        }
+                        if(ac != nullptr)
+                        {
+                            ac->count = ac->length;
                         }
                     }
                 }

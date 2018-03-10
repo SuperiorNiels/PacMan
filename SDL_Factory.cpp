@@ -3,7 +3,7 @@
 //
 
 #include "SDL_Factory.h"
-#include "CollisionSystem.h"
+#include "Systems/CollisionSystem.h"
 
 #include <fstream>
 
@@ -26,7 +26,7 @@ Entity* SDL_Factory::createPacMan(int x, int y)
         rect1->h = pacman[i][3];
         clips.push_back(rect1);
     }
-    auto* rc = createRenderComponent("../sprites2.png",clips);
+    auto* rc = createRenderComponent(sprites_sheet,clips);
     rc->animation_length = 3;
     rc->animation_speed = 4;
     rc->direction_offsets[0] = 3;
@@ -64,7 +64,7 @@ Entity* SDL_Factory::createGhost(int x, int y, ghost_color color)
         rect1->h = ghost[i][3];
         clips.push_back(rect1);
     }
-    auto* rc = createRenderComponent("../sprites2.png",clips);
+    auto* rc = createRenderComponent(sprites_sheet,clips);
     rc->animation_length = 2;
     rc->animation_speed = 4;
     rc->direction_offsets[0] = 2;
@@ -86,7 +86,7 @@ Entity* SDL_Factory::createGhost(int x, int y, ghost_color color)
 
 std::vector<Entity*> SDL_Factory::createWorld()
 {
-    std::ifstream in("../maze");
+    std::ifstream in(collision_map);
     std::vector<Entity*> world;
 
     int wall_types[28][31];
@@ -132,7 +132,7 @@ std::vector<Entity*> SDL_Factory::createWorld()
                 e->addComponent(cc);
                 e->addComponent(new PointsComponent());
             }
-            auto* rc = createRenderComponent("../sprites.png",clips);
+            auto* rc = createRenderComponent(sprites_sheet,clips);
             e->addComponent(p);
             e->addComponent(rc);
             world.push_back(e);

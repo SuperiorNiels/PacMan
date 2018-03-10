@@ -3,7 +3,7 @@
 //
 
 #include "SDL_RenderSystem.h"
-#include "PacMan_Constants.h"
+#include "../PacMan_Constants.h"
 
 SDL_RenderSystem::SDL_RenderSystem()
 {

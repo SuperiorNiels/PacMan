@@ -8,9 +8,9 @@
 
 #include "ECS/Entity.h"
 #include "ECS/System.h"
-#include "EventSystem.h"
+#include "Systems/EventSystem.h"
 #include "PacMan_Constants.h"
-#include "TimerSystem.h"
+#include "Systems/TimerSystem.h"
 
 class AbstractFactory {
 public:

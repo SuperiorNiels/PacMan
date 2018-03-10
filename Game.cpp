@@ -28,9 +28,9 @@ void Game::init()
 
     manager->registerEntity(factory->createPacMan(104, 182));
     manager->registerEntity(factory->createGhost(120, 105, RED_GHOST));
-    //manager->registerEntity(factory->createGhost(0, 0, PINK_GHOST));
-    //manager->registerEntity(factory->createGhost(0, 0, BLUE_GHOST));
-    //manager->registerEntity(factory->createGhost(0, 0, ORANGE_GHOST));
+    manager->registerEntity(factory->createGhost(88, 105, PINK_GHOST));
+    manager->registerEntity(factory->createGhost(88, 115, BLUE_GHOST));
+    manager->registerEntity(factory->createGhost(120, 115, ORANGE_GHOST));
 }
 
 void Game::run()

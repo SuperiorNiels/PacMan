@@ -7,11 +7,11 @@
 
 
 #include "AbstractFactory.h"
-#include "SystemManager.h"
-#include "MovementSystem.h"
-#include "AISystem.h"
-#include "EventSystem.h"
-#include "CollisionSystem.h"
+#include "ECS/SystemManager.h"
+#include "Systems/MovementSystem.h"
+#include "Systems/AISystem.h"
+#include "Systems/EventSystem.h"
+#include "Systems/CollisionSystem.h"
 
 class Game {
 public:

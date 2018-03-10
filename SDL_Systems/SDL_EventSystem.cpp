@@ -3,8 +3,8 @@
 //
 
 #include "SDL_EventSystem.h"
-#include "PacMan_Components.h"
-#include "SDL_Components.h"
+#include "../PacMan_Components.h"
+#include "../SDL_Components.h"
 
 SDL_EventSystem::SDL_EventSystem()
 {

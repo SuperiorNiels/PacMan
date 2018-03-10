@@ -10,6 +10,6 @@ find_package(SDL2_ttf REQUIRED)
 
 include_directories(${SDL2_INCLUDE_DIRS} ${SDL2_IMAGE_INCLUDE_DIRS} ${SDL2_TTF_INCLUDE_DIR})
 
-add_executable(PacMan main.cpp ECS/Component.h ECS/Entity.h ECS/System.h AbstractFactory.h ECS/ECS.h SDL_Factory.cpp SDL_Factory.h SDL_Components.h SDL_RenderSystem.cpp SDL_RenderSystem.h SystemManager.cpp SystemManager.h Game.cpp Game.h MovementSystem.cpp MovementSystem.h PacMan_Components.h SDL_EventSystem.cpp SDL_EventSystem.h EventSystem.h AISystem.cpp AISystem.h PacMan_Constants.h CollisionSystem.cpp CollisionSystem.h TimerSystem.h SDL_TimerSystem.cpp SDL_TimerSystem.h)
+add_executable(PacMan main.cpp ECS/Component.h ECS/Entity.h ECS/System.h AbstractFactory.h ECS/ECS.h SDL_Factory.cpp SDL_Factory.h SDL_Components.h SDL_Systems/SDL_RenderSystem.cpp SDL_Systems/SDL_RenderSystem.h ECS/SystemManager.cpp ECS/SystemManager.h Game.cpp Game.h Systems/MovementSystem.cpp Systems/MovementSystem.h PacMan_Components.h SDL_Systems/SDL_EventSystem.cpp SDL_Systems/SDL_EventSystem.h Systems/EventSystem.h Systems/AISystem.cpp Systems/AISystem.h PacMan_Constants.h Systems/CollisionSystem.cpp Systems/CollisionSystem.h Systems/TimerSystem.h SDL_Systems/SDL_TimerSystem.cpp SDL_Systems/SDL_TimerSystem.h)
 
 target_link_libraries(PacMan ${SDL2_LIBRARIES} ${SDL2_IMAGE_LIBRARIES} ${SDL2_TTF_LIBRARIES})

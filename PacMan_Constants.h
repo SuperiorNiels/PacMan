@@ -9,6 +9,9 @@ static float SCALE_FACTOR = 3;
 static float WINDOW_WIDTH = 224 * SCALE_FACTOR; // 224
 static float WINDOW_HEIGHT = 248 * SCALE_FACTOR; // 248
 
+static std::string sprites_sheet = "../data/sprites.png";
+static std::string collision_map = "../data/collision.map";
+
 enum ghost_color
 {
     RED_GHOST,

@@ -6,7 +6,7 @@
 #define ECS_SYSTEMMANAGER_H
 
 
-#include "ECS/ECS.h"
+#include "ECS.h"
 #include <unordered_set>
 #include <set>
 

@@ -6,7 +6,7 @@
 #define ECS_SDL_EVENTSYSTEM_H
 
 #include "SDL2/SDL.h"
-#include "EventSystem.h"
+#include "../Systems/EventSystem.h"
 
 class SDL_EventSystem : public EventSystem {
 public:
