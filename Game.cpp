@@ -26,7 +26,7 @@ void Game::init()
     for(auto* e : world)
         manager->registerEntity(e);
 
-    manager->registerEntity(factory->createPacMan(104, 182));
+    manager->registerEntity(factory->createPacMan(105, 182));
     manager->registerEntity(factory->createGhost(120, 105, RED_GHOST));
     manager->registerEntity(factory->createGhost(88, 105, PINK_GHOST));
     manager->registerEntity(factory->createGhost(88, 115, BLUE_GHOST));
