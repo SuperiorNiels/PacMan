@@ -57,8 +57,8 @@ SDL_RenderSystem::SDL_RenderSystem()
 void SDL_RenderSystem::update()
 {
     // Clear screen
-    //SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
-    //SDL_RenderClear(renderer);
+    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
+    SDL_RenderClear(renderer);
 
     for(auto& e : entities)
     {
@@ -94,13 +94,40 @@ void SDL_RenderSystem::update()
                 position.h = clip->h;
                 rc->count++;
             }
-
+            //renderCollisionBox(e);
             SDL_RenderCopy(renderer, rc->texture, clip, &position);
             //std::cout << "[SDL_Render] Entity id: " << e->id << " rendered." << std::endl;
         }
     }
 
     SDL_RenderPresent(renderer);
+}
+
+void SDL_RenderSystem::renderCollisionBox(Entity *e)
+{
+    auto* cc = e->getComponentByType<CollisionComponent>(COLLISION_COMPONENT);
+    auto* pc = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+    if(cc != nullptr && pc != nullptr) {
+        if(e->getComponentByType<AIComponent>(AI_COMPONENT) != nullptr)
+        {
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0xFF, 0xFF);
+        }
+        else if(e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT) != nullptr)
+        {
+            SDL_SetRenderDrawColor(renderer, 0xFF, 0, 0, 0xFF);
+        }
+        else
+        {
+            SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+        }
+        SDL_Rect aa = SDL_Rect();
+        aa.x = pc->x + cc->collision_box[0];
+        aa.y = pc->y + cc->collision_box[1];
+        aa.w = cc->collision_box[2];
+        aa.h = cc->collision_box[3];
+
+        SDL_RenderDrawRect(renderer, &aa);
+    }
 }
 
 SDL_RenderSystem::~SDL_RenderSystem()

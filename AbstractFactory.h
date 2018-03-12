@@ -21,8 +21,6 @@ public:
     virtual EventSystem* createEventSystem() = 0;
     virtual TimerSystem* createTimerSystem() = 0;
     virtual ~AbstractFactory() = default;
-
-    virtual System* createCollisionSystem() = 0;
 };
 
 

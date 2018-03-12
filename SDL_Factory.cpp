@@ -206,10 +206,3 @@ SDL_Factory::~SDL_Factory()
 {
     delete renderSystem;
 }
-
-System* SDL_Factory::createCollisionSystem()
-{
-    auto* cs = new CollisionSystem();
-    cs->renderer = renderSystem->renderer;
-    return cs;
-}

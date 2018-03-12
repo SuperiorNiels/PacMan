@@ -8,7 +8,7 @@
 
 MovementSystem::MovementSystem()
 {
-    component_types = {POSITION_COMPONENT, MOVABLE_COMPONENT};
+    component_types = {MOVABLE_COMPONENT};
 }
 
 void MovementSystem::update()

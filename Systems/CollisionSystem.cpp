@@ -29,11 +29,6 @@ void CollisionSystem::addEntity(Entity *e)
 
 void CollisionSystem::update()
 {
-
-    SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
-    SDL_RenderClear(renderer);
-    SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xFF);
-
     if(!to_check.empty())
     {
         for(auto& player : to_check)
@@ -101,23 +96,6 @@ bool CollisionSystem::checkCollision(box a, box b)
     rightB = b.x + b.w;
     topB = b.y;
     bottomB = b.y + b.h;
-
-    SDL_Rect aa = SDL_Rect();
-    aa.x = a.x;
-    aa.y = a.y;
-    aa.w = a.w;
-    aa.h = a.h;
-
-    SDL_Rect bb = SDL_Rect();
-    bb.x = b.x;
-    bb.y = b.y;
-    bb.w = b.w;
-    bb.h = b.h;
-
-    SDL_SetRenderDrawColor(renderer, 0xff, 0, 0, 0xFF);
-    SDL_RenderDrawRect(renderer,&aa);
-    SDL_SetRenderDrawColor(renderer, 0xff, 0xff, 0xff, 0xFF);
-    SDL_RenderDrawRect(renderer,&bb);
 
     if( bottomA <= topB )
     {

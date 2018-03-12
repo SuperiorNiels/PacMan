@@ -17,6 +17,8 @@ public:
     SDL_Window* window = nullptr;
     void update() override;
     ~SDL_RenderSystem() override;
+private:
+    void renderCollisionBox(Entity* e);
 };
 
 

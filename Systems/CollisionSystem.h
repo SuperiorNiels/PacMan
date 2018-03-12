@@ -25,7 +25,6 @@ public:
     void update() override;
     void addEntity(Entity* e) override;
     bool checkCollision(box a, box b);
-    SDL_Renderer* renderer = nullptr;
 private:
     std::vector<Entity*> to_check = std::vector<Entity*>();
 };
