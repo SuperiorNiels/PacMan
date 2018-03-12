@@ -92,9 +92,8 @@ std::vector<Entity*> SDL_Factory::createWorld()
     int wall_types[28][31];
     for(int x=0;x<31;x++)
     {
-        for(int y = 0; y < 28; y++)
-        {
-            in >> wall_types[y][x];
+        for (auto &wall_type : wall_types) {
+            in >> wall_type[x];
         }
     }
 
@@ -125,10 +124,10 @@ std::vector<Entity*> SDL_Factory::createWorld()
             else if(wall_types[x][y] == 3)
             {
                 auto *cc = new CollisionComponent();
-                cc->collision_box[0] = 2;
-                cc->collision_box[1] = 2;
-                cc->collision_box[2] = 4;
-                cc->collision_box[3] = 4;
+                cc->collision_box[0] = 3;
+                cc->collision_box[1] = 3;
+                cc->collision_box[2] = 2;
+                cc->collision_box[3] = 2;
                 e->addComponent(cc);
                 e->addComponent(new PointsComponent());
             }

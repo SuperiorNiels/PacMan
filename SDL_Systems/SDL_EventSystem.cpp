@@ -65,7 +65,6 @@ void SDL_EventSystem::update()
         for (auto &en : entities)
         {
             auto *m = en->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-            auto *p = en->getComponentByType<PositionComponent>(POSITION_COMPONENT);
             if (m != nullptr) {
                 m->x_speed = x_speed;
                 m->y_speed = y_speed;
