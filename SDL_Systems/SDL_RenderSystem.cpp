@@ -59,8 +59,9 @@ void SDL_RenderSystem::update()
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
     SDL_RenderClear(renderer);
 
-    for(auto& e : entities) {
-        if (e->hasComponentFromType(RENDER_COMPONENT) && e->hasComponentFromType(POSITION_COMPONENT))
+    for(auto& e : entities)
+    {
+        if (e->hasComponentTypes({POSITION_COMPONENT,RENDER_COMPONENT}))
         {
             auto *rc = e->getComponentByType<SDL_RenderComponent>(RENDER_COMPONENT);
             auto *p = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
@@ -100,8 +101,8 @@ void SDL_RenderSystem::update()
                         }
                         clip = rc->clips[rc->current_frame + rc->frame_offset];
                     }
-                    position.w = clip->w*tile_width/8;
-                    position.h = clip->h*tile_width/8;
+                    position.w = (int)floor(clip->w*rc->scale);
+                    position.h = (int)floor(clip->h*rc->scale);
                     rc->count++;
                 }
                 renderCollisionBox(e);
@@ -116,19 +117,19 @@ void SDL_RenderSystem::update()
 
 void SDL_RenderSystem::renderCollisionBox(Entity *e)
 {
-    if(e->hasComponentFromType(COLLISION_COMPONENT) && e->hasComponentFromType(POSITION_COMPONENT))
+    if(e->hasComponentType(COLLISION_COMPONENT) && e->hasComponentType(POSITION_COMPONENT))
     {
         auto* cc = e->getComponentByType<CollisionComponent>(COLLISION_COMPONENT);
         auto* pc = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-        if(e->hasComponentFromType(AI_COMPONENT))
+        if(e->hasComponentType(AI_COMPONENT))
         {
             SDL_SetRenderDrawColor(renderer, 0xFF, 0, 0, 0xFF);
         }
-        else if(e->hasComponentFromType(MOVABLE_COMPONENT))
+        else if(e->hasComponentType(MOVABLE_COMPONENT))
         {
             SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0, 0xFF);
         }
-        else if(e->hasComponentFromType(POINTS_COMPONENT))
+        else if(e->hasComponentType(POINTS_COMPONENT))
         {
             SDL_SetRenderDrawColor(renderer, 0xFF, 0xAB, 0x00, 0xFF);
         }

@@ -28,6 +28,7 @@ Entity* SDL_Factory::createPacMan(int x, int y)
     rc->direction_offsets[1] = 0;
     rc->direction_offsets[2] = 6;
     rc->direction_offsets[3] = 9;
+    rc->scale = tile_width/8;
     auto *cc = new CollisionComponent();
     cc->collision_box[0] = 0;
     cc->collision_box[1] = 0;
@@ -109,6 +110,7 @@ std::vector<Entity*> SDL_Factory::createWorld(World* world)
                 cc->collision_box[2] = tile_width;
                 cc->collision_box[3] = tile_width;
                 auto* rc = createRenderComponent(sprites_sheet,clips);
+                rc->scale = tile_width/8;
                 entity->addComponent(rc);
                 entity->addComponent(pc);
                 entity->addComponent(cc);

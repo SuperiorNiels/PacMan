@@ -13,13 +13,13 @@ void CollisionSystem::addEntity(Entity *e)
 {
     // TODO: create removeEntity function
     // entity is player?
-    if(e->hasComponentFromType(PLAYER_INPUT_COMPONENT))
+    if(e->hasComponentType(PLAYER_INPUT_COMPONENT))
     {
         to_check.push_back(e);
         return;
     }
     // entity is ghost?
-    if(e->hasComponentFromType(AI_COMPONENT))
+    if(e->hasComponentType(AI_COMPONENT))
     {
         to_check.push_back(e);
         return;

@@ -14,7 +14,7 @@ void MovementSystem::update()
 {
     for(auto& e : entities)
     {
-        if(e->hasComponentFromType(POSITION_COMPONENT) && e->hasComponentFromType(MOVABLE_COMPONENT))
+        if(e->hasComponentTypes({POSITION_COMPONENT,MOVABLE_COMPONENT}))
         {
             auto* p = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
             auto* m = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
@@ -36,7 +36,7 @@ void MovementSystem::update()
             {
                 p->y = world->getHeight();
             }
-            //std::cout << "[Movement] " << "x: " << p->x << " y: " << p->y << std::endl;
+            std::cout << "[Movement] " << "x: " << (int)p->x << " y: " << (int)p->y << std::endl;
         }
     }
 }

@@ -21,7 +21,8 @@ public:
     void addComponent(Component* c);
     template <class T> T* getComponentById(componentID id);
     template <class T> T* getComponentByType(int8_t type);
-    bool hasComponentFromType(int8_t type);
+    bool hasComponentType(int8_t type);
+    bool hasComponentTypes(std::vector<int8_t> types);
     void removeComponentById(componentID id);
     void removeComponentByType(int8_t type);
     ~Entity();
@@ -71,7 +72,7 @@ T* Entity::getComponentByType(int8_t type)
     return nullptr;
 }
 
-inline bool Entity::hasComponentFromType(int8_t type)
+inline bool Entity::hasComponentType(int8_t type)
 {
     for(auto& c : components)
     {
@@ -79,6 +80,21 @@ inline bool Entity::hasComponentFromType(int8_t type)
         {
             return true;
         }
+    }
+    return false;
+}
+
+inline bool Entity::hasComponentTypes(std::vector<int8_t> types)
+{
+    for(auto it = types.begin(); it < types.end(); it++)
+    {
+        if(hasComponentType(it.operator*()))
+        {
+            types.erase(it);
+            it--;
+        }
+        if(types.empty())
+            return true;
     }
     return false;
 }
