@@ -106,7 +106,7 @@ void SDL_RenderSystem::update()
                     rc->count++;
                 }
                 renderCollisionBox(e);
-                SDL_RenderCopy(renderer, rc->texture, clip, &position);
+                //SDL_RenderCopy(renderer, rc->texture, clip, &position);
                 //std::cout << "[SDL_Render] Entity id: " << e->id << " rendered." << std::endl;
             }
         }

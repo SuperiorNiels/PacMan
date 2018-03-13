@@ -36,7 +36,7 @@ void MovementSystem::update()
             {
                 p->y = world->getHeight();
             }
-            std::cout << "[Movement] " << "x: " << (int)p->x << " y: " << (int)p->y << std::endl;
+            //std::cout << "[Movement] " << "x: " << (int)p->x << " y: " << (int)p->y << std::endl;
         }
     }
 }

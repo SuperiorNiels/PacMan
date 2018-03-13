@@ -34,80 +34,24 @@ void CollisionSystem::update()
         for(auto& player : to_check)
         {
             auto *p = player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-            auto *cc = player->getComponentByType<CollisionComponent>(COLLISION_COMPONENT);
-            box player_box;
-            player_box.x = (int) floor(p->x*8)+cc->collision_box[0];
-            player_box.y = (int) floor(p->y*8)+cc->collision_box[1];
-            player_box.w = cc->collision_box[2];
-            player_box.h = cc->collision_box[3];
+            auto* mc = player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
             for (auto &e : entities)
             {
                 if (e->id != player->id)
                 {
                     auto *p2 = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-                    auto *cc2 = e->getComponentByType<CollisionComponent>(COLLISION_COMPONENT);
-                    box entity_box;
-                    entity_box.x = (int) floor(p2->x*8)+cc2->collision_box[0];
-                    entity_box.y = (int) floor(p2->y*8)+cc2->collision_box[1];
-                    entity_box.w = cc2->collision_box[2];
-                    entity_box.h = cc2->collision_box[3];
-                    if (checkCollision(player_box, entity_box))
+                    if((int)floor(p->x) == (int)floor(p2->x) && (int)floor(p->y) == (int)floor(p2->y) ||
+                            (int)ceil(p->x) == (int)ceil(p2->x) && (int)ceil(p->y) == (int)ceil(p2->y))
                     {
-                        //std::cout << "Player collided with entity: " << e->id << std::endl;
-                        auto *m = player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-                        auto *pc = e->getComponentByType<PointsComponent>(POINTS_COMPONENT);
-                        auto *ac = player->getComponentByType<AIComponent>(AI_COMPONENT);
-                        if(m != nullptr && pc == nullptr)
-                        {
-                            p->x -= m->x_speed;
-                            p->y -= m->y_speed;
-                            m->x_speed = 0;
-                            m->y_speed = 0;
-                        }
-                        if(pc != nullptr)
-                        {
-                            // add points
-                            auto* render = e->getComponentByType<RenderComponent>(RENDER_COMPONENT);
-                            render->visible = false;
-                        }
-                        if(ac != nullptr)
-                        {
-                            ac->count = ac->length;
-                        }
+                        p->x -= mc->x_speed;
+                        p->y -= mc->y_speed;
+                        mc->x_speed = 0;
+                        mc->y_speed = 0;
+                        std::cout << "[Collision] " << "x1: " << (int)p->x << " y1: " << (int)p->y
+                                  << " x1: " << (int)p2->x << " y1: " << (int)p2->y << std::endl;
                     }
                 }
             }
         }
     }
-}
-
-bool CollisionSystem::checkCollision(box a, box b)
-{
-    int leftA, leftB;
-    int rightA, rightB;
-    int topA, topB;
-    int bottomA, bottomB;
-
-    leftA = a.x;
-    rightA = a.x + a.w;
-    topA = a.y;
-    bottomA = a.y + a.h;
-    leftB = b.x;
-    rightB = b.x + b.w;
-    topB = b.y;
-    bottomB = b.y + b.h;
-
-    if( bottomA <= topB )
-    {
-        return false;
-    }
-    if( topA >= bottomB )
-    {
-        return false;
-    }
-    if( rightA <= leftB )
-    {
-        return false;
-    }
-    return leftA < rightB;
 }

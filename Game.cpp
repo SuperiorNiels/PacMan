@@ -20,7 +20,7 @@ void Game::init()
     manager->registerSystem(Game::events);
     //manager->registerSystem(new AISystem());
     manager->registerSystem(new MovementSystem(world));
-    //manager->registerSystem(new CollisionSystem());
+    manager->registerSystem(new CollisionSystem());
     manager->registerSystem(Game::render);
 
     std::vector<Entity*> map = factory->createWorld(world);
