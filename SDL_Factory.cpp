@@ -131,6 +131,16 @@ std::vector<Entity*> SDL_Factory::createWorld()
                 e->addComponent(cc);
                 e->addComponent(new PointsComponent());
             }
+            else if(wall_types[x][y] == 4)
+            {
+                auto *cc = new CollisionComponent();
+                cc->collision_box[0] = 1;
+                cc->collision_box[1] = 1;
+                cc->collision_box[2] = 6;
+                cc->collision_box[3] = 6;
+                e->addComponent(cc);
+                e->addComponent(new PointsComponent());
+            }
             auto* rc = createRenderComponent(sprites_sheet,clips);
             e->addComponent(p);
             e->addComponent(rc);
