@@ -13,6 +13,7 @@
 #include "Systems/EventSystem.h"
 #include "Systems/CollisionSystem.h"
 #include "World.h"
+#include "Systems/RenderSystem.h"
 
 class Game {
 public:
@@ -26,6 +27,7 @@ private:
     SystemManager* manager = nullptr;
     EventSystem* events = nullptr;
     TimerSystem* timer = nullptr;
+    RenderSystem* render = nullptr;
     World* world = nullptr;
 };
 

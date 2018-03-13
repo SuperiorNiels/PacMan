@@ -95,12 +95,20 @@ std::vector<Entity*> SDL_Factory::createWorld(World* world)
                 auto* pc = new PositionComponent();
                 pc->x = x;
                 pc->y = y;
+                std::vector<SDL_Rect*> clips;
+                SDL_Rect* rect = new SDL_Rect();
+                // TODO : do not hardcode tile width on sprites sheet
+                rect->x = x * 8;
+                rect->y = y * 8;
+                rect->w = 8;
+                rect->h = 8;
+                clips.push_back(rect);
                 auto *cc = new CollisionComponent();
                 cc->collision_box[0] = 0;
                 cc->collision_box[1] = 0;
                 cc->collision_box[2] = tile_width;
                 cc->collision_box[3] = tile_width;
-                auto* rc = createRenderComponent(sprites_sheet);
+                auto* rc = createRenderComponent(sprites_sheet,clips);
                 entity->addComponent(rc);
                 entity->addComponent(pc);
                 entity->addComponent(cc);
@@ -112,7 +120,7 @@ std::vector<Entity*> SDL_Factory::createWorld(World* world)
     return entities;
 }
 
-System* SDL_Factory::createRenderSystem(World* world, int screen_width, int screen_height)
+RenderSystem* SDL_Factory::createRenderSystem(World* world, int screen_width, int screen_height)
 {
     // Check if render system already exists
     if(renderSystem == nullptr)
@@ -122,9 +130,9 @@ System* SDL_Factory::createRenderSystem(World* world, int screen_width, int scre
     return renderSystem;
 }
 
-EventSystem* SDL_Factory::createEventSystem()
+EventSystem* SDL_Factory::createEventSystem(double speed)
 {
-    return new SDL_EventSystem();
+    return new SDL_EventSystem(speed);
 }
 
 TimerSystem* SDL_Factory::createTimerSystem(int fps)

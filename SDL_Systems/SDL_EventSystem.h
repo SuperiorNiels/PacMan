@@ -10,7 +10,8 @@
 
 class SDL_EventSystem : public EventSystem {
 public:
-    SDL_EventSystem();
+    SDL_EventSystem() = delete;
+    explicit SDL_EventSystem(double speed);
     void update() override;
 };
 

@@ -9,20 +9,18 @@
 #include "../SDL_Components.h"
 #include "../PacMan_Components.h"
 #include "../World.h"
+#include "../Systems/RenderSystem.h"
 
-class SDL_RenderSystem : public System
+class SDL_RenderSystem : public RenderSystem
 {
 public:
-    SDL_RenderSystem() = delete;
-    explicit SDL_RenderSystem(World* world, int screen_width, int screen_height);
+    SDL_RenderSystem(World* world, int screen_width, int screen_height);
     SDL_Renderer* renderer = nullptr;
     SDL_Window* window = nullptr;
     void update() override;
-    int getTile_width() const;
     ~SDL_RenderSystem() override;
 private:
     void renderCollisionBox(Entity* e);
-    int tile_width = 0; // square : width = height
 };
 
 

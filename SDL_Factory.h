@@ -17,8 +17,8 @@ class SDL_Factory : public AbstractFactory {
 public:
     Entity* createPacMan(int x,int y) override;
     Entity* createGhost(int x,int y, ghost_color color) override;
-    System* createRenderSystem(World* world, int screen_width, int screen_height) override;
-    EventSystem* createEventSystem() override;
+    RenderSystem* createRenderSystem(World* world, int screen_width, int screen_height) override;
+    EventSystem* createEventSystem(double speed) override;
     TimerSystem* createTimerSystem(int fps) override;
     std::vector<Entity *> createWorld(World* world) override;
     ~SDL_Factory() override;

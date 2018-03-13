@@ -24,16 +24,16 @@ class PositionComponent : public Component
 {
 public:
     PositionComponent() { type = POSITION_COMPONENT; };
-    float x = 0;
-    float y = 0;
+    double x = 0;
+    double y = 0;
 };
 
 class MovableComponent : public Component
 {
 public:
     MovableComponent() { type = MOVABLE_COMPONENT; };
-    float x_speed = 0;
-    float y_speed = 0;
+    double x_speed = 0;
+    double y_speed = 0;
 };
 
 class PlayerInputComponent : public Component
@@ -63,6 +63,7 @@ public:
     int count = 0;
     int frame_offset = 0;
     int direction_offsets[4] = {0,0,0,0}; // left,right,up,down
+    double scale = 1;
 };
 
 class CollisionComponent : public Component

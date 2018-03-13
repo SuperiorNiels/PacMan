@@ -36,8 +36,8 @@ void CollisionSystem::update()
             auto *p = player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
             auto *cc = player->getComponentByType<CollisionComponent>(COLLISION_COMPONENT);
             box player_box;
-            player_box.x = p->x+cc->collision_box[0];
-            player_box.y = p->y+cc->collision_box[1];
+            player_box.x = (int) floor(p->x*8)+cc->collision_box[0];
+            player_box.y = (int) floor(p->y*8)+cc->collision_box[1];
             player_box.w = cc->collision_box[2];
             player_box.h = cc->collision_box[3];
             for (auto &e : entities)
@@ -47,8 +47,8 @@ void CollisionSystem::update()
                     auto *p2 = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
                     auto *cc2 = e->getComponentByType<CollisionComponent>(COLLISION_COMPONENT);
                     box entity_box;
-                    entity_box.x = p2->x+cc2->collision_box[0];
-                    entity_box.y = p2->y+cc2->collision_box[1];
+                    entity_box.x = (int) floor(p2->x*8)+cc2->collision_box[0];
+                    entity_box.y = (int) floor(p2->y*8)+cc2->collision_box[1];
                     entity_box.w = cc2->collision_box[2];
                     entity_box.h = cc2->collision_box[3];
                     if (checkCollision(player_box, entity_box))

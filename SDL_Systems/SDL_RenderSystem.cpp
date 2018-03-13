@@ -4,16 +4,9 @@
 
 #include "SDL_RenderSystem.h"
 
-SDL_RenderSystem::SDL_RenderSystem(World* world, int screen_width, int screen_height)
+SDL_RenderSystem::SDL_RenderSystem(World* world, int screen_width, int screen_height) : RenderSystem(world,screen_width,screen_height)
 {
     component_types = {RENDER_COMPONENT};
-
-    // Calculate tile_width
-    int max_screen = std::max(screen_width,screen_height);
-    int max_world = std::max(world->getHeight(),world->getWidth());
-
-    SDL_RenderSystem::tile_width = (int)floor(max_screen/max_world);
-    std::cout << "Tile width: " << tile_width << std::endl;
 
     // Initialze SDL
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -75,8 +68,8 @@ void SDL_RenderSystem::update()
             if (rc->visible)
             {
                 // Create render position and render
-                SDL_Rect position = {(int) floor(p->x * tile_width), (int) floor(p->y * tile_width), rc->width,
-                                     rc->height};
+                SDL_Rect position = {(int) floor(p->x * tile_width), (int) floor(p->y * tile_width), rc->width*tile_width/8,
+                                     rc->height*tile_width/8};
 
                 SDL_Rect *clip = nullptr;
                 if (!rc->clips.empty())
@@ -107,12 +100,12 @@ void SDL_RenderSystem::update()
                         }
                         clip = rc->clips[rc->current_frame + rc->frame_offset];
                     }
-                    position.w = clip->w;
-                    position.h = clip->h;
+                    position.w = clip->w*tile_width/8;
+                    position.h = clip->h*tile_width/8;
                     rc->count++;
                 }
                 renderCollisionBox(e);
-                //SDL_RenderCopy(renderer, rc->texture, clip, &position);
+                SDL_RenderCopy(renderer, rc->texture, clip, &position);
                 //std::cout << "[SDL_Render] Entity id: " << e->id << " rendered." << std::endl;
             }
         }
@@ -149,12 +142,8 @@ void SDL_RenderSystem::renderCollisionBox(Entity *e)
         aa.w = cc->collision_box[2];
         aa.h = cc->collision_box[3];
 
-        SDL_RenderFillRect(renderer, &aa);
+        SDL_RenderDrawRect(renderer, &aa);
     }
-}
-
-int SDL_RenderSystem::getTile_width() const {
-    return tile_width;
 }
 
 SDL_RenderSystem::~SDL_RenderSystem()

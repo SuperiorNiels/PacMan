@@ -15,6 +15,7 @@ public:
     };
 protected:
     bool running = true;
+    double speed = 0;
 };
 
 #endif //ECS_EVENTSYSTEM_H
