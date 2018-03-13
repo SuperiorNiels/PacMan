@@ -3,42 +3,40 @@
 //
 
 #include "MovementSystem.h"
-#include "../PacMan_Constants.h"
-#include "../SDL_Components.h"
 
-MovementSystem::MovementSystem()
+MovementSystem::MovementSystem(World* world)
 {
     component_types = {MOVABLE_COMPONENT};
+    MovementSystem::world = world;
 }
 
 void MovementSystem::update()
 {
     for(auto& e : entities)
     {
-        auto* p = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-        auto* m = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-        auto* rc = e->getComponentByType<RenderComponent>(RENDER_COMPONENT);
-        if(p != nullptr && m != nullptr)
+        if(e->hasComponentFromType(POSITION_COMPONENT) && e->hasComponentFromType(MOVABLE_COMPONENT))
         {
+            auto* p = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+            auto* m = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
             p->x += m->x_speed;
             p->y += m->y_speed;
-            if(p->x > WINDOW_WIDTH/SCALE_FACTOR)
+            if(p->x > world->getWidth())
             {
                 p->x = 0;
             }
-            if(p->x+rc->width < 0)
+            if(p->x < 0)
             {
-                p->x = (int)floor(WINDOW_WIDTH/SCALE_FACTOR);
+                p->x = world->getWidth();
             }
-            if(p->y > WINDOW_HEIGHT/SCALE_FACTOR)
+            if(p->y > world->getHeight())
             {
                 p->y = 0;
             }
-            if(p->y+rc->width < 0)
+            if(p->y < 0)
             {
-                p->y = (int)floor(WINDOW_HEIGHT/SCALE_FACTOR);
+                p->y = world->getHeight();
             }
-            //std::cout << "[Movement] \t Moved entity with id: " << e->id << std::endl;
+            //std::cout << "[Movement] " << "x: " << p->x << " y: " << p->y << std::endl;
         }
     }
 }

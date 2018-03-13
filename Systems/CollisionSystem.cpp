@@ -68,7 +68,7 @@ void CollisionSystem::update()
                         {
                             // add points
                             auto* render = e->getComponentByType<RenderComponent>(RENDER_COMPONENT);
-                            render->visable = false;
+                            render->visible = false;
                         }
                         if(ac != nullptr)
                         {

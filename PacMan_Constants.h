@@ -5,10 +5,6 @@
 #ifndef ECS_PACMAN_CONSTANTS_H
 #define ECS_PACMAN_CONSTANTS_H
 
-static float SCALE_FACTOR = 4;
-static float WINDOW_WIDTH = 224 * SCALE_FACTOR; // 224
-static float WINDOW_HEIGHT = 248 * SCALE_FACTOR; // 248
-
 static std::string sprites_sheet = "../data/sprites.png";
 static std::string collision_map = "../data/collision.map";
 

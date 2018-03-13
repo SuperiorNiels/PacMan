@@ -5,9 +5,16 @@
 #include "SDL_RenderSystem.h"
 #include "../PacMan_Constants.h"
 
-SDL_RenderSystem::SDL_RenderSystem()
+SDL_RenderSystem::SDL_RenderSystem(World* world, int screen_width, int screen_height)
 {
     component_types = {RENDER_COMPONENT};
+
+    // Calculate tile_width
+    int max_screen = std::max(screen_width,screen_height);
+    int max_world = std::max(world->getHeight(),world->getWidth());
+
+    SDL_RenderSystem::tile_width = (int)floor(max_screen/max_world);
+    std::cout << "Tile width: " << tile_width << std::endl;
 
     // Initialze SDL
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
@@ -18,7 +25,7 @@ SDL_RenderSystem::SDL_RenderSystem()
     {
         // Create the window
         window = SDL_CreateWindow("PacMan", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED,
-                                  (int)floor(WINDOW_WIDTH), (int)floor(WINDOW_HEIGHT), SDL_WINDOW_SHOWN);
+                                  screen_width, screen_height, SDL_WINDOW_SHOWN);
         if(window == nullptr)
         {
             std::cout << "Window could not be created! Error: " << SDL_GetError() << std::endl;
@@ -33,7 +40,7 @@ SDL_RenderSystem::SDL_RenderSystem()
             }
             else
             {
-                if(SDL_RenderSetScale(renderer,SCALE_FACTOR,SCALE_FACTOR) < 0)
+                if(SDL_RenderSetScale(renderer,1,1) < 0)
                 {
                     std::cout << "Error setting renderer scale. Error: " << SDL_GetError() << std::endl;
                 }
@@ -65,26 +72,35 @@ void SDL_RenderSystem::update()
         auto* rc = e->getComponentByType<SDL_RenderComponent>(RENDER_COMPONENT);
         auto* p = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
         auto* m = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-        if(rc->visable)
+        if(rc->visible)
         {
             // Create render position and render
-            SDL_Rect position = {p->x, p->y, rc->width, rc->height};
+            SDL_Rect position = {(int)floor(p->x*tile_width), (int)floor(p->y*tile_width), rc->width, rc->height};
 
             SDL_Rect *clip = nullptr;
-            if (!rc->clips.empty()) {
-                if (m != nullptr) {
-                    if (m->x_speed != 0 || m->y_speed != 0) {
+            if (!rc->clips.empty())
+            {
+                if (m != nullptr)
+                {
+                    if (m->x_speed != 0 || m->y_speed != 0)
+                    {
                         // Entity is moving, animate
-                        if (rc->count > rc->animation_speed) {
+                        if (rc->count > rc->animation_speed)
+                        {
                             rc->current_frame = (rc->current_frame + 1) % rc->animation_length;
                             rc->count = 0;
                         }
                         clip = rc->clips[rc->current_frame + rc->frame_offset];
-                    } else {
+                    }
+                    else
+                    {
                         clip = rc->clips[0]; // still image should be at this position
                     }
-                } else {
-                    if (rc->count > rc->animation_speed) {
+                }
+                else
+                {
+                    if (rc->count > rc->animation_speed)
+                    {
                         rc->current_frame = (rc->current_frame + 1) % rc->animation_length;
                         rc->count = 0;
                     }
@@ -94,8 +110,8 @@ void SDL_RenderSystem::update()
                 position.h = clip->h;
                 rc->count++;
             }
-            renderCollisionBox(e);
-            //SDL_RenderCopy(renderer, rc->texture, clip, &position);
+            //renderCollisionBox(e);
+            SDL_RenderCopy(renderer, rc->texture, clip, &position);
             //std::cout << "[SDL_Render] Entity id: " << e->id << " rendered." << std::endl;
         }
     }
@@ -125,8 +141,8 @@ void SDL_RenderSystem::renderCollisionBox(Entity *e)
             SDL_SetRenderDrawColor(renderer, 0, 0, 0xFF, 0xFF);
         }
         SDL_Rect aa = SDL_Rect();
-        aa.x = pc->x + cc->collision_box[0];
-        aa.y = pc->y + cc->collision_box[1];
+        aa.x = (int)pc->x + cc->collision_box[0];
+        aa.y = (int)pc->y + cc->collision_box[1];
         aa.w = cc->collision_box[2];
         aa.h = cc->collision_box[3];
 

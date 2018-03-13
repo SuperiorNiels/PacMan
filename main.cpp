@@ -10,3 +10,5 @@ int main()
     delete game;
     return 0;
 }
+
+// TODO: add check if entity has multiple components function!!

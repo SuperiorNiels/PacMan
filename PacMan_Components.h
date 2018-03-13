@@ -24,16 +24,16 @@ class PositionComponent : public Component
 {
 public:
     PositionComponent() { type = POSITION_COMPONENT; };
-    int x = 0;
-    int y = 0;
+    float x = 0;
+    float y = 0;
 };
 
 class MovableComponent : public Component
 {
 public:
     MovableComponent() { type = MOVABLE_COMPONENT; };
-    int x_speed = 0;
-    int y_speed = 0;
+    float x_speed = 0;
+    float y_speed = 0;
 };
 
 class PlayerInputComponent : public Component
@@ -56,7 +56,7 @@ public:
     RenderComponent() { type = RENDER_COMPONENT; }
     int width = 0;
     int height = 0;
-    bool visable = true;
+    bool visible = true;
     int animation_length = 1;
     int animation_speed = 10;
     int current_frame = 0;

@@ -17,10 +17,10 @@ class SDL_Factory : public AbstractFactory {
 public:
     Entity* createPacMan(int x,int y) override;
     Entity* createGhost(int x,int y, ghost_color color) override;
-    std::vector<Entity*> createWorld() override;
-    System* createRenderSystem() override;
+    System* createRenderSystem(World* world, int screen_width, int screen_height) override;
     EventSystem* createEventSystem() override;
     TimerSystem* createTimerSystem(int fps) override;
+    std::vector<Entity *> createWorld(World* world) override;
     ~SDL_Factory() override;
 private:
     SDL_RenderComponent* createRenderComponent(std::string path, std::vector<SDL_Rect*> clips = std::vector<SDL_Rect*>());

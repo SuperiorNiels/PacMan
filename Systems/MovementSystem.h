@@ -7,11 +7,15 @@
 
 
 #include "../PacMan_Components.h"
+#include "../World.h"
 
 class MovementSystem : public System {
 public:
-    MovementSystem();
+    MovementSystem() = delete;
+    explicit MovementSystem(World* world);
     void update() override;
+private:
+    World* world = nullptr;
 };
 
 
