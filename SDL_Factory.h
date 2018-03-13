@@ -20,7 +20,7 @@ public:
     std::vector<Entity*> createWorld() override;
     System* createRenderSystem() override;
     EventSystem* createEventSystem() override;
-    TimerSystem* createTimerSystem() override;
+    TimerSystem* createTimerSystem(int fps) override;
     ~SDL_Factory() override;
 private:
     SDL_RenderComponent* createRenderComponent(std::string path, std::vector<SDL_Rect*> clips = std::vector<SDL_Rect*>());

@@ -4,22 +4,38 @@
 
 #include "SDL_TimerSystem.h"
 
-void SDL_TimerSystem::update()
+SDL_TimerSystem::SDL_TimerSystem()
+{
+    SCREEN_FPS = 60;
+    SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
+    fps_startTime = SDL_GetTicks();
+}
+
+SDL_TimerSystem::SDL_TimerSystem(int fps)
+{
+    SCREEN_FPS = fps;
+    SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
+    fps_startTime = SDL_GetTicks();
+}
+
+void SDL_TimerSystem::start()
+{
+    time = SDL_GetTicks();
+}
+
+void SDL_TimerSystem::cap()
 {
     Uint32 new_time = SDL_GetTicks();
-    if(fps.size() > 120)
+    float avgFPS = framecount / (  (new_time-fps_startTime) / 1000.f );
+    if( avgFPS > 2000000 )
     {
-        double average = 0;
-        for(auto& t : fps)
-        {
-            average += t;
-        }
-        std::cout << "[Timing] Average FPS: " << average/120  << std::endl;
-        fps.clear();
+        avgFPS = 0;
     }
-    else
+    //std::cout << "[Timing] avg FPS: " << avgFPS << std::endl;
+    if( (new_time - time) < SCREEN_TICKS_PER_FRAME )
     {
-        fps.push_back(1000.f / (new_time - time));
+        //Wait remaining time
+        SDL_Delay( SCREEN_TICKS_PER_FRAME - (new_time - time) );
     }
-    time = new_time;
+    framecount++;
 }

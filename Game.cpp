@@ -14,13 +14,13 @@ void Game::init()
     // Create systemmanager and add rendersystem
     Game::manager = new SystemManager();
     Game::events = factory->createEventSystem();
+    Game::timer = factory->createTimerSystem(1);
     System* renderSystem = factory->createRenderSystem();
     manager->registerSystem(Game::events);
     manager->registerSystem(new AISystem());
     manager->registerSystem(new MovementSystem());
     manager->registerSystem(new CollisionSystem());
     manager->registerSystem(renderSystem);
-    manager->registerSystem(factory->createTimerSystem());
 
     std::vector<Entity*> world = factory->createWorld();
     for(auto* e : world)
@@ -36,7 +36,11 @@ void Game::init()
 void Game::run()
 {
     while(events->getRunning())
+    {
+        timer->start();
         manager->updateSystems();
+        timer->cap();
+    }
 }
 
 Game::~Game()

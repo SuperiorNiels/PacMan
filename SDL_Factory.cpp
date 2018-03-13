@@ -155,9 +155,9 @@ EventSystem* SDL_Factory::createEventSystem()
     return new SDL_EventSystem();
 }
 
-TimerSystem* SDL_Factory::createTimerSystem()
+TimerSystem* SDL_Factory::createTimerSystem(int fps)
 {
-    return new SDL_TimerSystem();
+    return new SDL_TimerSystem(fps);
 }
 
 SDL_RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::vector<SDL_Rect*> clips)

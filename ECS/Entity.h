@@ -21,6 +21,7 @@ public:
     void addComponent(Component* c);
     template <class T> T* getComponentById(componentID id);
     template <class T> T* getComponentByType(int8_t type);
+    bool hasComponentFromType(int8_t type);
     void removeComponentById(componentID id);
     void removeComponentByType(int8_t type);
     ~Entity();
@@ -68,6 +69,18 @@ T* Entity::getComponentByType(int8_t type)
         }
     }
     return nullptr;
+}
+
+inline bool Entity::hasComponentFromType(int8_t type)
+{
+    for(auto& c : components)
+    {
+        if(c->type == type)
+        {
+            return true;
+        }
+    }
+    return false;
 }
 
 inline void Entity::removeComponentById(componentID id)

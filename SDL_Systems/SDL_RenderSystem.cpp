@@ -25,8 +25,8 @@ SDL_RenderSystem::SDL_RenderSystem()
         }
         else
         {
-            // Initialize renderer
-            renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+            // Initialize renderer vsync: | SDL_RENDERER_PRESENTVSYNC
+            renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
             if(renderer == nullptr)
             {
                 std::cout << "Failed to create renderer. Error: " << SDL_GetError() << std::endl;
@@ -108,11 +108,11 @@ void SDL_RenderSystem::renderCollisionBox(Entity *e)
     auto* cc = e->getComponentByType<CollisionComponent>(COLLISION_COMPONENT);
     auto* pc = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
     if(cc != nullptr && pc != nullptr) {
-        if(e->getComponentByType<AIComponent>(AI_COMPONENT) != nullptr)
+        if(e->hasComponentFromType(AI_COMPONENT))
         {
             SDL_SetRenderDrawColor(renderer, 0, 0, 0xFF, 0xFF);
         }
-        else if(e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT) != nullptr)
+        else if(e->hasComponentFromType(MOVABLE_COMPONENT))
         {
             SDL_SetRenderDrawColor(renderer, 0xFF, 0, 0, 0xFF);
         }

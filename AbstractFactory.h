@@ -19,7 +19,7 @@ public:
     virtual std::vector<Entity*> createWorld() =0;
     virtual System* createRenderSystem() = 0;
     virtual EventSystem* createEventSystem() = 0;
-    virtual TimerSystem* createTimerSystem() = 0;
+    virtual TimerSystem* createTimerSystem(int fps) = 0;
     virtual ~AbstractFactory() = default;
 };
 

@@ -12,10 +12,14 @@
 
 class SDL_TimerSystem : public TimerSystem {
 public:
-    void update() override;
+    SDL_TimerSystem();
+    explicit SDL_TimerSystem(int fps);
+    void start() override;
+    void cap() override;
 private:
     Uint32 time = 0;
-    std::vector<double> fps = std::vector<double>();
+    int framecount = 0;
+    Uint32 fps_startTime = 0;
 };
 
 
