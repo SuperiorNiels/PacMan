@@ -17,9 +17,9 @@ void Game::init()
     Game::timer = factory->createTimerSystem(60);
     System* renderSystem = factory->createRenderSystem();
     manager->registerSystem(Game::events);
-    manager->registerSystem(new AISystem());
+    //manager->registerSystem(new AISystem());
     manager->registerSystem(new MovementSystem());
-    manager->registerSystem(new CollisionSystem());
+    //manager->registerSystem(new CollisionSystem());
     manager->registerSystem(renderSystem);
 
     std::vector<Entity*> world = factory->createWorld();
@@ -27,10 +27,10 @@ void Game::init()
         manager->registerEntity(e);
 
     manager->registerEntity(factory->createPacMan(106, 182));
-    manager->registerEntity(factory->createGhost(120, 105, RED_GHOST));
-    manager->registerEntity(factory->createGhost(88, 105, PINK_GHOST));
-    manager->registerEntity(factory->createGhost(88, 115, BLUE_GHOST));
-    manager->registerEntity(factory->createGhost(120, 115, ORANGE_GHOST));
+    //manager->registerEntity(factory->createGhost(120, 105, RED_GHOST));
+    //manager->registerEntity(factory->createGhost(88, 105, PINK_GHOST));
+    //manager->registerEntity(factory->createGhost(88, 115, BLUE_GHOST));
+    //manager->registerEntity(factory->createGhost(120, 115, ORANGE_GHOST));
 }
 
 void Game::run()
