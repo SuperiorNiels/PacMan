@@ -94,8 +94,8 @@ void SDL_RenderSystem::update()
                 position.h = clip->h;
                 rc->count++;
             }
-            renderCollisionBox(e);
-            //SDL_RenderCopy(renderer, rc->texture, clip, &position);
+            //renderCollisionBox(e);
+            SDL_RenderCopy(renderer, rc->texture, clip, &position);
             //std::cout << "[SDL_Render] Entity id: " << e->id << " rendered." << std::endl;
         }
     }
@@ -110,15 +110,19 @@ void SDL_RenderSystem::renderCollisionBox(Entity *e)
     if(cc != nullptr && pc != nullptr) {
         if(e->hasComponentFromType(AI_COMPONENT))
         {
-            SDL_SetRenderDrawColor(renderer, 0, 0, 0xFF, 0xFF);
+            SDL_SetRenderDrawColor(renderer, 0xFF, 0, 0, 0xFF);
         }
         else if(e->hasComponentFromType(MOVABLE_COMPONENT))
         {
-            SDL_SetRenderDrawColor(renderer, 0xFF, 0, 0, 0xFF);
+            SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0, 0xFF);
+        }
+        else if(e->hasComponentFromType(POINTS_COMPONENT))
+        {
+            SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0x50, 0xFF);
         }
         else
         {
-            SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0xFF, 0xFF);
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0xFF, 0xFF);
         }
         SDL_Rect aa = SDL_Rect();
         aa.x = pc->x + cc->collision_box[0];
@@ -126,7 +130,7 @@ void SDL_RenderSystem::renderCollisionBox(Entity *e)
         aa.w = cc->collision_box[2];
         aa.h = cc->collision_box[3];
 
-        SDL_RenderDrawRect(renderer, &aa);
+        SDL_RenderFillRect(renderer, &aa);
     }
 }
 

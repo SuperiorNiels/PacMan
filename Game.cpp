@@ -14,7 +14,7 @@ void Game::init()
     // Create systemmanager and add rendersystem
     Game::manager = new SystemManager();
     Game::events = factory->createEventSystem();
-    Game::timer = factory->createTimerSystem(1);
+    Game::timer = factory->createTimerSystem(60);
     System* renderSystem = factory->createRenderSystem();
     manager->registerSystem(Game::events);
     manager->registerSystem(new AISystem());
