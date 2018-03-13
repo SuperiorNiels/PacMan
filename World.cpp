@@ -15,7 +15,8 @@ World::World(std::string world_file)
     for(int x=0;x<height;x++)
     {
         world[x] = new int[width];
-        for(int y=0;y<width;y++) {
+        for(int y=0;y<width;y++)
+        {
             in >> world[x][y];
         }
     }

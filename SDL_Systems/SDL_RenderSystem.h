@@ -18,6 +18,7 @@ public:
     SDL_Renderer* renderer = nullptr;
     SDL_Window* window = nullptr;
     void update() override;
+    int getTile_width() const;
     ~SDL_RenderSystem() override;
 private:
     void renderCollisionBox(Entity* e);

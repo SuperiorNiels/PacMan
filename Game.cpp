@@ -16,16 +16,18 @@ void Game::init()
     Game::manager = new SystemManager();
     Game::events = factory->createEventSystem();
     Game::timer = factory->createTimerSystem(60);
-    System* renderSystem = factory->createRenderSystem(world,1200,400);
+    System* renderSystem = factory->createRenderSystem(world,224*4,248*4);
     manager->registerSystem(Game::events);
     //manager->registerSystem(new AISystem());
     manager->registerSystem(new MovementSystem(world));
-    //manager->registerSystem(new CollisionSystem());
+    manager->registerSystem(new CollisionSystem());
     manager->registerSystem(renderSystem);
 
-    factory->createWorld(world);
+    std::vector<Entity*> map = factory->createWorld(world);
+    for(auto& e : map)
+        manager->registerEntity(e);
 
-    manager->registerEntity(factory->createPacMan(0, 0));
+    manager->registerEntity(factory->createPacMan(1, 1));
     //manager->registerEntity(factory->createGhost(120, 105, RED_GHOST));
     //manager->registerEntity(factory->createGhost(88, 105, PINK_GHOST));
     //manager->registerEntity(factory->createGhost(88, 115, BLUE_GHOST));
