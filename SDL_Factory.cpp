@@ -80,7 +80,7 @@ Entity* SDL_Factory::createGhost(int x, int y, ghost_color color)
     return e;
 }
 
-std::vector<Entity*> SDL_Factory::createWorld(World* world)
+std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
 {
     std::vector<Entity*> entities = std::vector<Entity*>();
     int **map = world->getWorld();
@@ -90,7 +90,7 @@ std::vector<Entity*> SDL_Factory::createWorld(World* world)
         for(int y=0;y<world->getHeight();y++)
         {
             //std::cout << map[y][x] << " ";
-            if(map[y][x] == 1)
+            if(map[y][x] == 1 || map[y][x] == 3 || map[y][x] == 4)
             {
                 auto *entity = new Entity();
                 auto* pc = new PositionComponent();
@@ -114,35 +114,12 @@ std::vector<Entity*> SDL_Factory::createWorld(World* world)
                 entity->addComponent(rc);
                 entity->addComponent(pc);
                 entity->addComponent(cc);
+                if(map[y][x] == 3 || map[y][x] == 4)
+                    entity->addComponent(new PointsComponent);
                 entities.push_back(entity);
             }
-            else if(map[y][x] == 3)
-            {
-                auto *entity = new Entity();
-                auto* pc = new PositionComponent();
-                pc->x = x;
-                pc->y = y;
-                std::vector<SDL_Rect*> clips;
-                SDL_Rect* rect = new SDL_Rect();
-                // TODO : do not hardcode tile width on sprites sheet
-                rect->x = x * 8;
-                rect->y = y * 8;
-                rect->w = 8;
-                rect->h = 8;
-                clips.push_back(rect);
-                auto *cc = new CollisionComponent();
-                cc->collision_box[0] = 0;
-                cc->collision_box[1] = 0;
-                cc->collision_box[2] = tile_width;
-                cc->collision_box[3] = tile_width;
-                auto* rc = createRenderComponent(sprites_sheet,clips);
-                rc->scale = tile_width/8;
-                entity->addComponent(rc);
-                entity->addComponent(pc);
-                entity->addComponent(cc);
-                entity->addComponent(new PointsComponent());
-                entities.push_back(entity);
-            }
+            if(map[y][x] == 5)
+                entities.push_back(createPacMan(x,y));
         }
         //std::cout << std::endl;
     }

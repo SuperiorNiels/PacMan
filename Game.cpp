@@ -23,15 +23,9 @@ void Game::init()
     manager->registerSystem(new CollisionSystem());
     manager->registerSystem(Game::render);
 
-    std::vector<Entity*> map = factory->createWorld(world);
+    std::vector<Entity*> map = factory->createWorldEntities(world);
     for(auto& e : map)
         manager->registerEntity(e);
-
-    manager->registerEntity(factory->createPacMan(1, 1));
-    //manager->registerEntity(factory->createGhost(120, 105, RED_GHOST));
-    //manager->registerEntity(factory->createGhost(88, 105, PINK_GHOST));
-    //manager->registerEntity(factory->createGhost(88, 115, BLUE_GHOST));
-    //manager->registerEntity(factory->createGhost(120, 115, ORANGE_GHOST));
 }
 
 void Game::run()

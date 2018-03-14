@@ -68,9 +68,16 @@ void SDL_RenderSystem::update()
             auto *m = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
             if (rc->visible)
             {
+                int x = (int) floor(p->x * tile_width);
+                int y = (int) floor(p->y * tile_width);
+                if(e->hasComponentType(PLAYER_INPUT_COMPONENT))
+                {
+                    x = (int) floor((p->x-(0.3*tile_width*(1.f/tile_width))) * tile_width);
+                    y = (int) floor((p->y-(0.3*tile_width*(1.f/tile_width))) * tile_width);
+                    //std::cout << "x: " << x << " y: " << y << std::endl;
+                }
                 // Create render position and render
-                SDL_Rect position = {(int) floor(p->x * tile_width), (int) floor(p->y * tile_width), rc->width*tile_width/8,
-                                     rc->height*tile_width/8};
+                SDL_Rect position = {x, y, rc->width*tile_width/8, rc->height*tile_width/8};
 
                 SDL_Rect *clip = nullptr;
                 if (!rc->clips.empty())
@@ -121,29 +128,31 @@ void SDL_RenderSystem::renderCollisionBox(Entity *e)
     {
         auto* cc = e->getComponentByType<CollisionComponent>(COLLISION_COMPONENT);
         auto* pc = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-        if(e->hasComponentType(AI_COMPONENT))
-        {
-            SDL_SetRenderDrawColor(renderer, 0xFF, 0, 0, 0xFF);
-        }
-        else if(e->hasComponentType(MOVABLE_COMPONENT))
-        {
-            SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0, 0xFF);
-        }
-        else if(e->hasComponentType(POINTS_COMPONENT))
-        {
-            SDL_SetRenderDrawColor(renderer, 0xFF, 0xAB, 0x00, 0xFF);
-        }
-        else
-        {
-            SDL_SetRenderDrawColor(renderer, 0, 0, 0xFF, 0xFF);
-        }
         SDL_Rect aa = SDL_Rect();
         aa.x = (int) floor(pc->x * tile_width) + cc->collision_box[0];
         aa.y = (int) floor(pc->y * tile_width) + cc->collision_box[1];
         aa.w = cc->collision_box[2];
         aa.h = cc->collision_box[3];
-
-        SDL_RenderDrawRect(renderer, &aa);
+        if(e->hasComponentType(AI_COMPONENT))
+        {
+            SDL_SetRenderDrawColor(renderer, 0xFF, 0, 0, 0xFF);
+            SDL_RenderDrawRect(renderer, &aa);
+        }
+        else if(e->hasComponentType(MOVABLE_COMPONENT))
+        {
+            SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0, 0xFF);
+            SDL_RenderFillRect(renderer, &aa);
+        }
+        else if(e->hasComponentType(POINTS_COMPONENT))
+        {
+            SDL_SetRenderDrawColor(renderer, 0xFF, 0xAB, 0x00, 0xFF);
+            SDL_RenderDrawRect(renderer, &aa);
+        }
+        else
+        {
+            SDL_SetRenderDrawColor(renderer, 0, 0, 0xFF, 0xFF);
+            SDL_RenderDrawRect(renderer, &aa);
+        }
     }
 }
 

@@ -21,7 +21,7 @@ public:
     virtual RenderSystem* createRenderSystem(World* world, int screen_width, int screen_height) = 0;
     virtual EventSystem* createEventSystem(double speed) = 0;
     virtual TimerSystem* createTimerSystem(int fps) = 0;
-    virtual std::vector<Entity*> createWorld(World* world) = 0;
+    virtual std::vector<Entity*> createWorldEntities(World *world) = 0;
     virtual ~AbstractFactory() = default;
 };
 
