@@ -116,6 +116,33 @@ std::vector<Entity*> SDL_Factory::createWorld(World* world)
                 entity->addComponent(cc);
                 entities.push_back(entity);
             }
+            else if(map[y][x] == 3)
+            {
+                auto *entity = new Entity();
+                auto* pc = new PositionComponent();
+                pc->x = x;
+                pc->y = y;
+                std::vector<SDL_Rect*> clips;
+                SDL_Rect* rect = new SDL_Rect();
+                // TODO : do not hardcode tile width on sprites sheet
+                rect->x = x * 8;
+                rect->y = y * 8;
+                rect->w = 8;
+                rect->h = 8;
+                clips.push_back(rect);
+                auto *cc = new CollisionComponent();
+                cc->collision_box[0] = 0;
+                cc->collision_box[1] = 0;
+                cc->collision_box[2] = tile_width;
+                cc->collision_box[3] = tile_width;
+                auto* rc = createRenderComponent(sprites_sheet,clips);
+                rc->scale = tile_width/8;
+                entity->addComponent(rc);
+                entity->addComponent(pc);
+                entity->addComponent(cc);
+                entity->addComponent(new PointsComponent());
+                entities.push_back(entity);
+            }
         }
         //std::cout << std::endl;
     }

@@ -16,7 +16,7 @@ void Game::init()
     Game::manager = new SystemManager();
     Game::timer = factory->createTimerSystem(60);
     Game::render = factory->createRenderSystem(world,224*4,248*4);
-    Game::events = factory->createEventSystem((1.f/render->getTile_width())*2);
+    Game::events = factory->createEventSystem(1);
     manager->registerSystem(Game::events);
     //manager->registerSystem(new AISystem());
     manager->registerSystem(new MovementSystem(world));

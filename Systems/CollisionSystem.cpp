@@ -43,12 +43,20 @@ void CollisionSystem::update()
                     if((int)floor(p->x) == (int)floor(p2->x) && (int)floor(p->y) == (int)floor(p2->y) ||
                             (int)ceil(p->x) == (int)ceil(p2->x) && (int)ceil(p->y) == (int)ceil(p2->y))
                     {
-                        p->x -= mc->x_speed;
-                        p->y -= mc->y_speed;
-                        mc->x_speed = 0;
-                        mc->y_speed = 0;
-                        std::cout << "[Collision] " << "x1: " << (int)p->x << " y1: " << (int)p->y
-                                  << " x1: " << (int)p2->x << " y1: " << (int)p2->y << std::endl;
+                        if(e->hasComponentType(POINTS_COMPONENT))
+                        {
+                            auto* rc = e->getComponentByType<RenderComponent>(RENDER_COMPONENT);
+                            rc->visible = false;
+                        }
+                        else
+                        {
+                            p->x -= mc->x_speed;
+                            p->y -= mc->y_speed;
+                            mc->x_speed = 0;
+                            mc->y_speed = 0;
+                        }
+                        //std::cout << "[Collision] " << "x1: " << (int)p->x << " y1: " << (int)p->y
+                        //          << " x1: " << (int)p2->x << " y1: " << (int)p2->y << std::endl;
                     }
                 }
             }
