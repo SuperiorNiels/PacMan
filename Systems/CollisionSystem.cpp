@@ -45,7 +45,6 @@ bool CollisionSystem::entityInSystem(entityID id)
 
 void CollisionSystem::update()
 {
-    std::cout << entities.size() << std::endl;
     if(!to_check.empty())
     {
         for(auto& player : to_check)
@@ -62,9 +61,7 @@ void CollisionSystem::update()
                     {
                         if(e->hasComponentType(POINTS_COMPONENT))
                         {
-                            auto* rc = e->getComponentByType<RenderComponent>(RENDER_COMPONENT);
-                            e->removeComponentByType(COLLISION_COMPONENT);
-                            rc->visible = false;
+                            e->clearComponents();
                         }
                         else
                         {

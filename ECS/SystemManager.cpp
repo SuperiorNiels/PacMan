@@ -17,12 +17,19 @@ void SystemManager::updateEntities()
     // Check if entity belongs in system and add to new system (when needed)
     for(auto& e : entities)
     {
-        for(auto& s : systems)
+        if(e->getComponentsSize() != 0)
         {
-            if(s->checkEntity(e) && s->entityInSystem(e->id))
-                s->removeEntity(e->id);
+            for (auto &s : systems)
+            {
+                if (!s->checkEntity(e) && s->entityInSystem(e->id))
+                    s->removeEntity(e->id);
+            }
+            registerEntity(e);
         }
-        registerEntity(e);
+        else
+        {
+            unregisterEntity(e);
+        }
     }
 }
 
@@ -54,19 +61,21 @@ void SystemManager::unregisterEntity(Entity *e)
     // remove the entity from all systems
     for(auto& s : systems)
     {
-        s->removeEntity(e->id);
+        if(s->entityInSystem(e->id))
+            s->removeEntity(e->id);
     }
     for(auto it = entities.begin(); it != entities.end(); it++)
     {
         if(it.operator*()->id == e->id)
         {
+            delete it.operator*();
             entities.erase(it);
             break;
         }
     }
 }
 
-void SystemManager::clearEnities()
+void SystemManager::clearEntities()
 {
     for(auto e : entities)
     {

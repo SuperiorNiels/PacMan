@@ -23,6 +23,8 @@ public:
     bool hasComponentType(int8_t type);
     bool hasComponentTypes(std::vector<int8_t> types);
     void removeComponentByType(int8_t type);
+    const int getComponentsSize();
+    void clearComponents();
     ~Entity();
     entityID id = getEntityID();
 private:
@@ -90,11 +92,25 @@ inline void Entity::removeComponentByType(int8_t type)
     {
         if(it.operator*()->type == type)
         {
-            components.erase(it);
             delete it.operator*();
+            components.erase(it);
             break;
         }
     }
+}
+
+inline const int Entity::getComponentsSize()
+{
+    return (int)components.size();
+}
+
+inline void Entity::clearComponents()
+{
+    for(auto* c : components)
+    {
+        delete c;
+    }
+    components.clear();
 }
 
 #endif //ECS_ENTITY_H

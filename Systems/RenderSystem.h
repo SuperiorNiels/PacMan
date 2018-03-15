@@ -21,7 +21,7 @@ public:
         int min_screen = std::max(screen_width,screen_height);
         int max_world = std::max(world->getHeight(),world->getWidth());
         RenderSystem::tile_width = (int)floor(min_screen/max_world);
-        std::cout << "Tile width: " << tile_width << std::endl;
+        //std::cout << "Tile width: " << tile_width << std::endl;
     };
     int getTile_width() const { return tile_width; };
 protected:
