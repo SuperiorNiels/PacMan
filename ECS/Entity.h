@@ -31,21 +31,6 @@ private:
     std::vector<Component*> components;
 };
 
-inline Entity::~Entity()
-{
-    for(auto& c : components)
-        delete c;
-    components.clear();
-};
-
-inline void Entity::addComponent(Component *c)
-{
-    if(getComponentByType<Component>(c->type) == nullptr)
-    {
-        components.push_back(c);
-    }
-}
-
 template <class T>
 T* Entity::getComponentByType(int8_t type)
 {
@@ -57,60 +42,6 @@ T* Entity::getComponentByType(int8_t type)
         }
     }
     return nullptr;
-}
-
-inline bool Entity::hasComponentType(int8_t type)
-{
-    for(auto& c : components)
-    {
-        if(c->type == type)
-        {
-            return true;
-        }
-    }
-    return false;
-}
-
-inline bool Entity::hasComponentTypes(std::vector<int8_t> types)
-{
-    for(auto it = types.begin(); it < types.end(); it++)
-    {
-        if(hasComponentType(it.operator*()))
-        {
-            types.erase(it);
-            it--;
-        }
-        if(types.empty())
-            return true;
-    }
-    return false;
-}
-
-inline void Entity::removeComponentByType(int8_t type)
-{
-    for(auto it = components.begin(); it < components.end(); it++)
-    {
-        if(it.operator*()->type == type)
-        {
-            delete it.operator*();
-            components.erase(it);
-            break;
-        }
-    }
-}
-
-inline const int Entity::getComponentsSize()
-{
-    return (int)components.size();
-}
-
-inline void Entity::clearComponents()
-{
-    for(auto* c : components)
-    {
-        delete c;
-    }
-    components.clear();
 }
 
 #endif //ECS_ENTITY_H

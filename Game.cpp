@@ -13,7 +13,7 @@ void Game::init()
 {
     Game::world = new World(collision_map);
     Game::manager = new SystemManager();
-    Game::timer = factory->createTimerSystem(30);
+    Game::timer = factory->createTimerSystem(60);
     Game::render = factory->createRenderSystem(world,224*4,248*4);
     Game::events = factory->createEventSystem(1);
     manager->registerSystem(Game::events);
