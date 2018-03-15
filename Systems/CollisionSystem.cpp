@@ -11,14 +11,7 @@ CollisionSystem::CollisionSystem()
 
 void CollisionSystem::addEntity(Entity *e)
 {
-    // entity is player?
-    if(e->hasComponentType(PLAYER_INPUT_COMPONENT))
-    {
-        to_check.push_back(e);
-        return;
-    }
-    // entity is ghost?
-    if(e->hasComponentType(AI_COMPONENT))
+    if((e->hasComponentType(PLAYER_INPUT_COMPONENT) || e->hasComponentType(AI_COMPONENT)) && !entityInSystem(e->id))
     {
         to_check.push_back(e);
         return;
@@ -40,8 +33,19 @@ void CollisionSystem::removeEntity(entityID id)
     System::removeEntity(id);
 }
 
+bool CollisionSystem::entityInSystem(entityID id)
+{
+    for(auto* e : to_check)
+    {
+        if(e->id == id)
+            return true;
+    }
+    return System::entityInSystem(id);
+}
+
 void CollisionSystem::update()
 {
+    std::cout << entities.size() << std::endl;
     if(!to_check.empty())
     {
         for(auto& player : to_check)
@@ -59,6 +63,7 @@ void CollisionSystem::update()
                         if(e->hasComponentType(POINTS_COMPONENT))
                         {
                             auto* rc = e->getComponentByType<RenderComponent>(RENDER_COMPONENT);
+                            e->removeComponentByType(COLLISION_COMPONENT);
                             rc->visible = false;
                         }
                         else
@@ -68,8 +73,6 @@ void CollisionSystem::update()
                             mc->x_speed = 0;
                             mc->y_speed = 0;
                         }
-                        //std::cout << "[Collision] " << "x1: " << (int)p->x << " y1: " << (int)p->y
-                        //          << " x1: " << (int)p2->x << " y1: " << (int)p2->y << std::endl;
                     }
                 }
             }

@@ -11,7 +11,6 @@ Game::Game(AbstractFactory *factory)
 
 void Game::init()
 {
-    // Create systemmanager and add rendersystem
     Game::world = new World(collision_map);
     Game::manager = new SystemManager();
     Game::timer = factory->createTimerSystem(60);
@@ -38,6 +37,7 @@ void Game::run()
     {
         timer->start();
         manager->updateSystems();
+        manager->updateEntities();
         for(auto event : events->getEvents())
         {
             if(event == R_BUTTON)

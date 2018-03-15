@@ -19,11 +19,9 @@ inline entityID getEntityID() {
 class Entity {
 public:
     void addComponent(Component* c);
-    template <class T> T* getComponentById(componentID id);
     template <class T> T* getComponentByType(int8_t type);
     bool hasComponentType(int8_t type);
     bool hasComponentTypes(std::vector<int8_t> types);
-    void removeComponentById(componentID id);
     void removeComponentByType(int8_t type);
     ~Entity();
     entityID id = getEntityID();
@@ -44,19 +42,6 @@ inline void Entity::addComponent(Component *c)
     {
         components.push_back(c);
     }
-}
-
-template <class T>
-T* Entity::getComponentById(componentID id)
-{
-    for(auto& c : components)
-    {
-        if(c->id == id)
-        {
-            return dynamic_cast<T*>(c);
-        }
-    }
-    return nullptr;
 }
 
 template <class T>
@@ -97,19 +82,6 @@ inline bool Entity::hasComponentTypes(std::vector<int8_t> types)
             return true;
     }
     return false;
-}
-
-inline void Entity::removeComponentById(componentID id)
-{
-    for(auto it = components.begin(); it < components.end(); it++)
-    {
-        if(it.operator*()->id == id)
-        {
-            components.erase(it);
-            delete it.operator*();
-            break;
-        }
-    }
 }
 
 inline void Entity::removeComponentByType(int8_t type)

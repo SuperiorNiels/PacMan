@@ -13,6 +13,7 @@
 class SystemManager {
 public:
     void updateSystems();
+    void updateEntities();
     void registerSystem(System* s);
     void registerEntity(Entity* e);
     void unregisterEntity(Entity* e);

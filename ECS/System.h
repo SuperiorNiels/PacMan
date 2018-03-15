@@ -14,7 +14,8 @@ public:
     virtual void update() = 0;
     virtual void addEntity(Entity* e);
     virtual void removeEntity(entityID id);
-    const std::vector<int8_t> &getComponent_types() const;
+    virtual bool checkEntity(Entity* e);
+    virtual bool entityInSystem(entityID id);
     virtual ~System() = default;
 protected:
     std::vector<Entity*> entities = std::vector<Entity*>();
@@ -25,16 +26,7 @@ inline void System::addEntity(Entity *e)
 {
     if(e->hasComponentTypes(component_types))
     {
-        bool found = false;
-        for (auto it = entities.begin(); it < entities.end(); it++)
-        {
-            if (it.operator*()->id == e->id)
-            {
-                found = true;
-                break;
-            }
-        }
-        if (!found)
+        if (!entityInSystem(e->id))
         {
             entities.push_back(e);
         }
@@ -53,8 +45,19 @@ inline void System::removeEntity(entityID id)
     }
 }
 
-inline const std::vector<int8_t> &System::getComponent_types() const {
-    return component_types;
+inline bool System::checkEntity(Entity* e)
+{
+    return e->hasComponentTypes(component_types);
+}
+
+inline bool System::entityInSystem(entityID id)
+{
+    for(auto* e: entities)
+    {
+        if(e->id == id)
+            return true;
+    }
+    return false;
 }
 
 

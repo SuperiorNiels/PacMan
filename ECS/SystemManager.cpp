@@ -12,9 +12,22 @@ void SystemManager::updateSystems()
     }
 }
 
+void SystemManager::updateEntities()
+{
+    // Check if entity belongs in system and add to new system (when needed)
+    for(auto& e : entities)
+    {
+        for(auto& s : systems)
+        {
+            if(s->checkEntity(e) && s->entityInSystem(e->id))
+                s->removeEntity(e->id);
+        }
+        registerEntity(e);
+    }
+}
+
 void SystemManager::registerSystem(System *s)
 {
-    // TODO: check if vector is best for keeping the systems (order is important, no doubles)
     bool found = false;
     for(auto& sys : systems)
     {
@@ -57,7 +70,6 @@ void SystemManager::clearEnities()
 {
     for(auto e : entities)
     {
-        //Entity* e = it.operator*();
         for(auto* s : systems)
         {
             s->removeEntity(e->id);
