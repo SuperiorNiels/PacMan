@@ -54,6 +54,8 @@ void SDL_EventSystem::update()
                         direction = 3;
                         change = true;
                         break;
+                    case SDLK_r:
+                        events.push_back(R_BUTTON);
                     default:
                         break;
                 }

@@ -29,18 +29,10 @@ void SystemManager::registerSystem(System *s)
 
 void SystemManager::registerEntity(Entity *e)
 {
-    entities.insert(e);
-    for(auto it = systems.begin();it!=systems.end();it++)
+    entities.emplace(e);
+    for(auto* s : systems)
     {
-        System* s = it.operator*();
-        for(auto itr = s->component_types.begin(); itr < s->component_types.end(); itr++)
-        {
-            auto* c = e->getComponentByType<Component>(itr.operator*());
-            if(c != nullptr)
-            {
-                s->addEntity(e);
-            }
-        }
+        s->addEntity(e);
     }
 }
 
@@ -51,7 +43,7 @@ void SystemManager::unregisterEntity(Entity *e)
     {
         s->removeEntity(e->id);
     }
-    for(auto it = entities.begin();it!=entities.end();it++)
+    for(auto it = entities.begin(); it != entities.end(); it++)
     {
         if(it.operator*()->id == e->id)
         {
@@ -59,6 +51,20 @@ void SystemManager::unregisterEntity(Entity *e)
             break;
         }
     }
+}
+
+void SystemManager::clearEnities()
+{
+    for(auto e : entities)
+    {
+        //Entity* e = it.operator*();
+        for(auto* s : systems)
+        {
+            s->removeEntity(e->id);
+        }
+        delete e;
+    }
+    entities.clear();
 }
 
 SystemManager::~SystemManager()

@@ -16,10 +16,11 @@ public:
     void registerSystem(System* s);
     void registerEntity(Entity* e);
     void unregisterEntity(Entity* e);
+    void clearEnities();
     ~SystemManager();
 private:
     std::vector<System*> systems = std::vector<System*>();
-    std::unordered_set<Entity*> entities = std::unordered_set<Entity*>();
+    std::set<Entity*> entities = std::set<Entity*>();
 };
 
 

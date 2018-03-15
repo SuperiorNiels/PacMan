@@ -11,7 +11,6 @@ CollisionSystem::CollisionSystem()
 
 void CollisionSystem::addEntity(Entity *e)
 {
-    // TODO: create removeEntity function
     // entity is player?
     if(e->hasComponentType(PLAYER_INPUT_COMPONENT))
     {
@@ -27,6 +26,20 @@ void CollisionSystem::addEntity(Entity *e)
     System::addEntity(e);
 }
 
+void CollisionSystem::removeEntity(entityID id)
+{
+    for(auto it = to_check.begin(); it != to_check.end(); it++)
+    {
+        Entity* e = it.operator*();
+        if(e->id == id)
+        {
+            to_check.erase(it);
+            return;
+        }
+    }
+    System::removeEntity(id);
+}
+
 void CollisionSystem::update()
 {
     if(!to_check.empty())
@@ -40,7 +53,8 @@ void CollisionSystem::update()
                 if (e->id != player->id)
                 {
                     auto *p2 = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-                    if((int)floor(p->x) == (int)floor(p2->x) && (int)floor(p->y) == (int)floor(p2->y))
+                    if((int)floor(p->x) == (int)floor(p2->x) && (int)floor(p->y) == (int)floor(p2->y) ||
+                            (int)floor(p->x) == (int)floor(p2->x) && (int)floor(p->y) == (int)floor(p2->y))
                     {
                         if(e->hasComponentType(POINTS_COMPONENT))
                         {

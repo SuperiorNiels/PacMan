@@ -22,7 +22,11 @@ void Game::init()
     manager->registerSystem(new MovementSystem(world));
     manager->registerSystem(new CollisionSystem());
     manager->registerSystem(Game::render);
+    createGame();
+}
 
+void Game::createGame()
+{
     std::vector<Entity*> map = factory->createWorldEntities(world);
     for(auto& e : map)
         manager->registerEntity(e);
@@ -34,6 +38,15 @@ void Game::run()
     {
         timer->start();
         manager->updateSystems();
+        for(auto event : events->getEvents())
+        {
+            if(event == R_BUTTON)
+            {
+                manager->clearEnities();
+                createGame();
+                //std::cout << "Game reset!" << std::endl;
+            }
+        }
         timer->cap();
     }
 }

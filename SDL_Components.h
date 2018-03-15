@@ -13,11 +13,10 @@
 class SDL_RenderComponent : public RenderComponent
 {
 public:
-    SDL_Texture* texture = nullptr;
+    SDL_Texture* texture = nullptr; // Textures get destroyed by the factory!
     std::vector<SDL_Rect*> clips = std::vector<SDL_Rect*>();
     ~SDL_RenderComponent() override
     {
-        SDL_DestroyTexture(texture);
         for(auto& c : clips)
             delete c;
     };

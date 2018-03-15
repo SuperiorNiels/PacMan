@@ -189,5 +189,10 @@ SDL_RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::v
 
 SDL_Factory::~SDL_Factory()
 {
+    for(auto it = loadedTextures.begin(); it != loadedTextures.end(); it++)
+    {
+        SDL_DestroyTexture(it->second);
+    }
     loadedTextures.clear();
+
 }

@@ -20,6 +20,7 @@ public:
     explicit Game(AbstractFactory* factory);
     void init();
     void run();
+    void createGame();
     ~Game();
 private:
     Game() = default;
