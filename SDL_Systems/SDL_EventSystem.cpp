@@ -63,6 +63,9 @@ void SDL_EventSystem::update()
                     case SDLK_o:
                         events.push_back(O_BUTTON);
                         break;
+                    case SDLK_m:
+                        events.push_back(M_BUTTON);
+                        break;
                     default:
                         break;
                 }

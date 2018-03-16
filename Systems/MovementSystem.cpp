@@ -20,21 +20,21 @@ void MovementSystem::update()
             auto* m = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
             p->x += m->x_speed;
             p->y += m->y_speed;
-            if(p->x > world->getWidth())
+            if(p->x > world->getWidth()-1)
             {
                 p->x = 0;
             }
             if(p->x < 0)
             {
-                p->x = world->getWidth();
+                p->x = world->getWidth()-1;
             }
-            if(p->y > world->getHeight())
+            if(p->y > world->getHeight()-1)
             {
                 p->y = 0;
             }
             if(p->y < 0)
             {
-                p->y = world->getHeight();
+                p->y = world->getHeight()-1;
             }
             //std::cout << "[Movement] " << "x: " << (int)p->x << " y: " << (int)p->y << std::endl;
         }

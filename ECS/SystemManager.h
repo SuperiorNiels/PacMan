@@ -9,6 +9,7 @@
 #include "ECS.h"
 #include <unordered_set>
 #include <set>
+#include "../PacMan_Components.h"
 
 class SystemManager {
 public:
@@ -19,6 +20,7 @@ public:
     void unregisterEntity(Entity* e);
     void clearEntities();
     void removeSystem(System* s);
+    void lol();
     ~SystemManager();
 private:
     std::vector<System*> systems = std::vector<System*>();

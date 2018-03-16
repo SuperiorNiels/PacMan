@@ -13,7 +13,7 @@ void Game::init()
 {
     Game::world = new World(collision_map);
     Game::manager = new SystemManager();
-    Game::timer = factory->createTimerSystem(60);
+    Game::timer = factory->createTimerSystem(10);
     Game::render = factory->createRenderSystem(world,224*3,248*3);
     Game::events = factory->createEventSystem(1);
     manager->registerSystem(Game::events);
@@ -63,6 +63,11 @@ void Game::run()
                 manager->registerSystem(Game::render);
                 manager->clearEntities();
                 createGame();
+            }
+            else if(event == M_BUTTON)
+            {
+                manager->lol();
+                manager->updateEntities();
             }
         }
         timer->cap();
