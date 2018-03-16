@@ -21,7 +21,7 @@ Entity* SDL_Factory::createPacMan(int x, int y)
         rect1->h = i[3];
         clips.push_back(rect1);
     }
-    auto* rc = createRenderComponent(sprites_sheet,clips);
+    auto* rc = createRenderComponent(config->getSprites_sheet(),clips);
     rc->animation_length = 3;
     rc->animation_speed = 4;
     rc->direction_offsets[0] = 3;
@@ -60,7 +60,7 @@ Entity* SDL_Factory::createGhost(int x, int y, int color)
         rect1->h = i[3];
         clips.push_back(rect1);
     }
-    auto* rc = createRenderComponent(sprites_sheet,clips);
+    auto* rc = createRenderComponent(config->getSprites_sheet(),clips);
     rc->animation_length = 2;
     rc->animation_speed = 4;
     rc->direction_offsets[0] = 2;
@@ -110,7 +110,7 @@ std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
                 cc->collision_box[1] = 0;
                 cc->collision_box[2] = tile_width;
                 cc->collision_box[3] = tile_width;
-                auto* rc = createRenderComponent(sprites_sheet,clips);
+                auto* rc = createRenderComponent(config->getSprites_sheet(),clips);
                 rc->scale = tile_width/8;
                 entity->addComponent(rc);
                 entity->addComponent(pc);

@@ -14,16 +14,18 @@
 #include "Systems/CollisionSystem.h"
 #include "World.h"
 #include "Systems/RenderSystem.h"
+#include "Config.h"
 
 class Game {
 public:
-    explicit Game(AbstractFactory* factory);
+    Game() = delete;
+    Game(AbstractFactory* factory, Config* config);
     void init();
     void run();
     void createGame();
     ~Game();
 private:
-    Game() = default;
+    Config* config = nullptr;
     AbstractFactory* factory = nullptr;
     SystemManager* manager = nullptr;
     EventSystem* events = nullptr;

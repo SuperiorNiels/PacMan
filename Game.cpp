@@ -4,17 +4,18 @@
 
 #include "Game.h"
 
-Game::Game(AbstractFactory *factory)
+Game::Game(AbstractFactory *factory, Config* config)
 {
     Game::factory = factory;
+    Game::config = config;
 }
 
 void Game::init()
 {
-    Game::world = new World(collision_map);
+    Game::world = new World(config->getCollision_map());
     Game::manager = new SystemManager();
-    Game::timer = factory->createTimerSystem(10);
-    Game::render = factory->createRenderSystem(world,224*3,248*3);
+    Game::timer = factory->createTimerSystem(config->getFps());
+    Game::render = factory->createRenderSystem(world,config->getScreen_x(),config->getScreen_y());
     Game::events = factory->createEventSystem(1);
     manager->registerSystem(Game::events);
     manager->registerSystem(new AISystem());
@@ -76,6 +77,7 @@ void Game::run()
 
 Game::~Game()
 {
+    delete config;
     delete manager;
     delete factory;
     delete world;

@@ -5,9 +5,6 @@
 #ifndef ECS_PACMAN_CONSTANTS_H
 #define ECS_PACMAN_CONSTANTS_H
 
-static std::string sprites_sheet = "../data/sprites.png";
-static std::string collision_map = "../data/collision.map";
-
 enum ghost_color
 {
     RED_GHOST,

@@ -1,0 +1,12 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pacman>
+    <game fps="60" screen_x="224" screen_y="248">
+        <collision>../data/collision.map</collision>
+        <sprites>../data/sprites.png</sprites>
+    </game>
+    <entities>
+        <wall_tile>
+            <position_component />
+        </wall_tile>
+    </entities>
+</pacman>

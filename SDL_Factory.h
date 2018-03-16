@@ -15,6 +15,8 @@
 
 class SDL_Factory : public AbstractFactory {
 public:
+    SDL_Factory() = delete;
+    SDL_Factory(Config* config) : AbstractFactory(config) {};
     Entity* createPacMan(int x,int y) override;
     Entity* createGhost(int x,int y, int color) override;
     RenderSystem* createRenderSystem(World* world, int screen_width, int screen_height) override;

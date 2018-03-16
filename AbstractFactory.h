@@ -13,9 +13,12 @@
 #include "Systems/TimerSystem.h"
 #include "World.h"
 #include "Systems/RenderSystem.h"
+#include "Config.h"
 
 class AbstractFactory {
 public:
+    AbstractFactory() = default;
+    AbstractFactory(Config* config) { AbstractFactory::config = config; };
     virtual Entity* createPacMan(int x, int y) = 0;
     virtual Entity* createGhost(int x, int y, int color) = 0;
     virtual RenderSystem* createRenderSystem(World* world, int screen_width, int screen_height) = 0;
@@ -23,6 +26,8 @@ public:
     virtual TimerSystem* createTimerSystem(int fps) = 0;
     virtual std::vector<Entity*> createWorldEntities(World *world) = 0;
     virtual ~AbstractFactory() = default;
+protected:
+    Config* config;
 };
 
 

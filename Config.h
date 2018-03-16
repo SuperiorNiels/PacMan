@@ -14,8 +14,19 @@ class Config
 public:
     Config() = delete;
     Config(std::string path);
+    int getFps() const;
+    int getScreen_x() const;
+    int getScreen_y() const;
+    const std::string &getCollision_map() const;
+
+    const std::string &getSprites_sheet() const;
+
 private:
-    std::map<std::string, std::string> values = std::map<std::string, std::string>();
+    int fps = 0;
+    int screen_x = 0;
+    int screen_y = 0;
+    std::string collision_map = std::string();
+    std::string sprites_sheet = std::string();
 };
 
 #endif //PACMAN_CONFIG_H
