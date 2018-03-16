@@ -11,7 +11,6 @@
 #include "ECS/ECS.h"
 #include "PacMan_Components.h"
 #include "TinyXML/tinyxml2.h"
-#include "AbstractFactory.h"
 
 using namespace tinyxml2;
 
@@ -19,7 +18,7 @@ class Config
 {
 public:
     Config() = delete;
-    Config(std::string path, AbstractFactory* factory);
+    Config(std::string path);
     int getFps() const;
     int getScreen_x() const;
     int getScreen_y() const;
@@ -27,7 +26,7 @@ public:
     const std::string &getSprites_sheet() const;
     Entity* createEntity(std::string entity_name, int tile_width, int x=0, int y=0);
 private:
-    AbstractFactory* factory;
+    //AbstractFactory* factory;
     XMLDocument doc;
     int fps = 0;
     int screen_x = 0;

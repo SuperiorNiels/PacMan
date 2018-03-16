@@ -4,9 +4,9 @@
 
 #include "Config.h"
 
-Config::Config(std::string path, AbstractFactory* factory)
+Config::Config(std::string path)
 {
-    Config::factory = factory;
+    //Config::factory = factory;
     doc.LoadFile(path.c_str());
     doc.FirstChildElement("pacman")->FirstChildElement("game")->QueryIntAttribute("fps", &fps);
     doc.FirstChildElement("pacman")->FirstChildElement("game")->QueryIntAttribute("screen_x", &screen_x);
@@ -55,8 +55,8 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
                 }
             }
 
-            auto* rc = factory->createRenderComponent(sprites_sheet);
-            e->addComponent(rc);
+            //auto* rc = factory->createRenderComponent(sprites_sheet);
+            //e->addComponent(rc);
         }
     }
     else

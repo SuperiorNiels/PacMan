@@ -93,7 +93,7 @@ std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
             //std::cout << map[y][x] << " ";
             if(map[y][x] == 1 || map[y][x] == 3 || map[y][x] == 4)
             {
-                config->createEntity("wall_tile",tile_width,this);
+                config->createEntity("wall_tile",tile_width);
                 auto *entity = new Entity();
                 auto* pc = new PositionComponent();
                 pc->x = x;
