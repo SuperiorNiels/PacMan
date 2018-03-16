@@ -2,11 +2,22 @@
 <pacman>
     <game fps="60" screen_x="224" screen_y="248">
         <collision>../data/collision.map</collision>
-        <sprites>../data/sprites.png</sprites>
+        <sprites tile_width="8">../data/sprites.png</sprites>
     </game>
     <entities>
         <wall_tile>
             <position_component />
+            <render_component>
+                <clips total="5">
+                    <!-- x:y: -1 == get coordinates from map, w:h: -1 == tile_width -->
+                    <clip x="-1" y="-1" w="-1" h="-1"/>
+                    <clip x="-1" y="-1" w="-1" h="-1"/>
+                    <clip x="-1" y="-1" w="-1" h="-1"/>
+                    <clip x="-1" y="-1" w="-1" h="-1"/>
+                    <clip x="-1" y="-1" w="-1" h="-1"/>
+                </clips>
+            </render_component>
+            <collision_component />
         </wall_tile>
     </entities>
 </pacman>

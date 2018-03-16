@@ -20,12 +20,13 @@ public:
     Entity* createPacMan(int x,int y) override;
     Entity* createGhost(int x,int y, int color) override;
     RenderSystem* createRenderSystem(World* world, int screen_width, int screen_height) override;
+    RenderComponent* createRenderComponent(std::string path, std::vector<clip> clips = std::vector<clip>()) override;
     EventSystem* createEventSystem(double speed) override;
     TimerSystem* createTimerSystem(int fps) override;
     std::vector<Entity *> createWorldEntities(World *world) override;
     ~SDL_Factory() override;
 private:
-    SDL_RenderComponent* createRenderComponent(std::string path, std::vector<SDL_Rect*> clips = std::vector<SDL_Rect*>());
+
     SDL_RenderSystem* renderSystem = nullptr;
     std::unordered_map<std::string,SDL_Texture*> loadedTextures = std::unordered_map<std::string,SDL_Texture*>();
     void clearTextures();

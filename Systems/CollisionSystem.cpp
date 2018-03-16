@@ -56,8 +56,7 @@ void CollisionSystem::update()
                 if (e->id != player->id)
                 {
                     auto *p2 = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-                    if((int)floor(p->x) == (int)floor(p2->x) && (int)floor(p->y) == (int)floor(p2->y) ||
-                            (int)floor(p->x) == (int)floor(p2->x) && (int)floor(p->y) == (int)floor(p2->y))
+                    if((int)floor(p->x) == (int)floor(p2->x) && (int)floor(p->y) == (int)floor(p2->y))
                     {
                         if(e->hasComponentType(POINTS_COMPONENT))
                         {

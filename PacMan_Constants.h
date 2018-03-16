@@ -13,6 +13,14 @@ enum ghost_color
     ORANGE_GHOST
 };
 
+struct clip
+{
+    int x;
+    int y;
+    int w;
+    int h;
+};
+
 static int pacman[12][4] = {
         {489,1,13,13},
         {473,1,13,13},

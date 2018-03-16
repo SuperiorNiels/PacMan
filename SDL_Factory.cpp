@@ -12,13 +12,13 @@ Entity* SDL_Factory::createPacMan(int x, int y)
     auto* pc = new PositionComponent();
     pc->x = x;
     pc->y = y;
-    std::vector<SDL_Rect*> clips = std::vector<SDL_Rect*>();
+    std::vector<clip> clips = std::vector<clip>();
     for (auto &i : pacman) {
-        auto* rect1 = new SDL_Rect();
-        rect1->x = i[0]; // 908
-        rect1->y = i[1];
-        rect1->w = i[2];
-        rect1->h = i[3];
+        clip rect1;
+        rect1.x = i[0]; // 908
+        rect1.y = i[1];
+        rect1.w = i[2];
+        rect1.h = i[3];
         clips.push_back(rect1);
     }
     auto* rc = createRenderComponent(config->getSprites_sheet(),clips);
@@ -51,13 +51,13 @@ Entity* SDL_Factory::createGhost(int x, int y, int color)
     p->y = y;
     e->addComponent(p);
 
-    std::vector<SDL_Rect*> clips = std::vector<SDL_Rect*>();
+    std::vector<clip> clips = std::vector<clip>();
     for (auto &i : ghost) {
-        auto* rect1 = new SDL_Rect();
-        rect1->x = i[0];
-        rect1->y = i[1]+(16*(color%4));
-        rect1->w = i[2];
-        rect1->h = i[3];
+        clip rect1;
+        rect1.x = i[0];
+        rect1.y = i[1]+(16*(color%4));
+        rect1.w = i[2];
+        rect1.h = i[3];
         clips.push_back(rect1);
     }
     auto* rc = createRenderComponent(config->getSprites_sheet(),clips);
@@ -93,17 +93,17 @@ std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
             //std::cout << map[y][x] << " ";
             if(map[y][x] == 1 || map[y][x] == 3 || map[y][x] == 4)
             {
+                config->createEntity("wall_tile",tile_width,this);
                 auto *entity = new Entity();
                 auto* pc = new PositionComponent();
                 pc->x = x;
                 pc->y = y;
-                std::vector<SDL_Rect*> clips;
-                SDL_Rect* rect = new SDL_Rect();
-                // TODO : do not hardcode tile width on sprites sheet
-                rect->x = x * 8;
-                rect->y = y * 8;
-                rect->w = 8;
-                rect->h = 8;
+                std::vector<clip> clips;
+                clip rect;
+                rect.x = x * 8;
+                rect.y = y * 8;
+                rect.w = 8;
+                rect.h = 8;
                 clips.push_back(rect);
                 auto *cc = new CollisionComponent();
                 cc->collision_box[0] = 0;
@@ -158,7 +158,7 @@ TimerSystem* SDL_Factory::createTimerSystem(int fps)
     return new SDL_TimerSystem(fps);
 }
 
-SDL_RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::vector<SDL_Rect*> clips)
+RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::vector<clip> clips)
 {
     auto* to_return = new SDL_RenderComponent();
     SDL_Texture *newTexture = nullptr;
@@ -191,11 +191,23 @@ SDL_RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::v
         SDL_QueryTexture(newTexture, nullptr, nullptr, &to_return->width, &to_return->height);
     else
     {
-        to_return->width = clips[0]->w;
-        to_return->height = clips[0]->h;
+        to_return->width = clips[0].w;
+        to_return->height = clips[0].h;
     }
     to_return->texture = newTexture;
-    to_return->clips = std::move(clips);
+
+    std::vector<SDL_Rect*> sdl_clips = std::vector<SDL_Rect*>();
+    for(auto clip : clips)
+    {
+        SDL_Rect* rect = new SDL_Rect();
+        rect->x = clip.x;
+        rect->y = clip.y;
+        rect->w = clip.w;
+        rect->h = clip.h;
+        sdl_clips.push_back(rect);
+    }
+    to_return->clips = std::move(sdl_clips);
+
     return to_return;
 }
 
