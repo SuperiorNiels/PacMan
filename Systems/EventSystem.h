@@ -9,7 +9,9 @@
 
 enum events_numbers
 {
-    R_BUTTON
+    R_BUTTON,
+    P_BUTTON,
+    O_BUTTON
 };
 
 class EventSystem : public System

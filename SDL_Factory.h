@@ -26,6 +26,7 @@ private:
     SDL_RenderComponent* createRenderComponent(std::string path, std::vector<SDL_Rect*> clips = std::vector<SDL_Rect*>());
     SDL_RenderSystem* renderSystem = nullptr;
     std::unordered_map<std::string,SDL_Texture*> loadedTextures = std::unordered_map<std::string,SDL_Texture*>();
+    void clearTextures();
 };
 
 

@@ -44,7 +44,7 @@ Entity* SDL_Factory::createPacMan(int x, int y)
 
 Entity* SDL_Factory::createGhost(int x, int y, ghost_color color)
 {
-    // Create empty entity and add components
+    int tile_width = renderSystem->getTile_width();
     auto* e = new Entity();
     auto* p = new PositionComponent();
     p->x = x;
@@ -67,12 +67,13 @@ Entity* SDL_Factory::createGhost(int x, int y, ghost_color color)
     rc->direction_offsets[1] = 0;
     rc->direction_offsets[2] = 4;
     rc->direction_offsets[3] = 6;
+    rc->scale = tile_width/8;
     e->addComponent(rc);
     auto *cc = new CollisionComponent();
-    cc->collision_box[0] = 2;
-    cc->collision_box[1] = 2;
-    cc->collision_box[2] = 8;
-    cc->collision_box[3] = 8;
+    cc->collision_box[0] = 0;
+    cc->collision_box[1] = 0;
+    cc->collision_box[2] = tile_width;
+    cc->collision_box[3] = tile_width;
     e->addComponent(cc);
     e->addComponent(new MovableComponent());
     e->addComponent(new AIComponent());
@@ -120,6 +121,8 @@ std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
             }
             if(map[y][x] == 5)
                 entities.push_back(createPacMan(x,y));
+            if(map[y][x] == 6)
+                entities.push_back(createGhost(x,y,RED_GHOST));
         }
         //std::cout << std::endl;
     }
@@ -129,11 +132,10 @@ std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
 RenderSystem* SDL_Factory::createRenderSystem(World* world, int screen_width, int screen_height)
 {
     // Check if render system already exists
-    if(renderSystem == nullptr)
-    {
-        renderSystem = new SDL_RenderSystem(world,screen_width,screen_height);
-    }
-    return renderSystem;
+    SDL_RenderSystem* res = new SDL_RenderSystem(world,screen_width,screen_height);
+    clearTextures();
+    renderSystem = res;
+    return res;
 }
 
 EventSystem* SDL_Factory::createEventSystem(double speed)
@@ -187,12 +189,16 @@ SDL_RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::v
     return to_return;
 }
 
-SDL_Factory::~SDL_Factory()
+void SDL_Factory::clearTextures()
 {
     for(auto it = loadedTextures.begin(); it != loadedTextures.end(); it++)
     {
         SDL_DestroyTexture(it->second);
     }
     loadedTextures.clear();
+}
 
+SDL_Factory::~SDL_Factory()
+{
+    clearTextures();
 }

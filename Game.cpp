@@ -14,10 +14,10 @@ void Game::init()
     Game::world = new World(collision_map);
     Game::manager = new SystemManager();
     Game::timer = factory->createTimerSystem(60);
-    Game::render = factory->createRenderSystem(world,224*4,248*4);
+    Game::render = factory->createRenderSystem(world,224*3,248*3);
     Game::events = factory->createEventSystem(1);
     manager->registerSystem(Game::events);
-    //manager->registerSystem(new AISystem());
+    manager->registerSystem(new AISystem());
     manager->registerSystem(new MovementSystem(world));
     manager->registerSystem(new CollisionSystem());
     manager->registerSystem(Game::render);
@@ -45,6 +45,24 @@ void Game::run()
                 manager->clearEntities();
                 createGame();
                 //std::cout << "Game reset!" << std::endl;
+            }
+            else if(event == P_BUTTON)
+            {
+                manager->removeSystem(Game::render);
+                delete Game::render;
+                Game::render = factory->createRenderSystem(world,224,248);
+                manager->registerSystem(Game::render);
+                manager->clearEntities();
+                createGame();
+            }
+            else if(event == O_BUTTON)
+            {
+                manager->removeSystem(Game::render);
+                delete Game::render;
+                Game::render = factory->createRenderSystem(world,224*3,248*3);
+                manager->registerSystem(Game::render);
+                manager->clearEntities();
+                createGame();
             }
         }
         timer->cap();

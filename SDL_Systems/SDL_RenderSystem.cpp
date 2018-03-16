@@ -70,7 +70,7 @@ void SDL_RenderSystem::update()
             {
                 int x = (int) floor(p->x * tile_width);
                 int y = (int) floor(p->y * tile_width);
-                if(e->hasComponentType(PLAYER_INPUT_COMPONENT))
+                if(e->hasComponentType(PLAYER_INPUT_COMPONENT) || e->hasComponentType(AI_COMPONENT))
                 {
                     x = (int) floor((p->x-(0.3*tile_width*(1.f/tile_width))) * tile_width);
                     y = (int) floor((p->y-(0.3*tile_width*(1.f/tile_width))) * tile_width);
@@ -112,8 +112,8 @@ void SDL_RenderSystem::update()
                     position.h = (int)floor(clip->h*rc->scale);
                     rc->count++;
                 }
-                //renderCollisionBox(e);
-                SDL_RenderCopy(renderer, rc->texture, clip, &position);
+                renderCollisionBox(e);
+                //SDL_RenderCopy(renderer, rc->texture, clip, &position);
                 //std::cout << "[SDL_Render] Entity id: " << e->id << " rendered." << std::endl;
             }
         }
@@ -136,7 +136,7 @@ void SDL_RenderSystem::renderCollisionBox(Entity *e)
         if(e->hasComponentType(AI_COMPONENT))
         {
             SDL_SetRenderDrawColor(renderer, 0xFF, 0, 0, 0xFF);
-            SDL_RenderDrawRect(renderer, &aa);
+            SDL_RenderFillRect(renderer, &aa);
         }
         else if(e->hasComponentType(MOVABLE_COMPONENT))
         {
@@ -151,7 +151,7 @@ void SDL_RenderSystem::renderCollisionBox(Entity *e)
         else
         {
             SDL_SetRenderDrawColor(renderer, 0, 0, 0xFF, 0xFF);
-            SDL_RenderDrawRect(renderer, &aa);
+            SDL_RenderFillRect(renderer, &aa);
         }
     }
 }

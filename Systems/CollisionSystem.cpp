@@ -61,7 +61,10 @@ void CollisionSystem::update()
                     {
                         if(e->hasComponentType(POINTS_COMPONENT))
                         {
-                            e->clearComponents();
+                            auto* rc = e->getComponentByType<RenderComponent>(RENDER_COMPONENT);
+                            rc->visible = false;
+                            //TODO : add dots to different list, no collision with ghosts!!
+                            //e->clearComponents();
                         }
                         else
                         {

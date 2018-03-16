@@ -18,6 +18,7 @@ public:
     void registerEntity(Entity* e);
     void unregisterEntity(Entity* e);
     void clearEntities();
+    void removeSystem(System* s);
     ~SystemManager();
 private:
     std::vector<System*> systems = std::vector<System*>();

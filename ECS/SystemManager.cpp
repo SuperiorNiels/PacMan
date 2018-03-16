@@ -88,6 +88,18 @@ void SystemManager::clearEntities()
     entities.clear();
 }
 
+void SystemManager::removeSystem(System *s)
+{
+    for(auto it = systems.begin(); it != systems.end(); it++)
+    {
+        if(it.operator*() == s)
+        {
+            systems.erase(it);
+            break;
+        }
+    }
+}
+
 SystemManager::~SystemManager()
 {
     for(auto& e : entities)
