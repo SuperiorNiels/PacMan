@@ -17,7 +17,7 @@
 class AbstractFactory {
 public:
     virtual Entity* createPacMan(int x, int y) = 0;
-    virtual Entity* createGhost(int x, int y, ghost_color color) = 0;
+    virtual Entity* createGhost(int x, int y, int color) = 0;
     virtual RenderSystem* createRenderSystem(World* world, int screen_width, int screen_height) = 0;
     virtual EventSystem* createEventSystem(double speed) = 0;
     virtual TimerSystem* createTimerSystem(int fps) = 0;

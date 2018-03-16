@@ -47,7 +47,7 @@ class AIComponent : public Component
 public:
     AIComponent() { type = AI_COMPONENT; }
     int count = 0;
-    int length = 50;
+    int length = 1;
 };
 
 class RenderComponent : public Component

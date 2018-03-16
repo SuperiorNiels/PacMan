@@ -42,7 +42,7 @@ Entity* SDL_Factory::createPacMan(int x, int y)
     return e;
 }
 
-Entity* SDL_Factory::createGhost(int x, int y, ghost_color color)
+Entity* SDL_Factory::createGhost(int x, int y, int color)
 {
     int tile_width = renderSystem->getTile_width();
     auto* e = new Entity();
@@ -119,12 +119,22 @@ std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
                     entity->addComponent(new PointsComponent);
                 entities.push_back(entity);
             }
+        }
+        //std::cout << std::endl;
+    }
+    int i = 0;
+    for(int x=0;x<world->getWidth();x++)
+    {
+        for (int y = 0; y < world->getHeight(); y++)
+        {
             if(map[y][x] == 5)
                 entities.push_back(createPacMan(x,y));
             if(map[y][x] == 6)
-                entities.push_back(createGhost(x,y,RED_GHOST));
+            {
+                entities.push_back(createGhost(x, y, RED_GHOST+i));
+                i++;
+            }
         }
-        //std::cout << std::endl;
     }
     return entities;
 }
