@@ -7,10 +7,10 @@
 
 #include <iostream>
 #include <istream>
-#include <map>
 #include "ECS/ECS.h"
 #include "PacMan_Components.h"
 #include "TinyXML/tinyxml2.h"
+#include "SDL_Factory.h"
 
 using namespace tinyxml2;
 
@@ -24,9 +24,10 @@ public:
     int getScreen_y() const;
     const std::string &getCollision_map() const;
     const std::string &getSprites_sheet() const;
+    AbstractFactory *getFactory() const;
     Entity* createEntity(std::string entity_name, int tile_width, int x=0, int y=0);
 private:
-    //AbstractFactory* factory;
+    AbstractFactory* factory = nullptr;
     XMLDocument doc;
     int fps = 0;
     int screen_x = 0;

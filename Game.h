@@ -5,21 +5,21 @@
 #ifndef ECS_GAME_H
 #define ECS_GAME_H
 
-
+#include "World.h"
+#include "Config.h"
 #include "AbstractFactory.h"
 #include "ECS/SystemManager.h"
 #include "Systems/MovementSystem.h"
 #include "Systems/AISystem.h"
 #include "Systems/EventSystem.h"
 #include "Systems/CollisionSystem.h"
-#include "World.h"
 #include "Systems/RenderSystem.h"
-#include "Config.h"
 
-class Game {
+class Game
+{
 public:
     Game() = delete;
-    Game(AbstractFactory* factory, Config* config);
+    explicit Game(Config* config);
     void init();
     void run();
     void createGame();
@@ -33,6 +33,5 @@ private:
     RenderSystem* render = nullptr;
     World* world = nullptr;
 };
-
 
 #endif //ECS_GAME_H

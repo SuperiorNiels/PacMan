@@ -8,15 +8,19 @@
 #include <iostream>
 #include <unordered_map>
 #include "AbstractFactory.h"
-#include "SDL_Systems/SDL_RenderSystem.h"
 #include "SDL_Components.h"
+#include "SDL_Systems/SDL_RenderSystem.h"
 #include "SDL_Systems/SDL_EventSystem.h"
 #include "SDL_Systems/SDL_TimerSystem.h"
+#include "Config.h"
 
-class SDL_Factory : public AbstractFactory {
+class Config;
+
+class SDL_Factory : public AbstractFactory
+{
 public:
     SDL_Factory() = delete;
-    SDL_Factory(Config* config) : AbstractFactory(config) {};
+    SDL_Factory(Config* config) { SDL_Factory::config = config; };
     Entity* createPacMan(int x,int y) override;
     Entity* createGhost(int x,int y, int color) override;
     RenderSystem* createRenderSystem(World* world, int screen_width, int screen_height) override;
@@ -26,10 +30,10 @@ public:
     std::vector<Entity *> createWorldEntities(World *world) override;
     ~SDL_Factory() override;
 private:
-
     SDL_RenderSystem* renderSystem = nullptr;
     std::unordered_map<std::string,SDL_Texture*> loadedTextures = std::unordered_map<std::string,SDL_Texture*>();
     void clearTextures();
+    Config* config;
 };
 
 

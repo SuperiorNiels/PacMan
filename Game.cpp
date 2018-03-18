@@ -4,10 +4,10 @@
 
 #include "Game.h"
 
-Game::Game(AbstractFactory *factory, Config* config)
+Game::Game(Config* config)
 {
-    Game::factory = factory;
     Game::config = config;
+    Game::factory = config->getFactory();
 }
 
 void Game::init()

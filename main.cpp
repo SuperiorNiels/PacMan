@@ -5,8 +5,7 @@
 
 int main()
 {
-    Config* config = new Config("../data/config.xml");
-    auto* game = new Game(new SDL_Factory(config), config);
+    auto* game = new Game(new Config("../data/config.xml"));
     game->init();
     game->run();
     delete game;

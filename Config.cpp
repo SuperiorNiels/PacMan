@@ -14,7 +14,13 @@ Config::Config(std::string path)
     collision_map = doc.FirstChildElement("pacman")->FirstChildElement("game")->FirstChildElement("collision")->GetText();
     sprites_sheet = doc.FirstChildElement("pacman")->FirstChildElement("game")->FirstChildElement("sprites")->GetText();
     doc.FirstChildElement("pacman")->FirstChildElement("game")->FirstChildElement("sprites")->QueryIntAttribute("tile_width", &sprite_tile_width);
-    std::cout << "config loaded." << std::endl;
+    std::string graphics = doc.FirstChildElement("pacman")->FirstChildElement("game")->FirstChildElement("graphics")->GetText();
+    if(graphics == "SDL")
+    {
+        // Create SDL factory
+        factory = new SDL_Factory(this);
+    }
+    std::cout << "Config loaded." << std::endl;
 }
 
 Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int y)
@@ -88,4 +94,9 @@ const std::string &Config::getCollision_map() const
 const std::string &Config::getSprites_sheet() const
 {
     return sprites_sheet;
+}
+
+AbstractFactory *Config::getFactory() const
+{
+    return factory;
 }
