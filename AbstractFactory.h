@@ -17,7 +17,7 @@ class AbstractFactory
 {
 public:
     AbstractFactory() = default;
-    //AbstractFactory(Config* config) { AbstractFactory::config = config; };
+    //AbstractFactory(Config* config) { AbstractFactory::config = config; }; // fixme: add config to abstract factory?
     virtual Entity* createPacMan(int x, int y) = 0;
     virtual Entity* createGhost(int x, int y, int color) = 0;
     virtual RenderSystem* createRenderSystem(World* world, int screen_width, int screen_height) = 0;
