@@ -33,7 +33,7 @@ private:
     SDL_RenderSystem* renderSystem = nullptr;
     std::unordered_map<std::string,SDL_Texture*> loadedTextures = std::unordered_map<std::string,SDL_Texture*>();
     void clearTextures();
-    Config* config;
+    Config* config = nullptr;
 };
 
 

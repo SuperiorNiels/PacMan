@@ -47,28 +47,68 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
         }
         if(entity_config->FirstChildElement("render_component") != nullptr)
         {
-            if(entity_config->FirstChildElement("render_component")->FirstChildElement("clips") != nullptr)
+            std::vector<clip> clips = std::vector<clip>();
+            auto* render_config = entity_config->FirstChildElement("render_component");
+            if(render_config->FirstChildElement("clips") != nullptr)
             {
-                auto* clip_config = entity_config->FirstChildElement("render_component")->FirstChildElement("clips");
+                auto* clip_config = render_config->FirstChildElement("clips");
                 int total;
                 clip_config->QueryIntAttribute("total", &total);
                 for(int i=0;i<total;i++)
                 {
-                    // TODO: maybe add check if clip exists?
                     clip c;
-                    clip_config->FirstChildElement("clip");
-
+                    if(i == 0)
+                        clip_config = clip_config->FirstChildElement("clip");
+                    else
+                        clip_config = clip_config->NextSiblingElement();
+                    if(clip_config != nullptr)
+                    {
+                        clip_config->QueryIntAttribute("x",&c.x);
+                        clip_config->QueryIntAttribute("y",&c.y);
+                        clip_config->QueryIntAttribute("w",&c.w);
+                        clip_config->QueryIntAttribute("h",&c.h);
+                        if(c.x == -1) c.x = x * sprite_tile_width;
+                        if(c.y == -1) c.y = y * sprite_tile_width;
+                        if(c.h == -1) c.h = sprite_tile_width;
+                        if(c.w == -1) c.w = sprite_tile_width;
+                        clips.push_back(c);
+                    }
                 }
             }
-
-            //auto* rc = factory->createRenderComponent(sprites_sheet);
-            //e->addComponent(rc);
+            auto* rc = factory->createRenderComponent(sprites_sheet,clips);
+            if(render_config->FirstChildElement("animation_length") != nullptr)
+                render_config->FirstChildElement("animation_length")->QueryIntAttribute("value",&rc->animation_length);
+            if(render_config->FirstChildElement("animation_speed") != nullptr)
+                render_config->FirstChildElement("animation_speed")->QueryIntAttribute("value",&rc->animation_speed);
+            if(render_config->FirstChildElement("direction_offset") != nullptr)
+            {
+                render_config->FirstChildElement("direction_offset")->QueryIntAttribute("left",&rc->direction_offsets[0]);
+                render_config->FirstChildElement("direction_offset")->QueryIntAttribute("right",&rc->direction_offsets[1]);
+                render_config->FirstChildElement("direction_offset")->QueryIntAttribute("up",&rc->direction_offsets[2]);
+                render_config->FirstChildElement("direction_offset")->QueryIntAttribute("down",&rc->direction_offsets[3]);
+            }
+            rc->scale = tile_width/sprite_tile_width;
+            e->addComponent(rc);
         }
+        if(entity_config->FirstChildElement("points_component") != nullptr)
+        {
+            e->addComponent(new PointsComponent());
+        }
+        if(entity_config->FirstChildElement("movable_component") != nullptr)
+        {
+            e->addComponent(new MovableComponent());
+        }
+        if(entity_config->FirstChildElement("player_input_component") != nullptr)
+        {
+            e->addComponent(new PlayerInputComponent());
+        }
+        if(entity_config->FirstChildElement("ai_component") != nullptr)
+        {
+            e->addComponent(new AIComponent());
+        }
+        return e;
     }
-    else
-    {
-        std::cout << "entity not found." << std::endl;
-    }
+    return nullptr;
 }
 
 int Config::getFps() const
