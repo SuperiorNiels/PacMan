@@ -12,6 +12,7 @@ Game::Game(Config* config)
 
 void Game::init()
 {
+    delete world;
     Game::world = new World(config->getCollision_map());
     Game::manager = new SystemManager();
     Game::timer = factory->createTimerSystem(config->getFps());
