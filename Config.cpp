@@ -23,7 +23,7 @@ Config::Config(std::string path)
     std::cout << "Config loaded." << std::endl;
 }
 
-Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int y)
+Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int y, int x_offset, int y_offset)
 {
     auto* entity_config = doc.FirstChildElement("pacman")->FirstChildElement("entities")->FirstChildElement(entity_name.c_str());
     if(entity_config != nullptr)
@@ -67,6 +67,11 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
                         clip_config->QueryIntAttribute("y",&c.y);
                         clip_config->QueryIntAttribute("w",&c.w);
                         clip_config->QueryIntAttribute("h",&c.h);
+                        int x_off, y_off = 0;
+                        render_config->FirstChildElement("clips")->QueryIntAttribute("x_offset", &x_off);
+                        render_config->FirstChildElement("clips")->QueryIntAttribute("y_offset", &y_off);
+                        c.x = c.x + (x_offset*x_off);
+                        c.y = c.y + (y_offset*y_off);
                         if(c.x == -1) c.x = x * sprite_tile_width;
                         if(c.y == -1) c.y = y * sprite_tile_width;
                         if(c.h == -1) c.h = sprite_tile_width;

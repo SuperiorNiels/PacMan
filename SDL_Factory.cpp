@@ -11,7 +11,7 @@ Entity* SDL_Factory::createPacMan(int x, int y)
 
 Entity* SDL_Factory::createGhost(int x, int y, int color)
 {
-    return config->createEntity("ghost",renderSystem->getTile_width(),x,y);
+    return config->createEntity("ghost",renderSystem->getTile_width(),x,y,0,color);
 }
 
 std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
