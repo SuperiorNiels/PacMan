@@ -28,7 +28,7 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
     auto* entity_config = doc.FirstChildElement("pacman")->FirstChildElement("entities")->FirstChildElement(entity_name.c_str());
     if(entity_config != nullptr)
     {
-        std::cout << "entity found." << std::endl;
+        //std::cout << "entity found." << std::endl;
         Entity* e = new Entity();
         if(entity_config->FirstChildElement("position_component") != nullptr)
         {

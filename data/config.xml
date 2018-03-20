@@ -70,12 +70,12 @@
                 </clips>
                 <animation_length value="2"/>
                 <animation_speed value="4"/>
-                <direction_offset left="2" right="0" up="4" down="6"/>
+                <direction_offset down="2" right="0" left="4" up="6"/> <!-- fixme: ghost down animation is wrong -->
             </render_component>
             <collision_component />
             <points_component />
             <movable_component />
-            <ai_component />khfcx
+            <ai_component />
         </ghost>
     </entities>
 </pacman>
