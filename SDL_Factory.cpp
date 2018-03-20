@@ -6,79 +6,12 @@
 
 Entity* SDL_Factory::createPacMan(int x, int y)
 {
-    int tile_width = renderSystem->getTile_width();
-    // Create empty entity and add components
-    auto* e = new Entity();
-    auto* pc = new PositionComponent();
-    pc->x = x;
-    pc->y = y;
-    std::vector<clip> clips = std::vector<clip>();
-    for (auto &i : pacman) {
-        clip rect1;
-        rect1.x = i[0]; // 908
-        rect1.y = i[1];
-        rect1.w = i[2];
-        rect1.h = i[3];
-        clips.push_back(rect1);
-    }
-    auto* rc = createRenderComponent(config->getSprites_sheet(),clips);
-    rc->animation_length = 3;
-    rc->animation_speed = 4;
-    rc->direction_offsets[0] = 3;
-    rc->direction_offsets[1] = 0;
-    rc->direction_offsets[2] = 6;
-    rc->direction_offsets[3] = 9;
-    rc->scale = tile_width/8;
-    auto *cc = new CollisionComponent();
-    cc->collision_box[0] = 0;
-    cc->collision_box[1] = 0;
-    cc->collision_box[2] = tile_width;
-    cc->collision_box[3] = tile_width;
-    e->addComponent(pc);
-    e->addComponent(cc);
-    e->addComponent(rc);
-    e->addComponent(new MovableComponent());
-    e->addComponent(new PlayerInputComponent());
-    return e;
+    return config->createEntity("player",renderSystem->getTile_width(),x,y);
 }
 
 Entity* SDL_Factory::createGhost(int x, int y, int color)
 {
-    int tile_width = renderSystem->getTile_width();
-    auto* e = new Entity();
-    auto* p = new PositionComponent();
-    p->x = x;
-    p->y = y;
-    e->addComponent(p);
-
-    std::vector<clip> clips = std::vector<clip>();
-    for (auto &i : ghost) {
-        clip rect1;
-        rect1.x = i[0];
-        rect1.y = i[1]+(16*(color%4));
-        rect1.w = i[2];
-        rect1.h = i[3];
-        clips.push_back(rect1);
-    }
-    auto* rc = createRenderComponent(config->getSprites_sheet(),clips);
-    rc->animation_length = 2;
-    rc->animation_speed = 4;
-    rc->direction_offsets[0] = 2;
-    rc->direction_offsets[1] = 0;
-    rc->direction_offsets[2] = 4;
-    rc->direction_offsets[3] = 6;
-    rc->scale = tile_width/8;
-    e->addComponent(rc);
-    auto *cc = new CollisionComponent();
-    cc->collision_box[0] = 0;
-    cc->collision_box[1] = 0;
-    cc->collision_box[2] = tile_width;
-    cc->collision_box[3] = tile_width;
-    e->addComponent(cc);
-    e->addComponent(new MovableComponent());
-    e->addComponent(new AIComponent());
-    e->addComponent(new CollisionComponent());
-    return e;
+    return config->createEntity("ghost",renderSystem->getTile_width(),x,y);
 }
 
 std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
@@ -91,35 +24,19 @@ std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
         for(int y=0;y<world->getHeight();y++)
         {
             //std::cout << map[y][x] << " ";
-            if(map[y][x] == 1 || map[y][x] == 3 || map[y][x] == 4)
+            Entity* entity = nullptr;
+            if(map[y][x] == 1)
             {
-                config->createEntity("wall_tile",tile_width);
-                auto *entity = new Entity();
-                auto* pc = new PositionComponent();
-                pc->x = x;
-                pc->y = y;
-                std::vector<clip> clips;
-                clip rect;
-                rect.x = x * 8;
-                rect.y = y * 8;
-                rect.w = 8;
-                rect.h = 8;
-                clips.push_back(rect);
-                auto *cc = new CollisionComponent();
-                cc->collision_box[0] = 0;
-                cc->collision_box[1] = 0;
-                cc->collision_box[2] = tile_width;
-                cc->collision_box[3] = tile_width;
-                auto* rc = createRenderComponent(config->getSprites_sheet(),clips);
-                rc->scale = tile_width/8;
-                entity->addComponent(rc);
-                entity->addComponent(pc);
-                entity->addComponent(cc);
-                if(map[y][x] == 3 || map[y][x] == 4)
-                    entity->addComponent(new PointsComponent);
-                entities.push_back(entity);
+                entity = config->createEntity("wall_tile",tile_width, x, y);
             }
+            else if(map[y][x] == 3 || map[y][x] == 4)
+            {
+                entity = config->createEntity("point",tile_width, x, y);
+            }
+            if(entity != nullptr)
+                entities.push_back(entity);
         }
+
         //std::cout << std::endl;
     }
     int i = 0;
@@ -167,13 +84,15 @@ RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::vecto
     {
         // First load image in surface
         SDL_Surface *currentImage = IMG_Load(path.c_str());
-        if (currentImage == nullptr) {
+        if (currentImage == nullptr)
+        {
             std::cout << "Unable to load image! Error: " << SDL_GetError() << std::endl;
             return nullptr;
         } else {
             SDL_SetColorKey(currentImage, SDL_TRUE, SDL_MapRGB(currentImage->format, 0, 0, 0));
             newTexture = SDL_CreateTextureFromSurface(renderSystem->renderer, currentImage);
-            if (newTexture == nullptr) {
+            if (newTexture == nullptr)
+            {
                 std::cout << "Unable to create texture from surface. Error: " << SDL_GetError() << std::endl;
                 return nullptr;
             }

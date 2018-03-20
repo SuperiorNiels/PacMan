@@ -55,7 +55,7 @@ class RenderComponent : public Component
 public:
     RenderComponent() { type = RENDER_COMPONENT; }
     int width = 0;
-    int height = 0;
+    int height = 0; // fixme: width en height nodig?
     bool visible = true;
     int animation_length = 1;
     int animation_speed = 10;
