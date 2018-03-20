@@ -23,7 +23,7 @@ void AISystem::update()
         {
             if(a->count > a->length)
             {
-                a->length = rand() % 250 + 20;
+                a->length = rand() % 10 + 1;
                 int r = rand() % 4 + 1;
                 m->x_speed = -1;
                 m->y_speed = 0;

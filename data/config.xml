@@ -1,0 +1,81 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pacman>
+    <game fps="30" screen_x="448" screen_y="496"> <!-- 496 -->
+        <collision>../data/collision.map</collision>
+        <sprites tile_width="8">../data/sprites.png</sprites>
+        <graphics>SDL</graphics>
+    </game>
+    <entities>
+        <wall_tile>
+            <position_component />
+            <render_component>
+                <clips total="1">
+                    <!-- x:y: -1 == get coordinates from map, w:h: -1 == tile_width -->
+                    <clip x="-1" y="-1" w="-1" h="-1"/>
+                </clips>
+            </render_component>
+            <collision_component />
+        </wall_tile>
+        <point>
+            <position_component />
+            <render_component>
+                <clips total="1">
+                    <!-- x:y: -1 == get coordinates from map, w:h: -1 == tile_width -->
+                    <clip x="-1" y="-1" w="-1" h="-1"/>
+                </clips>
+            </render_component>
+            <collision_component />
+            <points_component />
+        </point>
+        <player>
+            <position_component />
+            <render_component>
+                <clips total="12">
+                    <clip x="489" y="1" w="13" h="13"/>
+                    <clip x="473" y="1" w="13" h="13"/>
+                    <clip x="457" y="1" w="13" h="13"/>
+                    <clip x="489" y="1" w="13" h="13"/>
+                    <clip x="473" y="17" w="13" h="13"/>
+                    <clip x="457" y="17" w="13" h="13"/>
+                    <clip x="489" y="1" w="13" h="13"/>
+                    <clip x="473" y="34" w="13" h="13"/>
+                    <clip x="457" y="34" w="13" h="13"/>
+                    <clip x="489" y="1" w="13" h="13"/>
+                    <clip x="473" y="49" w="13" h="13"/>
+                    <clip x="457" y="49" w="13" h="13"/>
+                </clips>
+                <animation_length value="3"/>
+                <animation_speed value="4"/>
+                <direction_offset left="3" right="0" up="6" down="9"/>
+            </render_component>
+            <collision_component />
+            <points_component />
+            <movable_component />
+            <player_input_component />
+        </player>
+        <ghost>
+            <position_component />
+            <render_component>
+                <clips total="8">
+                    <clip x="457" y="65" w="14" h="13"/>
+                    <clip x="473" y="65" w="14" h="13"/>
+                    <clip x="489" y="65" w="14" h="13"/>
+                    <clip x="457" y="65" w="14" h="13"/>
+                    <clip x="489" y="65" w="14" h="13"/>
+                    <clip x="505" y="65" w="14" h="13"/>
+                    <clip x="521" y="65" w="14" h="13"/>
+                    <clip x="537" y="65" w="14" h="13"/>
+                    <clip x="553" y="65" w="14" h="13"/>
+                    <clip x="569" y="65" w="14" h="13"/>
+                </clips>
+                <animation_length value="2"/>
+                <animation_speed value="4"/>
+                <direction_offset left="2" right="0" up="4" down="6"/>
+            </render_component>
+            <collision_component />
+            <points_component />
+            <movable_component />
+            <ai_component />khfcx
+        </ghost>
+    </entities>
+</pacman>

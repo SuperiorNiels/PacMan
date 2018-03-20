@@ -24,16 +24,16 @@ class PositionComponent : public Component
 {
 public:
     PositionComponent() { type = POSITION_COMPONENT; };
-    int x = 0;
-    int y = 0;
+    double x = 0;
+    double y = 0;
 };
 
 class MovableComponent : public Component
 {
 public:
     MovableComponent() { type = MOVABLE_COMPONENT; };
-    int x_speed = 0;
-    int y_speed = 0;
+    double x_speed = 0;
+    double y_speed = 0;
 };
 
 class PlayerInputComponent : public Component
@@ -47,7 +47,7 @@ class AIComponent : public Component
 public:
     AIComponent() { type = AI_COMPONENT; }
     int count = 0;
-    int length = 50;
+    int length = 1;
 };
 
 class RenderComponent : public Component
@@ -55,14 +55,15 @@ class RenderComponent : public Component
 public:
     RenderComponent() { type = RENDER_COMPONENT; }
     int width = 0;
-    int height = 0;
-    bool visable = true;
+    int height = 0; // fixme: width en height nodig?
+    bool visible = true;
     int animation_length = 1;
     int animation_speed = 10;
     int current_frame = 0;
     int count = 0;
     int frame_offset = 0;
     int direction_offsets[4] = {0,0,0,0}; // left,right,up,down
+    double scale = 1;
 };
 
 class CollisionComponent : public Component

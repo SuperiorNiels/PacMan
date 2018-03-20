@@ -8,11 +8,13 @@
 
 #include "../SDL_Components.h"
 #include "../PacMan_Components.h"
+#include "../World.h"
+#include "../Systems/RenderSystem.h"
 
-class SDL_RenderSystem : public System
+class SDL_RenderSystem : public RenderSystem
 {
 public:
-    explicit SDL_RenderSystem();
+    SDL_RenderSystem(World* world, int screen_width, int screen_height);
     SDL_Renderer* renderer = nullptr;
     SDL_Window* window = nullptr;
     void update() override;

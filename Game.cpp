@@ -4,33 +4,33 @@
 
 #include "Game.h"
 
-Game::Game(AbstractFactory *factory)
+Game::Game(Config* config)
 {
-    Game::factory = factory;
+    Game::config = config;
+    Game::factory = config->getFactory();
 }
 
 void Game::init()
 {
-    // Create systemmanager and add rendersystem
+    delete world;
+    Game::world = new World(config->getCollision_map());
     Game::manager = new SystemManager();
-    Game::events = factory->createEventSystem();
-    Game::timer = factory->createTimerSystem(60);
-    System* renderSystem = factory->createRenderSystem();
+    Game::timer = factory->createTimerSystem(config->getFps());
+    Game::render = factory->createRenderSystem(world,config->getScreen_x(),config->getScreen_y());
+    Game::events = factory->createEventSystem(1);
     manager->registerSystem(Game::events);
-    //manager->registerSystem(new AISystem());
-    manager->registerSystem(new MovementSystem());
-    //manager->registerSystem(new CollisionSystem());
-    manager->registerSystem(renderSystem);
+    manager->registerSystem(new AISystem());
+    manager->registerSystem(new MovementSystem(world));
+    manager->registerSystem(new CollisionSystem());
+    manager->registerSystem(Game::render);
+    createGame();
+}
 
-    std::vector<Entity*> world = factory->createWorld();
-    for(auto* e : world)
+void Game::createGame()
+{
+    std::vector<Entity*> map = factory->createWorldEntities(world);
+    for(auto& e : map)
         manager->registerEntity(e);
-
-    manager->registerEntity(factory->createPacMan(106, 182));
-    //manager->registerEntity(factory->createGhost(120, 105, RED_GHOST));
-    //manager->registerEntity(factory->createGhost(88, 105, PINK_GHOST));
-    //manager->registerEntity(factory->createGhost(88, 115, BLUE_GHOST));
-    //manager->registerEntity(factory->createGhost(120, 115, ORANGE_GHOST));
 }
 
 void Game::run()
@@ -39,13 +39,49 @@ void Game::run()
     {
         timer->start();
         manager->updateSystems();
+        manager->updateEntities();
+        for(auto event : events->getEvents())
+        {
+            if(event == R_BUTTON)
+            {
+                manager->clearEntities();
+                createGame();
+                //std::cout << "Game reset!" << std::endl;
+            }
+            else if(event == P_BUTTON)
+            {
+                manager->removeSystem(Game::render);
+                delete Game::render;
+                Game::render = factory->createRenderSystem(world,224,248);
+                manager->registerSystem(Game::render);
+                manager->clearEntities();
+                createGame();
+            }
+            else if(event == O_BUTTON)
+            {
+                manager->removeSystem(Game::render);
+                delete Game::render;
+                Game::render = factory->createRenderSystem(world,224*3,248*3);
+                manager->registerSystem(Game::render);
+                manager->clearEntities();
+                createGame();
+            }
+            else if(event == M_BUTTON)
+            {
+                manager->lol();
+                manager->updateEntities();
+            }
+        }
         timer->cap();
     }
 }
 
 Game::~Game()
 {
+    delete config;
     delete manager;
     delete factory;
+    delete world;
+    delete timer;
 }
 

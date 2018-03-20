@@ -24,7 +24,8 @@ public:
     CollisionSystem();
     void update() override;
     void addEntity(Entity* e) override;
-    bool checkCollision(box a, box b);
+    void removeEntity(entityID id) override;
+    bool entityInSystem(entityID id) override;
 private:
     std::vector<Entity*> to_check = std::vector<Entity*>();
 };

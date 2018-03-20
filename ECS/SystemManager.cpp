@@ -12,9 +12,29 @@ void SystemManager::updateSystems()
     }
 }
 
+void SystemManager::updateEntities()
+{
+    // Check if entity belongs in system and add to new system (when needed)
+    for(auto& e : entities)
+    {
+        if(e->getComponentsSize() != 0)
+        {
+            for (auto &s : systems)
+            {
+                if (!s->checkEntity(e) && s->entityInSystem(e->id))
+                    s->removeEntity(e->id);
+            }
+            registerEntity(e);
+        }
+        else
+        {
+            unregisterEntity(e);
+        }
+    }
+}
+
 void SystemManager::registerSystem(System *s)
 {
-    // TODO: check if vector is best for keeping the systems (order is important, no doubles)
     bool found = false;
     for(auto& sys : systems)
     {
@@ -29,18 +49,10 @@ void SystemManager::registerSystem(System *s)
 
 void SystemManager::registerEntity(Entity *e)
 {
-    entities.insert(e);
-    for(auto it = systems.begin();it!=systems.end();it++)
+    entities.emplace(e);
+    for(auto* s : systems)
     {
-        System* s = it.operator*();
-        for(auto itr = s->component_types.begin(); itr < s->component_types.end(); itr++)
-        {
-            auto* c = e->getComponentByType<Component>(itr.operator*());
-            if(c != nullptr)
-            {
-                s->addEntity(e);
-            }
-        }
+        s->addEntity(e);
     }
 }
 
@@ -49,15 +61,52 @@ void SystemManager::unregisterEntity(Entity *e)
     // remove the entity from all systems
     for(auto& s : systems)
     {
-        s->removeEntity(e->id);
+        if(s->entityInSystem(e->id))
+            s->removeEntity(e->id);
     }
-    for(auto it = entities.begin();it!=entities.end();it++)
+    for(auto it = entities.begin(); it != entities.end(); it++)
     {
         if(it.operator*()->id == e->id)
         {
+            delete it.operator*();
             entities.erase(it);
             break;
         }
+    }
+}
+
+void SystemManager::clearEntities()
+{
+    for(auto e : entities)
+    {
+        for(auto* s : systems)
+        {
+            s->removeEntity(e->id);
+        }
+        delete e;
+    }
+    entities.clear();
+}
+
+void SystemManager::removeSystem(System *s)
+{
+    for(auto it = systems.begin(); it != systems.end(); it++)
+    {
+        if(it.operator*() == s)
+        {
+            systems.erase(it);
+            break;
+        }
+    }
+}
+
+void SystemManager::lol()
+{
+    for(auto* e : entities)
+    {
+        e->removeComponentByType(COLLISION_COMPONENT);
+        e->addComponent(new MovableComponent());
+        e->addComponent(new AIComponent());
     }
 }
 

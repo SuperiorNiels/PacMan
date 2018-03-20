@@ -14,26 +14,22 @@ public:
     virtual void update() = 0;
     virtual void addEntity(Entity* e);
     virtual void removeEntity(entityID id);
-    std::vector<int8_t> component_types = std::vector<int8_t>();
-    virtual ~System() = default;
+    virtual bool checkEntity(Entity* e);
+    virtual bool entityInSystem(entityID id);
+    virtual ~System();
 protected:
     std::vector<Entity*> entities = std::vector<Entity*>();
+    std::vector<int8_t> component_types = std::vector<int8_t>();
 };
 
 inline void System::addEntity(Entity *e)
 {
-    bool found = false;
-    for(auto it = entities.begin(); it<entities.end(); it++)
+    if(e->hasComponentTypes(component_types))
     {
-        if(it.operator*()->id == e->id)
+        if (!entityInSystem(e->id))
         {
-            found = true;
-            break;
+            entities.push_back(e);
         }
-    }
-    if(!found)
-    {
-        entities.push_back(e);
     }
 }
 
@@ -49,5 +45,25 @@ inline void System::removeEntity(entityID id)
     }
 }
 
+inline bool System::checkEntity(Entity* e)
+{
+    return e->hasComponentTypes(component_types);
+}
+
+inline bool System::entityInSystem(entityID id)
+{
+    for(auto* e: entities)
+    {
+        if(e->id == id)
+            return true;
+    }
+    return false;
+}
+
+inline System::~System()
+{
+    entities.clear();
+    component_types.clear();
+}
 
 #endif //ECS_SYSTEM_H

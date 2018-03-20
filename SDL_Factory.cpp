@@ -3,166 +3,71 @@
 //
 
 #include "SDL_Factory.h"
-#include "Systems/CollisionSystem.h"
-
-#include <fstream>
 
 Entity* SDL_Factory::createPacMan(int x, int y)
 {
-    // Create empty entity and add components
-    auto* e = new Entity();
-    auto* p = new PositionComponent();
-    p->x = x;
-    p->y = y;
-    e->addComponent(p);
-
-    std::vector<SDL_Rect*> clips = std::vector<SDL_Rect*>();
-    for(int i = 0; i < 12 ; i++)
-    {
-        auto* rect1 = new SDL_Rect();
-        rect1->x = pacman[i][0]; // 908
-        rect1->y = pacman[i][1];
-        rect1->w = pacman[i][2];
-        rect1->h = pacman[i][3];
-        clips.push_back(rect1);
-    }
-    auto* rc = createRenderComponent(sprites_sheet,clips);
-    rc->animation_length = 3;
-    rc->animation_speed = 4;
-    rc->direction_offsets[0] = 3;
-    rc->direction_offsets[1] = 0;
-    rc->direction_offsets[2] = 6;
-    rc->direction_offsets[3] = 9;
-    e->addComponent(rc);
-    auto *cc = new CollisionComponent();
-    cc->collision_box[0] = 2;
-    cc->collision_box[1] = 2;
-    cc->collision_box[2] = 8;
-    cc->collision_box[3] = 8;
-    e->addComponent(cc);
-    e->addComponent(new MovableComponent());
-    e->addComponent(new PlayerInputComponent());
-    return e;
+    return config->createEntity("player",renderSystem->getTile_width(),x,y);
 }
 
-Entity* SDL_Factory::createGhost(int x, int y, ghost_color color)
+Entity* SDL_Factory::createGhost(int x, int y, int color)
 {
-    // Create empty entity and add components
-    auto* e = new Entity();
-    auto* p = new PositionComponent();
-    p->x = x;
-    p->y = y;
-    e->addComponent(p);
-
-    std::vector<SDL_Rect*> clips = std::vector<SDL_Rect*>();
-    for(int i = 0; i < 8 ; i++)
-    {
-        auto* rect1 = new SDL_Rect();
-        rect1->x = ghost[i][0];
-        rect1->y = ghost[i][1]+(16*(color%4));
-        rect1->w = ghost[i][2];
-        rect1->h = ghost[i][3];
-        clips.push_back(rect1);
-    }
-    auto* rc = createRenderComponent(sprites_sheet,clips);
-    rc->animation_length = 2;
-    rc->animation_speed = 4;
-    rc->direction_offsets[0] = 2;
-    rc->direction_offsets[1] = 0;
-    rc->direction_offsets[2] = 4;
-    rc->direction_offsets[3] = 6;
-    e->addComponent(rc);
-    auto *cc = new CollisionComponent();
-    cc->collision_box[0] = 2;
-    cc->collision_box[1] = 2;
-    cc->collision_box[2] = 8;
-    cc->collision_box[3] = 8;
-    e->addComponent(cc);
-    e->addComponent(new MovableComponent());
-    e->addComponent(new AIComponent());
-    e->addComponent(new CollisionComponent());
-    return e;
+    return config->createEntity("ghost",renderSystem->getTile_width(),x,y);
 }
 
-std::vector<Entity*> SDL_Factory::createWorld()
+std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
 {
-    std::ifstream in(collision_map);
-    std::vector<Entity*> world;
-
-    int wall_types[28][31];
-    for(int x=0;x<31;x++)
+    std::vector<Entity*> entities = std::vector<Entity*>();
+    int **map = world->getWorld();
+    int tile_width = renderSystem->getTile_width();
+    for(int x=0;x<world->getWidth();x++)
     {
-        for (auto &wall_type : wall_types) {
-            in >> wall_type[x];
-        }
-    }
-
-    for(int x=0;x<28;x++)
-    {
-        for(int y=0;y<31;y++)
+        for(int y=0;y<world->getHeight();y++)
         {
-            auto* e = new Entity();
-            auto* p = new PositionComponent();
-            p->x = x * 8;
-            p->y = y * 8;
-            auto *rect = new SDL_Rect();
-            rect->x = p->x;
-            rect->y = p->y;
-            rect->w = 8;
-            rect->h = 8;
-            std::vector<SDL_Rect*> clips;
-            clips.push_back(rect);
-            if(wall_types[x][y] == 1)
+            //std::cout << map[y][x] << " ";
+            Entity* entity = nullptr;
+            if(map[y][x] == 1)
             {
-                auto *cc = new CollisionComponent();
-                cc->collision_box[0] = 0;
-                cc->collision_box[1] = 0;
-                cc->collision_box[2] = 8;
-                cc->collision_box[3] = 8;
-                e->addComponent(cc);
+                entity = config->createEntity("wall_tile",tile_width, x, y);
             }
-            else if(wall_types[x][y] == 3)
+            else if(map[y][x] == 3 || map[y][x] == 4)
             {
-                auto *cc = new CollisionComponent();
-                cc->collision_box[0] = 3;
-                cc->collision_box[1] = 3;
-                cc->collision_box[2] = 2;
-                cc->collision_box[3] = 2;
-                e->addComponent(cc);
-                e->addComponent(new PointsComponent());
+                entity = config->createEntity("point",tile_width, x, y);
             }
-            else if(wall_types[x][y] == 4)
+            if(entity != nullptr)
+                entities.push_back(entity);
+        }
+
+        //std::cout << std::endl;
+    }
+    int i = 0;
+    for(int x=0;x<world->getWidth();x++)
+    {
+        for (int y = 0; y < world->getHeight(); y++)
+        {
+            if(map[y][x] == 5)
+                entities.push_back(createPacMan(x,y));
+            if(map[y][x] == 6)
             {
-                auto *cc = new CollisionComponent();
-                cc->collision_box[0] = 1;
-                cc->collision_box[1] = 1;
-                cc->collision_box[2] = 6;
-                cc->collision_box[3] = 6;
-                e->addComponent(cc);
-                e->addComponent(new PointsComponent());
+                entities.push_back(createGhost(x, y, RED_GHOST+i));
+                i++;
             }
-            auto* rc = createRenderComponent(sprites_sheet,clips);
-            e->addComponent(p);
-            e->addComponent(rc);
-            world.push_back(e);
         }
     }
-    return world;
+    return entities;
 }
 
-System* SDL_Factory::createRenderSystem()
+RenderSystem* SDL_Factory::createRenderSystem(World* world, int screen_width, int screen_height)
 {
-    // Check if rendersystem already exists
-    if(renderSystem == nullptr)
-    {
-        renderSystem = new SDL_RenderSystem();
-    }
-    return renderSystem;
+    // Check if render system already exists
+    SDL_RenderSystem* res = new SDL_RenderSystem(world,screen_width,screen_height);
+    clearTextures();
+    renderSystem = res;
+    return res;
 }
 
-EventSystem* SDL_Factory::createEventSystem()
+EventSystem* SDL_Factory::createEventSystem(double speed)
 {
-    return new SDL_EventSystem();
+    return new SDL_EventSystem(speed);
 }
 
 TimerSystem* SDL_Factory::createTimerSystem(int fps)
@@ -170,7 +75,7 @@ TimerSystem* SDL_Factory::createTimerSystem(int fps)
     return new SDL_TimerSystem(fps);
 }
 
-SDL_RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::vector<SDL_Rect*> clips)
+RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::vector<clip> clips)
 {
     auto* to_return = new SDL_RenderComponent();
     SDL_Texture *newTexture = nullptr;
@@ -179,13 +84,15 @@ SDL_RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::v
     {
         // First load image in surface
         SDL_Surface *currentImage = IMG_Load(path.c_str());
-        if (currentImage == nullptr) {
+        if (currentImage == nullptr)
+        {
             std::cout << "Unable to load image! Error: " << SDL_GetError() << std::endl;
             return nullptr;
         } else {
             SDL_SetColorKey(currentImage, SDL_TRUE, SDL_MapRGB(currentImage->format, 0, 0, 0));
             newTexture = SDL_CreateTextureFromSurface(renderSystem->renderer, currentImage);
-            if (newTexture == nullptr) {
+            if (newTexture == nullptr)
+            {
                 std::cout << "Unable to create texture from surface. Error: " << SDL_GetError() << std::endl;
                 return nullptr;
             }
@@ -203,15 +110,36 @@ SDL_RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::v
         SDL_QueryTexture(newTexture, nullptr, nullptr, &to_return->width, &to_return->height);
     else
     {
-        to_return->width = clips[0]->w;
-        to_return->height = clips[0]->h;
+        to_return->width = clips[0].w;
+        to_return->height = clips[0].h;
     }
     to_return->texture = newTexture;
-    to_return->clips = std::move(clips);
+
+    std::vector<SDL_Rect*> sdl_clips = std::vector<SDL_Rect*>();
+    for(auto clip : clips)
+    {
+        SDL_Rect* rect = new SDL_Rect();
+        rect->x = clip.x;
+        rect->y = clip.y;
+        rect->w = clip.w;
+        rect->h = clip.h;
+        sdl_clips.push_back(rect);
+    }
+    to_return->clips = std::move(sdl_clips);
+
     return to_return;
+}
+
+void SDL_Factory::clearTextures()
+{
+    for(auto it = loadedTextures.begin(); it != loadedTextures.end(); it++)
+    {
+        SDL_DestroyTexture(it->second);
+    }
+    loadedTextures.clear();
 }
 
 SDL_Factory::~SDL_Factory()
 {
-    delete renderSystem;
+    clearTextures();
 }

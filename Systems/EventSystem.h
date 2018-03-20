@@ -7,14 +7,31 @@
 
 #include "../ECS/ECS.h"
 
+enum events_numbers
+{
+    R_BUTTON,
+    P_BUTTON,
+    O_BUTTON,
+    M_BUTTON
+};
+
 class EventSystem : public System
 {
 public:
-    const bool getRunning() {
+    const bool getRunning()
+    {
         return running;
+    };
+    const std::vector<events_numbers> getEvents()
+    {
+        std::vector<events_numbers> res = events;
+        events.clear();
+        return res;
     };
 protected:
     bool running = true;
+    double speed = 0;
+    std::vector<events_numbers> events = std::vector<events_numbers>();
 };
 
 #endif //ECS_EVENTSYSTEM_H
