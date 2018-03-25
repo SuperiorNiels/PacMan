@@ -65,7 +65,7 @@ void SDL_EventSystem::update()
             if(en->hasComponentType(MOVABLE_COMPONENT))
             {
                 auto* mc = en->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-                mc->dir = dir;
+                mc->wanted_dir = dir;
             }
             if(en->hasComponentType(RENDER_COMPONENT))
             {

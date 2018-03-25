@@ -90,7 +90,7 @@ void SDL_RenderSystem::update()
                     if(e->hasComponentType(MOVABLE_COMPONENT))
                     {
                         auto *m = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-                        if(m->dir == STOP)
+                        if(m->current_dir == STOP)
                             clip = rc->clips[0];
                     }
                     position.w = (int)floor(clip->w*rc->scale);
@@ -121,12 +121,12 @@ void SDL_RenderSystem::renderCollisionBox(Entity *e)
         if(e->hasComponentType(AI_COMPONENT))
         {
             SDL_SetRenderDrawColor(renderer, 0xFF, 0, 0, 0xFF);
-            SDL_RenderFillRect(renderer, &aa);
+            SDL_RenderDrawRect(renderer, &aa);
         }
         else if(e->hasComponentType(MOVABLE_COMPONENT))
         {
             SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0, 0xFF);
-            SDL_RenderFillRect(renderer, &aa);
+            SDL_RenderDrawRect(renderer, &aa);
         }
         else if(e->hasComponentType(POINTS_COMPONENT))
         {
@@ -136,7 +136,7 @@ void SDL_RenderSystem::renderCollisionBox(Entity *e)
         else
         {
             SDL_SetRenderDrawColor(renderer, 0, 0, 0xFF, 0xFF);
-            SDL_RenderFillRect(renderer, &aa);
+            SDL_RenderDrawRect(renderer, &aa);
         }
     }
 }

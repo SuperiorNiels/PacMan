@@ -32,20 +32,21 @@ class MovableComponent : public Component
 {
 public:
     MovableComponent() { type = MOVABLE_COMPONENT; };
-    direction dir = STOP;
+    direction current_dir = STOP;
+    direction wanted_dir = STOP;
     double speed = 1;
 };
 
 class PlayerInputComponent : public Component
 {
 public:
-    PlayerInputComponent() { type = PLAYER_INPUT_COMPONENT;}
+    PlayerInputComponent() { type = PLAYER_INPUT_COMPONENT; };
 };
 
 class AIComponent : public Component
 {
 public:
-    AIComponent() { type = AI_COMPONENT; }
+    AIComponent() { type = AI_COMPONENT; };
     int count = 0;
     int length = 1;
 };
@@ -53,7 +54,7 @@ public:
 class RenderComponent : public Component
 {
 public:
-    RenderComponent() { type = RENDER_COMPONENT; }
+    RenderComponent() { type = RENDER_COMPONENT; };
     int width = 0;
     int height = 0; // fixme: width en height nodig?
     bool visible = true;
@@ -69,14 +70,14 @@ public:
 class CollisionComponent : public Component
 {
 public:
-    CollisionComponent() { type = COLLISION_COMPONENT; }
+    CollisionComponent() { type = COLLISION_COMPONENT; };
     int collision_box[4] = {0,0,0,0}; // x_offset, y_offset, width, height
 };
 
 class PointsComponent : public Component
 {
 public:
-    PointsComponent() { type = POINTS_COMPONENT; }
+    PointsComponent() { type = POINTS_COMPONENT; };
     int points = 0;
 };
 

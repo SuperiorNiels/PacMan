@@ -36,7 +36,6 @@ std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
             if(entity != nullptr)
                 entities.push_back(entity);
         }
-
         //std::cout << std::endl;
     }
     int i = 0;

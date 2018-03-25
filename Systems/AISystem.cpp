@@ -25,21 +25,21 @@ void AISystem::update()
             {
                 a->length = rand() % 10 + 1;
                 int r = rand() % 4 + 1;
-                m->dir = LEFT;
+                m->current_dir = LEFT;
                 rc->frame_offset = rc->direction_offsets[0];
                 if (r == 1)
                 {
-                    m->dir = RIGHT;
+                    m->current_dir = RIGHT;
                     rc->frame_offset = rc->direction_offsets[1];
                 }
                 else if(r == 2)
                 {
-                    m->dir = UP;
+                    m->current_dir = UP;
                     rc->frame_offset = rc->direction_offsets[3];
                 }
                 else if(r == 3)
                 {
-                    m->dir = DOWN;
+                    m->current_dir = DOWN;
                     rc->frame_offset = rc->direction_offsets[2];
                 }
                 a->count = 0;

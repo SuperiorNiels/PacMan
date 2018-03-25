@@ -49,29 +49,49 @@ void CollisionSystem::update()
     {
         for(auto& player : to_check)
         {
-            auto *p = player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-            auto* mc = player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-            for (auto &e : entities)
+            auto* pc = player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+            for (auto& entity : entities)
             {
-                if (e->id != player->id)
+                if (entity->id != player->id)
                 {
-                    auto *p2 = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-                    if((int)floor(p->x) == (int)floor(p2->x) && (int)floor(p->y) == (int)floor(p2->y))
+                    auto *pc2 = entity->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+                    if(entity->hasComponentType(POINTS_COMPONENT))
                     {
-                        if(e->hasComponentType(POINTS_COMPONENT))
+                        if ((int) floor(pc->x) == (int) floor(pc2->x) && (int) floor(pc->y) == (int) floor(pc2->y))
                         {
-                            auto* rc = e->getComponentByType<RenderComponent>(RENDER_COMPONENT);
+                            auto *rc = entity->getComponentByType<RenderComponent>(RENDER_COMPONENT);
                             rc->visible = false;
                             //TODO : add dots to different list, no collision with ghosts!!
-                            //e->clearComponents();
+                            //entity->clearComponents();
+                        }
+                    }
+                    else
+                    {
+                        auto* mc = player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
+                        double wanted_x = pc->x;
+                        double wanted_y = pc->y;
+                        if(mc->wanted_dir == LEFT)
+                            wanted_x -= mc->speed;
+                        else if(mc->wanted_dir == RIGHT)
+                            wanted_x += mc->speed;
+                        else if(mc->wanted_dir == UP)
+                            wanted_y -= mc->speed;
+                        else if(mc->wanted_dir == DOWN)
+                            wanted_y += mc->speed;
+                        std::cout << "wanted: " << mc->wanted_dir << " current: " << mc->current_dir << std::endl;
+                        if ((int) floor(wanted_x) == (int) floor(pc2->x) && (int) floor(wanted_y) == (int) floor(pc2->y))
+                        {
+                            if(mc->current_dir == mc->wanted_dir)
+                            {
+                                mc->wanted_dir = STOP;
+                                mc->current_dir = STOP;
+                            }
                         }
                         else
                         {
-                            /*p->x -= mc->x_speed;
-                            p->y -= mc->y_speed;
-                            mc->x_speed = 0;
-                            mc->y_speed = 0;*/
+                            mc->current_dir = mc->wanted_dir;
                         }
+
                     }
                 }
             }
