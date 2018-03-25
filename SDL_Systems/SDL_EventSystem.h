@@ -7,11 +7,12 @@
 
 #include "SDL2/SDL.h"
 #include "../Systems/EventSystem.h"
+#include "../PacMan_Components.h"
+#include "../SDL_Components.h"
 
 class SDL_EventSystem : public EventSystem {
 public:
-    SDL_EventSystem() = delete;
-    explicit SDL_EventSystem(double speed);
+    SDL_EventSystem();
     void update() override;
 };
 

@@ -3,90 +3,75 @@
 //
 
 #include "SDL_EventSystem.h"
-#include "../PacMan_Components.h"
-#include "../SDL_Components.h"
 
-SDL_EventSystem::SDL_EventSystem(double speed)
+
+SDL_EventSystem::SDL_EventSystem()
 {
     component_types = {PLAYER_INPUT_COMPONENT};
-    SDL_EventSystem::speed = speed;
 }
 
 void SDL_EventSystem::update()
 {
     SDL_Event e = {};
-    double x_speed = 0;
-    double y_speed = 0;
-    int direction = 0;
-    bool change = false;
+    direction dir = STOP; // STOP = 0
+    bool update_entities = false;
     while(SDL_PollEvent(&e) != 0)
     {
         if(e.type == SDL_QUIT)
             running = false;
-        if(!entities.empty())
+
+        if(e.type == SDL_KEYDOWN)
         {
-            // If entities not empty, an entity can be controlled so we check for key events
-            if(e.type == SDL_KEYDOWN)
+            switch(e.key.keysym.sym)
             {
-                switch(e.key.keysym.sym)
-                {
-                    case SDLK_LEFT:
-                        y_speed = 0;
-                        x_speed =  -speed;
-                        direction = 0;
-                        change = true;
-                        break;
-                    case SDLK_RIGHT:
-                        y_speed = 0;
-                        x_speed  = speed;
-                        direction = 1;
-                        change = true;
-                        break;
-                    case SDLK_UP:
-                        x_speed = 0;
-                        y_speed = -speed;
-                        direction = 2;
-                        change = true;
-                        break;
-                    case SDLK_DOWN:
-                        x_speed = 0;
-                        y_speed = speed;
-                        direction = 3;
-                        change = true;
-                        break;
-                    case SDLK_r:
-                        events.push_back(R_BUTTON);
-                        break;
-                    case SDLK_p:
-                        events.push_back(P_BUTTON);
-                        break;
-                    case SDLK_o:
-                        events.push_back(O_BUTTON);
-                        break;
-                    case SDLK_m:
-                        events.push_back(M_BUTTON);
-                        break;
-                    default:
-                        break;
-                }
+                case SDLK_LEFT:
+                    dir = LEFT;
+                    update_entities = true;
+                    break;
+                case SDLK_RIGHT:
+                    dir = RIGHT;
+                    update_entities = true;
+                    break;
+                case SDLK_UP:
+                    dir = UP;
+                    update_entities = true;
+                    break;
+                case SDLK_DOWN:
+                    dir = DOWN;
+                    update_entities = true;
+                    break;
+                case SDLK_r:
+                    events.push_back(R_BUTTON);
+                    break;
+                case SDLK_p:
+                    events.push_back(P_BUTTON);
+                    break;
+                case SDLK_o:
+                    events.push_back(O_BUTTON);
+                    break;
+                case SDLK_m:
+                    events.push_back(M_BUTTON);
+                    break;
+                default:
+                    break;
             }
         }
     }
 
-    if(change)
+    if(update_entities)
     {
-        for (auto &en : entities)
+        for (auto& en : entities)
         {
-            auto *m = en->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-            if (m != nullptr) {
-                m->x_speed = x_speed;
-                m->y_speed = y_speed;
+            if(en->hasComponentType(MOVABLE_COMPONENT))
+            {
+                auto* mc = en->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
+                mc->dir = dir;
             }
-            auto *rc = en->getComponentByType<SDL_RenderComponent>(RENDER_COMPONENT);
-            if (rc != nullptr) {
-                rc->frame_offset = rc->direction_offsets[direction];
+            if(en->hasComponentType(RENDER_COMPONENT))
+            {
+                auto* rc = en->getComponentByType<RenderComponent>(RENDER_COMPONENT);
+                rc->frame_offset = rc->direction_offsets[dir-1];
             }
         }
     }
-    //std::cout << "[SDL_Events] SDL_Events updated." << std::endl;
 }

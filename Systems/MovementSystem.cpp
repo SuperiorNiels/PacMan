@@ -7,7 +7,7 @@
 MovementSystem::MovementSystem(World* world)
 {
     component_types = {MOVABLE_COMPONENT};
-    MovementSystem::world = world;
+    MovementSystem::world = world; //fixme: shared pointer?
 }
 
 void MovementSystem::update()
@@ -18,8 +18,21 @@ void MovementSystem::update()
         {
             auto* p = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
             auto* m = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-            p->x += m->x_speed;
-            p->y += m->y_speed;
+
+            if(m->dir == LEFT)
+            {
+                p->x -= m->speed;
+            } else if(m->dir == RIGHT)
+            {
+                p->x += m->speed;
+            } else if(m->dir == UP)
+            {
+                p->y -= m->speed;
+            } else if(m->dir == DOWN)
+            {
+                p->y += m->speed;
+            }
+
             if(p->x > world->getWidth()-1)
             {
                 p->x = 0;
@@ -36,7 +49,6 @@ void MovementSystem::update()
             {
                 p->y = world->getHeight()-1;
             }
-            //std::cout << "[Movement] " << "x: " << (int)p->x << " y: " << (int)p->y << std::endl;
         }
     }
 }

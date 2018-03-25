@@ -32,8 +32,8 @@ class MovableComponent : public Component
 {
 public:
     MovableComponent() { type = MOVABLE_COMPONENT; };
-    double x_speed = 0;
-    double y_speed = 0;
+    direction dir = STOP;
+    double speed = 1;
 };
 
 class PlayerInputComponent : public Component
@@ -70,7 +70,7 @@ class CollisionComponent : public Component
 {
 public:
     CollisionComponent() { type = COLLISION_COMPONENT; }
-    int collision_box[4] = {0,0,0,0}; // x offset, y_offset, width, height
+    int collision_box[4] = {0,0,0,0}; // x_offset, y_offset, width, height
 };
 
 class PointsComponent : public Component

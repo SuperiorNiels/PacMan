@@ -29,7 +29,7 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
     if(entity_config != nullptr)
     {
         //std::cout << "entity found." << std::endl;
-        Entity* e = new Entity();
+        auto* e = new Entity();
         if(entity_config->FirstChildElement("position_component") != nullptr)
         {
             auto* pc = new PositionComponent();
@@ -101,7 +101,9 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
         }
         if(entity_config->FirstChildElement("movable_component") != nullptr)
         {
-            e->addComponent(new MovableComponent());
+            auto* mc = new MovableComponent();
+            entity_config->FirstChildElement("movable_component")->QueryDoubleAttribute("speed", &mc->speed);
+            e->addComponent(mc);
         }
         if(entity_config->FirstChildElement("player_input_component") != nullptr)
         {

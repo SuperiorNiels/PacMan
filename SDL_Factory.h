@@ -20,20 +20,20 @@ class SDL_Factory : public AbstractFactory
 {
 public:
     SDL_Factory() = delete;
-    SDL_Factory(Config* config) { SDL_Factory::config = config; };
+    explicit SDL_Factory(Config* config) { SDL_Factory::config = config; };
     Entity* createPacMan(int x,int y) override;
     Entity* createGhost(int x,int y, int color) override;
-    RenderSystem* createRenderSystem(World* world, int screen_width, int screen_height) override;
-    RenderComponent* createRenderComponent(std::string path, std::vector<clip> clips = std::vector<clip>()) override;
-    EventSystem* createEventSystem(double speed) override;
+    EventSystem* createEventSystem() override;
     TimerSystem* createTimerSystem(int fps) override;
     std::vector<Entity *> createWorldEntities(World *world) override;
+    RenderSystem* createRenderSystem(World* world, int screen_width, int screen_height) override;
+    RenderComponent* createRenderComponent(std::string path, std::vector<clip> clips) override;
     ~SDL_Factory() override;
 private:
-    SDL_RenderSystem* renderSystem = nullptr;
-    std::unordered_map<std::string,SDL_Texture*> loadedTextures = std::unordered_map<std::string,SDL_Texture*>();
     void clearTextures();
     Config* config = nullptr;
+    SDL_RenderSystem* renderSystem = nullptr;
+    std::unordered_map<std::string,SDL_Texture*> loadedTextures = std::unordered_map<std::string,SDL_Texture*>();
 };
 
 

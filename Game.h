@@ -25,6 +25,7 @@ public:
     void createGame();
     ~Game();
 private:
+    void clear();
     Config* config = nullptr;
     AbstractFactory* factory = nullptr;
     SystemManager* manager = nullptr;

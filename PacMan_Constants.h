@@ -13,6 +13,15 @@ enum ghost_color
     ORANGE_GHOST
 };
 
+enum direction
+{
+    STOP,
+    LEFT,
+    RIGHT,
+    UP,
+    DOWN
+};
+
 struct clip
 {
     int x = 0;

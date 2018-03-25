@@ -12,14 +12,14 @@ Game::Game(Config* config)
 
 void Game::init()
 {
-    delete world;
+    clear();
     Game::world = new World(config->getCollision_map());
     Game::manager = new SystemManager();
     Game::timer = factory->createTimerSystem(config->getFps());
     Game::render = factory->createRenderSystem(world,config->getScreen_x(),config->getScreen_y());
-    Game::events = factory->createEventSystem(1);
+    Game::events = factory->createEventSystem();
     manager->registerSystem(Game::events);
-    manager->registerSystem(new AISystem());
+    //manager->registerSystem(new AISystem());
     manager->registerSystem(new MovementSystem(world));
     manager->registerSystem(new CollisionSystem());
     manager->registerSystem(Game::render);
@@ -76,12 +76,17 @@ void Game::run()
     }
 }
 
-Game::~Game()
+void Game::clear()
 {
-    delete config;
     delete manager;
-    delete factory;
     delete world;
     delete timer;
+}
+
+Game::~Game()
+{
+    clear();
+    delete config;
+    delete factory;
 }
 

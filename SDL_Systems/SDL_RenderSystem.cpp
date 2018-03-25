@@ -65,11 +65,10 @@ void SDL_RenderSystem::update()
         {
             auto *rc = e->getComponentByType<SDL_RenderComponent>(RENDER_COMPONENT);
             auto *p = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-            auto *m = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
             if (rc->visible)
             {
-                int x = (int) floor(p->x * tile_width);
-                int y = (int) floor(p->y * tile_width);
+                auto x = (int) floor(p->x * tile_width);
+                auto y = (int) floor(p->y * tile_width);
                 if(e->hasComponentType(PLAYER_INPUT_COMPONENT) || e->hasComponentType(AI_COMPONENT))
                 {
                     x = (int) floor((p->x-(0.3*tile_width*(1.f/tile_width))) * tile_width);
@@ -82,31 +81,17 @@ void SDL_RenderSystem::update()
                 SDL_Rect *clip = nullptr;
                 if (!rc->clips.empty())
                 {
-                    if (m != nullptr)
+                    if (rc->count > rc->animation_speed)
                     {
-                        if (m->x_speed != 0 || m->y_speed != 0)
-                        {
-                            // Entity is moving, animate
-                            if (rc->count > rc->animation_speed)
-                            {
-                                rc->current_frame = (rc->current_frame + 1) % rc->animation_length;
-                                rc->count = 0;
-                            }
-                            clip = rc->clips[rc->current_frame + rc->frame_offset];
-                        }
-                        else
-                        {
-                            clip = rc->clips[0]; // still image should be at this position
-                        }
+                        rc->current_frame = (rc->current_frame + 1) % rc->animation_length;
+                        rc->count = 0;
                     }
-                    else
+                    clip = rc->clips[rc->current_frame + rc->frame_offset];
+                    if(e->hasComponentType(MOVABLE_COMPONENT))
                     {
-                        if (rc->count > rc->animation_speed)
-                        {
-                            rc->current_frame = (rc->current_frame + 1) % rc->animation_length;
-                            rc->count = 0;
-                        }
-                        clip = rc->clips[rc->current_frame + rc->frame_offset];
+                        auto *m = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
+                        if(m->dir == STOP)
+                            clip = rc->clips[0];
                     }
                     position.w = (int)floor(clip->w*rc->scale);
                     position.h = (int)floor(clip->h*rc->scale);

@@ -67,10 +67,10 @@ void CollisionSystem::update()
                         }
                         else
                         {
-                            p->x -= mc->x_speed;
+                            /*p->x -= mc->x_speed;
                             p->y -= mc->y_speed;
                             mc->x_speed = 0;
-                            mc->y_speed = 0;
+                            mc->y_speed = 0;*/
                         }
                     }
                 }
