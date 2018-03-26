@@ -22,6 +22,9 @@ enum direction
     DOWN
 };
 
+// enum direction gives location of the move vector
+static int movement_vector[5][2] = {{0,0},{-1,0},{1,0},{0,-1},{0,1}};
+
 struct clip
 {
     int x = 0;

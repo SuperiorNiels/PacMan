@@ -20,6 +20,7 @@ public:
     void removeEntity(entityID id) override;
     bool entityInSystem(entityID id) override;
 private:
+    bool checkCollision();
     std::vector<Entity*> to_check = std::vector<Entity*>();
 };
 

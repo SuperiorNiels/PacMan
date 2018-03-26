@@ -71,7 +71,7 @@ class CollisionComponent : public Component
 {
 public:
     CollisionComponent() { type = COLLISION_COMPONENT; };
-    int collision_box[4] = {0,0,0,0}; // x_offset, y_offset, width, height
+    clip collision_box; // x_offset, y_offset, width, height
 };
 
 class PointsComponent : public Component

@@ -6,7 +6,6 @@
 
 Config::Config(std::string path)
 {
-    //Config::factory = factory;
     doc.LoadFile(path.c_str());
     doc.FirstChildElement("pacman")->FirstChildElement("game")->QueryIntAttribute("fps", &fps);
     doc.FirstChildElement("pacman")->FirstChildElement("game")->QueryIntAttribute("screen_x", &screen_x);
@@ -39,10 +38,10 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
         if(entity_config->FirstChildElement("collision_component") != nullptr)
         {
             auto* cc = new CollisionComponent();
-            cc->collision_box[0] = 0;
-            cc->collision_box[1] = 0;
-            cc->collision_box[2] = tile_width;
-            cc->collision_box[3] = tile_width;
+            cc->collision_box.x = 0;
+            cc->collision_box.y = 0;
+            cc->collision_box.w = tile_width;
+            cc->collision_box.h = tile_width;
             e->addComponent(cc);
         }
         if(entity_config->FirstChildElement("render_component") != nullptr)

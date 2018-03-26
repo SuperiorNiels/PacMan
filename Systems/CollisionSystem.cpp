@@ -57,7 +57,7 @@ void CollisionSystem::update()
                     auto *pc2 = entity->getComponentByType<PositionComponent>(POSITION_COMPONENT);
                     if(entity->hasComponentType(POINTS_COMPONENT))
                     {
-                        if ((int) floor(pc->x) == (int) floor(pc2->x) && (int) floor(pc->y) == (int) floor(pc2->y))
+                        if((int) floor(pc->x) == (int) floor(pc2->x) && (int) floor(pc->y) == (int) floor(pc2->y))
                         {
                             auto *rc = entity->getComponentByType<RenderComponent>(RENDER_COMPONENT);
                             rc->visible = false;
@@ -68,30 +68,27 @@ void CollisionSystem::update()
                     else
                     {
                         auto* mc = player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-                        double wanted_x = pc->x;
-                        double wanted_y = pc->y;
-                        if(mc->wanted_dir == LEFT)
-                            wanted_x -= mc->speed;
-                        else if(mc->wanted_dir == RIGHT)
-                            wanted_x += mc->speed;
-                        else if(mc->wanted_dir == UP)
-                            wanted_y -= mc->speed;
-                        else if(mc->wanted_dir == DOWN)
-                            wanted_y += mc->speed;
-                        std::cout << "wanted: " << mc->wanted_dir << " current: " << mc->current_dir << std::endl;
-                        if ((int) floor(wanted_x) == (int) floor(pc2->x) && (int) floor(wanted_y) == (int) floor(pc2->y))
+                        double wanted_x = pc->x + movement_vector[mc->wanted_dir][0] * mc->speed;
+                        double wanted_y = pc->y + movement_vector[mc->wanted_dir][1] * mc->speed;
+                        //std::cout << "wanted: " << mc->wanted_dir << " current: " << mc->current_dir << std::endl;
+                        if(mc->current_dir != STOP || mc->wanted_dir != STOP)
                         {
-                            if(mc->current_dir == mc->wanted_dir)
+                            if(!((int) floor(wanted_x) == (int) floor(pc2->x) && (int) floor(wanted_y) == (int) floor(pc2->y)))
                             {
-                                mc->wanted_dir = STOP;
+                                mc->current_dir = mc->wanted_dir;
+                            } else {
+                                std::cout << "collision " << pc2->x << " " << pc2->y << std::endl;
+                            }
+
+                            double new_x = pc->x + movement_vector[mc->current_dir][0] * mc->speed;
+                            double new_y = pc->y + movement_vector[mc->current_dir][1] * mc->speed;
+                            //std::cout << "wanted: " << mc->wanted_dir << " current: " << mc->current_dir << std::endl;
+                            if((int) floor(new_x) == (int) floor(pc2->x) && (int) floor(new_y) == (int) floor(pc2->y))
+                            {
                                 mc->current_dir = STOP;
+                                mc->wanted_dir = STOP;
                             }
                         }
-                        else
-                        {
-                            mc->current_dir = mc->wanted_dir;
-                        }
-
                     }
                 }
             }

@@ -20,8 +20,8 @@ void Game::init()
     Game::events = factory->createEventSystem();
     manager->registerSystem(Game::events);
     //manager->registerSystem(new AISystem());
-    manager->registerSystem(new MovementSystem(world));
     manager->registerSystem(new CollisionSystem());
+    manager->registerSystem(new MovementSystem(world));
     manager->registerSystem(Game::render);
     createGame();
 }
