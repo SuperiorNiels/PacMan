@@ -20,7 +20,8 @@ public:
     void removeEntity(entityID id) override;
     bool entityInSystem(entityID id) override;
 private:
-    bool checkCollision();
+    bool checkCollision(clip player, clip entity);
+    clip getClip(Entity* e);
     std::vector<Entity*> to_check = std::vector<Entity*>();
 };
 

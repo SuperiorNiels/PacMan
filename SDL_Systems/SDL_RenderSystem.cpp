@@ -114,10 +114,10 @@ void SDL_RenderSystem::renderCollisionBox(Entity *e)
         auto* cc = e->getComponentByType<CollisionComponent>(COLLISION_COMPONENT);
         auto* pc = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
         SDL_Rect aa = SDL_Rect();
-        aa.x = (int) floor(pc->x * tile_width) + cc->collision_box.x;
-        aa.y = (int) floor(pc->y * tile_width) + cc->collision_box.y;
-        aa.w = cc->collision_box.w;
-        aa.h = cc->collision_box.h;
+        aa.x = (int) floor(pc->x * tile_width) + (int) floor(cc->collision_box.x);
+        aa.y = (int) floor(pc->y * tile_width) + (int) floor(cc->collision_box.y);
+        aa.w = (int) floor(cc->collision_box.w) * tile_width;
+        aa.h = (int) floor(cc->collision_box.h) * tile_width;
         if(e->hasComponentType(AI_COMPONENT))
         {
             SDL_SetRenderDrawColor(renderer, 0xFF, 0, 0, 0xFF);

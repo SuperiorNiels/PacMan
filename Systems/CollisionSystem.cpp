@@ -57,7 +57,7 @@ void CollisionSystem::update()
                     auto *pc2 = entity->getComponentByType<PositionComponent>(POSITION_COMPONENT);
                     if(entity->hasComponentType(POINTS_COMPONENT))
                     {
-                        if((int) floor(pc->x) == (int) floor(pc2->x) && (int) floor(pc->y) == (int) floor(pc2->y))
+                        if(!checkCollision(getClip(player), getClip(entity)))
                         {
                             auto *rc = entity->getComponentByType<RenderComponent>(RENDER_COMPONENT);
                             rc->visible = false;
@@ -68,30 +68,76 @@ void CollisionSystem::update()
                     else
                     {
                         auto* mc = player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-                        double wanted_x = pc->x + movement_vector[mc->wanted_dir][0] * mc->speed;
+                        /*double wanted_x = pc->x + movement_vector[mc->wanted_dir][0] * mc->speed;
                         double wanted_y = pc->y + movement_vector[mc->wanted_dir][1] * mc->speed;
                         //std::cout << "wanted: " << mc->wanted_dir << " current: " << mc->current_dir << std::endl;
-                        if(mc->current_dir != STOP || mc->wanted_dir != STOP)
+                        if(!checkCollision(getClip(player),getClip(entity)))
                         {
-                            if(!((int) floor(wanted_x) == (int) floor(pc2->x) && (int) floor(wanted_y) == (int) floor(pc2->y)))
-                            {
-                                mc->current_dir = mc->wanted_dir;
-                            } else {
-                                std::cout << "collision " << pc2->x << " " << pc2->y << std::endl;
-                            }
+                            mc->current_dir = mc->wanted_dir;
+                        } else {
+                            std::cout << "collision " << pc2->x << " " << pc2->y << std::endl;
+                        }*/
 
-                            double new_x = pc->x + movement_vector[mc->current_dir][0] * mc->speed;
-                            double new_y = pc->y + movement_vector[mc->current_dir][1] * mc->speed;
-                            //std::cout << "wanted: " << mc->wanted_dir << " current: " << mc->current_dir << std::endl;
-                            if((int) floor(new_x) == (int) floor(pc2->x) && (int) floor(new_y) == (int) floor(pc2->y))
-                            {
-                                mc->current_dir = STOP;
-                                mc->wanted_dir = STOP;
-                            }
+                        //double new_x = pc->x + movement_vector[mc->current_dir][0] * mc->speed;
+                        //double new_y = pc->y + movement_vector[mc->current_dir][1] * mc->speed;
+                        //std::cout << "wanted: " << mc->wanted_dir << " current: " << mc->current_dir << std::endl;
+                        if(checkCollision(getClip(player),getClip(entity)))
+                        {
+                            mc->wanted_dir = STOP;
                         }
+                        mc->current_dir = mc->wanted_dir;
                     }
                 }
             }
         }
     }
+}
+
+bool CollisionSystem::checkCollision(clip player, clip entity)
+{
+    double leftA, leftB;
+    double rightA, rightB;
+    double topA, topB;
+    double bottomA, bottomB;
+
+    leftA = player.x;
+    rightA = player.x + player.w;
+    topA = player.y;
+    bottomA = player.y + player.h;
+
+    leftB = entity.x;
+    rightB = entity.x + entity.w;
+    topB = entity.y;
+    bottomB = entity.y + entity.h;
+
+    //If any of the sides from A are outside of B
+    double temp = fabs(bottomA - topB);
+    if(bottomA - topB <= 0.001f)
+        return false;
+    double temp1 = fabs(topA - bottomB);
+    if(topA - bottomB >= 0.001f)
+        return false;
+    double temp2 = fabs(rightA - leftB);
+    if(rightA - leftB <= 0.001f)
+        return false;
+    double temp3 = fabs(leftA - rightB);
+    if(leftA - rightB >= 0.001f)
+        return false;
+
+    return true;
+}
+
+clip CollisionSystem::getClip(Entity *e)
+{
+    clip c = clip();
+    if(e->hasComponentTypes({POSITION_COMPONENT,COLLISION_COMPONENT}))
+    {
+        auto* pc = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+        auto* cc = e->getComponentByType<CollisionComponent>(COLLISION_COMPONENT);
+        c.x = pc->x + cc->collision_box.x;
+        c.y = pc->y + cc->collision_box.y;
+        c.w = cc->collision_box.w;
+        c.h = cc->collision_box.h;
+    }
+    return c;
 }

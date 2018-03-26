@@ -40,8 +40,8 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
             auto* cc = new CollisionComponent();
             cc->collision_box.x = 0;
             cc->collision_box.y = 0;
-            cc->collision_box.w = tile_width;
-            cc->collision_box.h = tile_width;
+            cc->collision_box.w = 1;
+            cc->collision_box.h = 1;
             e->addComponent(cc);
         }
         if(entity_config->FirstChildElement("render_component") != nullptr)
@@ -62,10 +62,10 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
                         clip_config = clip_config->NextSiblingElement();
                     if(clip_config != nullptr)
                     {
-                        clip_config->QueryIntAttribute("x",&c.x);
-                        clip_config->QueryIntAttribute("y",&c.y);
-                        clip_config->QueryIntAttribute("w",&c.w);
-                        clip_config->QueryIntAttribute("h",&c.h);
+                        clip_config->QueryDoubleAttribute("x",&c.x);
+                        clip_config->QueryDoubleAttribute("y",&c.y);
+                        clip_config->QueryDoubleAttribute("w",&c.w);
+                        clip_config->QueryDoubleAttribute("h",&c.h);
                         int x_off, y_off = 0;
                         render_config->FirstChildElement("clips")->QueryIntAttribute("x_offset", &x_off);
                         render_config->FirstChildElement("clips")->QueryIntAttribute("y_offset", &y_off);
