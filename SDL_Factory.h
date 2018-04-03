@@ -26,7 +26,7 @@ public:
     EventSystem* createEventSystem() override;
     TimerSystem* createTimerSystem(int fps) override;
     std::vector<Entity *> createWorldEntities(World *world) override;
-    RenderSystem* createRenderSystem(World* world, int screen_width, int screen_height) override;
+    RenderSystem* createRenderSystem(World* world, int screen_width, int screen_height, TimerSystem* timer) override;
     RenderComponent* createRenderComponent(std::string path, std::vector<clip> clips) override;
     ~SDL_Factory() override;
 private:

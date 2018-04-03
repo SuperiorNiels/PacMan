@@ -10,11 +10,12 @@
 #include "../PacMan_Components.h"
 #include "../World.h"
 #include "../Systems/RenderSystem.h"
+#include "../Systems/TimerSystem.h"
 
 class SDL_RenderSystem : public RenderSystem
 {
 public:
-    SDL_RenderSystem(World* world, int screen_width, int screen_height);
+    SDL_RenderSystem(World* world, int screen_width, int screen_height, TimerSystem* timer);
     SDL_Renderer* renderer = nullptr;
     SDL_Window* window = nullptr;
     void update() override;

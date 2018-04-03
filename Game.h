@@ -30,7 +30,6 @@ private:
     AbstractFactory* factory = nullptr;
     SystemManager* manager = nullptr;
     EventSystem* events = nullptr;
-    TimerSystem* timer = nullptr;
     RenderSystem* render = nullptr;
     World* world = nullptr;
 };

@@ -14,7 +14,7 @@ SDL_TimerSystem::SDL_TimerSystem()
 SDL_TimerSystem::SDL_TimerSystem(int fps)
 {
     SCREEN_FPS = fps;
-    SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
+    SCREEN_TICKS_PER_FRAME = 10 / SCREEN_FPS;
     fps_startTime = SDL_GetTicks();
 }
 
@@ -31,7 +31,7 @@ void SDL_TimerSystem::cap()
     {
         avgFPS = 0;
     }
-    //std::cout << "[Timing] avg FPS: " << avgFPS << std::endl;
+    std::cout << "[Timing] avg FPS: " << avgFPS << std::endl;
     if( (new_time - time) < SCREEN_TICKS_PER_FRAME )
     {
         //Wait remaining time

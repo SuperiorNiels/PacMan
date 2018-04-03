@@ -55,10 +55,10 @@ std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
     return entities;
 }
 
-RenderSystem* SDL_Factory::createRenderSystem(World* world, int screen_width, int screen_height)
+RenderSystem* SDL_Factory::createRenderSystem(World* world, int screen_width, int screen_height, TimerSystem* timer)
 {
     // Check if render system already exists
-    auto* res = new SDL_RenderSystem(world,screen_width,screen_height);
+    auto* res = new SDL_RenderSystem(world,screen_width,screen_height,timer);
     clearTextures();
     renderSystem = res;
     return res;

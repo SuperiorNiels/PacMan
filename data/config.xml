@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <pacman>
-    <game fps="60" screen_x="448" screen_y="496">
+    <game fps="120" screen_x="448" screen_y="496">
         <collision>../data/collision.map</collision>
         <sprites tile_width="8">../data/sprites.png</sprites>
         <graphics>SDL</graphics>
@@ -45,12 +45,12 @@
                     <clip x="457" y="49" w="13" h="13"/>
                 </clips>
                 <animation_length value="3"/>
-                <animation_speed value="4"/>
+                <animation_speed value="1"/>
                 <direction_offset left="3" right="0" up="6" down="9"/>
             </render_component>
-            <collision_component />
+            <!--<collision_component />-->
             <points_component />
-            <movable_component speed="0.3"/>
+            <movable_component speed="1"/>
             <player_input_component />
         </player>
         <ghost>
