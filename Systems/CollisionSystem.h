@@ -20,7 +20,8 @@ public:
     void removeEntity(entityID id) override;
     bool entityInSystem(entityID id) override;
 private:
-    std::vector<Entity*> to_check = std::vector<Entity*>();
+    std::vector<Entity*> players = std::vector<Entity*>();
+    std::vector<Entity*> ghosts = std::vector<Entity*>();
 };
 
 

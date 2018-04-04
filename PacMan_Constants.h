@@ -33,10 +33,10 @@ static const int movement_vector[5][2] = {{0,0},{-1,0},{1,0},{0,-1},{0,1}};
 
 struct clip
 {
-    double x = 0;
-    double y = 0;
-    double w = 0;
-    double h = 0;
+    int x = 0;
+    int y = 0;
+    int w = 0;
+    int h = 0;
 };
 
 #endif //ECS_PACMAN_CONSTANTS_H

@@ -62,10 +62,10 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
                         clip_config = clip_config->NextSiblingElement();
                     if(clip_config != nullptr)
                     {
-                        clip_config->QueryDoubleAttribute("x",&c.x);
-                        clip_config->QueryDoubleAttribute("y",&c.y);
-                        clip_config->QueryDoubleAttribute("w",&c.w);
-                        clip_config->QueryDoubleAttribute("h",&c.h);
+                        clip_config->QueryIntAttribute("x",&c.x);
+                        clip_config->QueryIntAttribute("y",&c.y);
+                        clip_config->QueryIntAttribute("w",&c.w);
+                        clip_config->QueryIntAttribute("h",&c.h);
                         int x_off, y_off = 0;
                         render_config->FirstChildElement("clips")->QueryIntAttribute("x_offset", &x_off);
                         render_config->FirstChildElement("clips")->QueryIntAttribute("y_offset", &y_off);
@@ -80,6 +80,8 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
                 }
             }
             auto* rc = factory->createRenderComponent(sprites_sheet,clips);
+            render_config->QueryDoubleAttribute("x_render_offset", &rc->x_render_offset);
+            render_config->QueryDoubleAttribute("y_render_offset", &rc->y_render_offset);
             if(render_config->FirstChildElement("animation_length") != nullptr)
                 render_config->FirstChildElement("animation_length")->QueryIntAttribute("value",&rc->animation_length);
             if(render_config->FirstChildElement("animation_speed") != nullptr)
@@ -96,7 +98,9 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
         }
         if(entity_config->FirstChildElement("points_component") != nullptr)
         {
-            e->addComponent(new PointsComponent());
+            auto* pp = new PointsComponent();
+            entity_config->FirstChildElement("points_component")->QueryIntAttribute("points", &pp->points);
+            e->addComponent(pp);
         }
         if(entity_config->FirstChildElement("movable_component") != nullptr)
         {
@@ -111,6 +115,10 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
         if(entity_config->FirstChildElement("ai_component") != nullptr)
         {
             e->addComponent(new AIComponent());
+        }
+        if(entity_config->FirstChildElement("score_component") != nullptr)
+        {
+            e->addComponent(new ScoreComponent());
         }
         return e;
     }

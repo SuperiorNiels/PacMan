@@ -25,11 +25,11 @@
                 </clips>
             </render_component>
             <collision_component />
-            <points_component />
+            <points_component points="100" />
         </point>
         <player>
             <position_component />
-            <render_component>
+            <render_component x_render_offset="0.29" y_render_offset="0.29">
                 <clips total="12">
                     <clip x="489" y="1" w="13" h="13"/>
                     <clip x="473" y="1" w="13" h="13"/>
@@ -50,12 +50,13 @@
             </render_component>
             <collision_component />
             <points_component />
-            <movable_component speed="25"/>
+            <movable_component speed="100"/>
             <player_input_component />
+            <score_component />
         </player>
         <ghost>
             <position_component />
-            <render_component>
+            <render_component x_render_offset="0.3" y_render_offset="0.3">
                 <clips total="8" y_offset="16">
                     <clip x="457" y="65" w="14" h="13"/>
                     <clip x="473" y="65" w="14" h="13"/>

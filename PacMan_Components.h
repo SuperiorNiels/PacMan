@@ -17,7 +17,8 @@ enum ComponentTypes
     AI_COMPONENT,
     RENDER_COMPONENT,
     COLLISION_COMPONENT,
-    POINTS_COMPONENT
+    POINTS_COMPONENT,
+    SCORE_COMPONENT
 };
 
 class PositionComponent : public Component
@@ -59,8 +60,6 @@ class RenderComponent : public Component
 {
 public:
     RenderComponent() { type = RENDER_COMPONENT; };
-    int width = 0;
-    int height = 0; // fixme: width en height nodig?
     bool visible = true;
     int animation_length = 1;
     int animation_speed = 10;
@@ -69,6 +68,8 @@ public:
     int frame_offset = 0;
     int direction_offsets[4] = {0,0,0,0}; // left,right,up,down
     double scale = 1;
+    double x_render_offset = 0;
+    double y_render_offset = 0;
 };
 
 class CollisionComponent : public Component
@@ -83,6 +84,13 @@ class PointsComponent : public Component
 public:
     PointsComponent() { type = POINTS_COMPONENT; };
     int points = 0;
+};
+
+class ScoreComponent : public Component
+{
+public:
+    ScoreComponent() { type = SCORE_COMPONENT; };
+    int score = 0;
 };
 
 

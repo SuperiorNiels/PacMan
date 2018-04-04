@@ -106,12 +106,8 @@ RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::vecto
     }
 
     if(clips.empty())
-        SDL_QueryTexture(newTexture, nullptr, nullptr, &to_return->width, &to_return->height);
-    else
-    {
-        to_return->width = clips[0].w;
-        to_return->height = clips[0].h;
-    }
+        SDL_QueryTexture(newTexture, nullptr, nullptr, (int*) renderSystem->getTile_width(), (int*) renderSystem->getTile_width());
+
     to_return->texture = newTexture;
 
     std::vector<SDL_Rect*> sdl_clips = std::vector<SDL_Rect*>();

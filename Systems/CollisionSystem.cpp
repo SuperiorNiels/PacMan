@@ -11,9 +11,14 @@ CollisionSystem::CollisionSystem()
 
 void CollisionSystem::addEntity(Entity *e)
 {
-    if((e->hasComponentType(PLAYER_INPUT_COMPONENT) || e->hasComponentType(AI_COMPONENT)) && !entityInSystem(e->id))
+    if(e->hasComponentType(PLAYER_INPUT_COMPONENT) && !entityInSystem(e->id))
     {
-        to_check.push_back(e);
+        players.push_back(e);
+        return;
+    }
+    if(e->hasComponentType(AI_COMPONENT) && !entityInSystem(e->id))
+    {
+        ghosts.push_back(e);
         return;
     }
     System::addEntity(e);
@@ -21,12 +26,21 @@ void CollisionSystem::addEntity(Entity *e)
 
 void CollisionSystem::removeEntity(entityID id)
 {
-    for(auto it = to_check.begin(); it != to_check.end(); it++)
+    for(auto it = players.begin(); it != players.end(); it++)
     {
         Entity* e = it.operator*();
         if(e->id == id)
         {
-            to_check.erase(it);
+            players.erase(it);
+            return;
+        }
+    }
+    for(auto it = ghosts.begin(); it != ghosts.end(); it++)
+    {
+        Entity* e = it.operator*();
+        if(e->id == id)
+        {
+            ghosts.erase(it);
             return;
         }
     }
@@ -35,7 +49,12 @@ void CollisionSystem::removeEntity(entityID id)
 
 bool CollisionSystem::entityInSystem(entityID id)
 {
-    for(auto* e : to_check)
+    for(auto* e : players)
+    {
+        if(e->id == id)
+            return true;
+    }
+    for(auto* e : ghosts)
     {
         if(e->id == id)
             return true;
@@ -45,37 +64,44 @@ bool CollisionSystem::entityInSystem(entityID id)
 
 void CollisionSystem::update()
 {
-    if(!to_check.empty())
+    // TODO: collision for ghosts
+    for(auto* player : players)
     {
-        for(auto& player : to_check)
+        auto* pc = player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+        for (auto& entity : entities)
         {
-            auto* pc = player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-            for (auto& entity : entities)
+            auto *pc2 = entity->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+            if(entity->hasComponentType(POINTS_COMPONENT))
             {
-                if (entity->id != player->id)
+                if(pc->x == pc2->x && pc->y == pc2->y)
                 {
-                    auto *pc2 = entity->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-                    if(entity->hasComponentType(POINTS_COMPONENT))
+                    if(player->hasComponentType(SCORE_COMPONENT))
                     {
-                        if(pc->x == pc2->x && pc->y == (pc2->y))
-                        {
-                            auto *rc = entity->getComponentByType<RenderComponent>(RENDER_COMPONENT);
-                            rc->visible = false;
-                            //TODO : add dots to different list, no collision with ghosts!!
-                            //entity->clearComponents();
-                        }
+                        auto* sc = player->getComponentByType<ScoreComponent>(SCORE_COMPONENT);
+                        auto* pp = entity->getComponentByType<PointsComponent>(POINTS_COMPONENT);
+                        sc->score += pp->points;
+                        std::cout << "[Score] Added points. New score: " << sc->score << std::endl;
                     }
-                    else
-                    {
-                        auto* mc = player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-                        double new_x = pc->x + movement_vector[mc->wanted_dir][0];
-                        double new_y = pc->y + movement_vector[mc->wanted_dir][1];
-                        if(new_x == pc2->x && new_y == (pc2->y))
-                        {
-                            mc->current_dir = STOP;
-                        }
-                    }
+                    entity->clearComponents();
                 }
+            }
+            else
+            {
+                auto* mc = player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
+                double new_x = pc->x + movement_vector[mc->wanted_dir][0];
+                double new_y = pc->y + movement_vector[mc->wanted_dir][1];
+                if(new_x == pc2->x && new_y == (pc2->y))
+                {
+                    mc->current_dir = STOP;
+                }
+            }
+        }
+        for (auto& ghost : ghosts)
+        {
+            auto *pc2 = ghost->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+            if(pc->x == pc2->x && pc->y == (pc2->y))
+            {
+                std::cout << "you are dead" << std::endl;
             }
         }
     }
