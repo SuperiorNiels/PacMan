@@ -69,9 +69,9 @@ void SDL_RenderSystem::update()
             {
                 SDL_Rect position = getPosition(e);
 
-                renderBox(&position,e);
+                //renderBox(&position,e);
 
-                /*double x_offset = rc->x_render_offset*tile_width;
+                double x_offset = rc->x_render_offset*tile_width;
                 double y_offset = rc->y_render_offset*tile_width;
                 position.x = (int) (position.x - x_offset);
                 position.y = (int) (position.y - y_offset);
@@ -81,7 +81,7 @@ void SDL_RenderSystem::update()
                 position.w = (int) floor(clip.w * rc->scale);
                 position.h = (int) floor(clip.h * rc->scale);
 
-                SDL_RenderCopy(renderer, rc->texture, &clip, &position);*/
+                SDL_RenderCopy(renderer, rc->texture, &clip, &position);
             }
         }
     }

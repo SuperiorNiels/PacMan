@@ -107,13 +107,7 @@ void CollisionSystem::update()
                 }
             }
 
-            if(wanted_possible)
-                mc->current_dir = mc->wanted_dir;
-            if(!wanted_possible && !current_possible)
-            {
-                mc->wanted_dir = STOP;
-                mc->current_dir = STOP;
-            }
+            bool dead = false;
 
             for (auto& ghost : ghosts)
             {
@@ -121,7 +115,16 @@ void CollisionSystem::update()
                 if(pc->x == pc2->x && pc->y == (pc2->y))
                 {
                     std::cout << "you are dead" << std::endl;
+                    dead = true;
                 }
+            }
+
+            if(wanted_possible)
+                mc->current_dir = mc->wanted_dir;
+            if((!wanted_possible && !current_possible) || dead)
+            {
+                mc->wanted_dir = STOP;
+                mc->current_dir = STOP;
             }
         }
     }
