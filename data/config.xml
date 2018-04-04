@@ -50,7 +50,7 @@
             </render_component>
             <collision_component />
             <points_component />
-            <movable_component speed="50"/>
+            <movable_component speed="25"/>
             <player_input_component />
         </player>
         <ghost>

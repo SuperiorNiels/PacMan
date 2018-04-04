@@ -67,23 +67,23 @@ void SDL_RenderSystem::update()
             auto *rc = e->getComponentByType<SDL_RenderComponent>(RENDER_COMPONENT);
             if (rc->visible)
             {
-                SDL_Rect* position = getPosition(e);
+                SDL_Rect position = getPosition(e);
 
                 if(e->hasComponentType(PLAYER_INPUT_COMPONENT))
                 {
                     double x_offset = 0.3*tile_width;
                     double y_offset = 0.3*tile_width; // fixme: hardcoded values
-                    position->x = (int) (position->x - x_offset);
-                    position->y = (int) (position->y - y_offset);
+                    position.x = (int) (position.x - x_offset);
+                    position.y = (int) (position.y - y_offset);
                 }
 
-                SDL_Rect *clip = getClip(e);
+                SDL_Rect clip = getClip(e);
 
-                position->w = (int) floor(clip->w * rc->scale);
-                position->h = (int) floor(clip->h * rc->scale);
+                position.w = (int) floor(clip.w * rc->scale);
+                position.h = (int) floor(clip.h * rc->scale);
 
                 renderCollisionBox(e);
-                SDL_RenderCopy(renderer, rc->texture, clip, position);
+                SDL_RenderCopy(renderer, rc->texture, &clip, &position);
             }
         }
     }
@@ -91,9 +91,9 @@ void SDL_RenderSystem::update()
     SDL_RenderPresent(renderer);
 }
 
-SDL_Rect* SDL_RenderSystem::getPosition(Entity *e)
+SDL_Rect SDL_RenderSystem::getPosition(Entity *e)
 {
-    SDL_Rect* position = new SDL_Rect();
+    SDL_Rect position = SDL_Rect();
     if(e->hasComponentType(POSITION_COMPONENT))
     {
         auto *p = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
@@ -125,24 +125,24 @@ SDL_Rect* SDL_RenderSystem::getPosition(Entity *e)
             }
         }
 
-        *position = {x, y, rc->width * tile_width / 8, rc->height * tile_width / 8}; // fixme
+        position = {x, y, rc->width * tile_width / 8, rc->height * tile_width / 8}; // fixme
     }
     return position;
 }
 
-SDL_Rect* SDL_RenderSystem::getClip(Entity *e)
+SDL_Rect SDL_RenderSystem::getClip(Entity *e)
 {
     auto *rc = e->getComponentByType<SDL_RenderComponent>(RENDER_COMPONENT);
-    SDL_Rect* clip = new SDL_Rect();
+    SDL_Rect clip = SDL_Rect();
     if (!rc->clips.empty())
     {
-        clip = rc->clips[0];
+        clip = *rc->clips[0];
         if (e->hasComponentType(MOVABLE_COMPONENT))
         {
             auto *m = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
             rc->frame_offset = rc->direction_offsets[m->current_dir-1];
             if (m->state != IDLE || m->current_dir != STOP)
-                clip = rc->clips[rc->current_frame + rc->frame_offset];
+                clip = *rc->clips[rc->current_frame + rc->frame_offset];
         }
         if (rc->count > rc->animation_speed)
         {
@@ -160,30 +160,30 @@ void SDL_RenderSystem::renderCollisionBox(Entity *e)
     if(e->hasComponentType(POSITION_COMPONENT))
     {
         auto* cc = e->getComponentByType<CollisionComponent>(COLLISION_COMPONENT);
-        SDL_Rect* aa = getPosition(e);
-        aa->x = aa->x + (int) floor(cc->collision_box.x);
-        aa->y = aa->y + (int) floor(cc->collision_box.y);
-        aa->w = (int) floor(cc->collision_box.w) * tile_width;
-        aa->h = (int) floor(cc->collision_box.h) * tile_width;
+        SDL_Rect aa = getPosition(e);
+        aa.x = aa.x + (int) floor(cc->collision_box.x);
+        aa.y = aa.y + (int) floor(cc->collision_box.y);
+        aa.w = (int) floor(cc->collision_box.w) * tile_width;
+        aa.h = (int) floor(cc->collision_box.h) * tile_width;
         if(e->hasComponentType(AI_COMPONENT))
         {
             SDL_SetRenderDrawColor(renderer, 0xFF, 0, 0, 0xFF);
-            SDL_RenderDrawRect(renderer, aa);
+            SDL_RenderDrawRect(renderer, &aa);
         }
         else if(e->hasComponentType(PLAYER_INPUT_COMPONENT))
         {
             SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0, 0xFF);
-            SDL_RenderFillRect(renderer, aa);
+            SDL_RenderFillRect(renderer, &aa);
         }
         else if(e->hasComponentType(POINTS_COMPONENT))
         {
             SDL_SetRenderDrawColor(renderer, 0xFF, 0xAB, 0x00, 0xFF);
-            SDL_RenderDrawRect(renderer, aa);
+            SDL_RenderDrawRect(renderer, &aa);
         }
         else
         {
             SDL_SetRenderDrawColor(renderer, 0, 0, 0xFF, 0xFF);
-            SDL_RenderDrawRect(renderer, aa);
+            SDL_RenderDrawRect(renderer, &aa);
         }
     }
 }
