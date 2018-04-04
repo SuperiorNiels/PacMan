@@ -24,8 +24,8 @@ class PositionComponent : public Component
 {
 public:
     PositionComponent() { type = POSITION_COMPONENT; };
-    double x = 0;
-    double y = 0;
+    int x = 0;
+    int y = 0;
 };
 
 class MovableComponent : public Component
@@ -35,6 +35,10 @@ public:
     direction current_dir = STOP;
     direction wanted_dir = STOP;
     double speed = 1;
+    double time = 0;
+    entity_state state = IDLE;
+    int x_prev = 0;
+    int y_prev = 0;
 };
 
 class PlayerInputComponent : public Component

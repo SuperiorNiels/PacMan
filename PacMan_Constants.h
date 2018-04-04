@@ -22,6 +22,12 @@ enum direction
     DOWN
 };
 
+enum entity_state
+{
+    IDLE,
+    MOVING
+};
+
 // enum direction gives location of the move vector
 static const int movement_vector[5][2] = {{0,0},{-1,0},{1,0},{0,-1},{0,1}};
 

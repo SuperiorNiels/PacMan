@@ -20,7 +20,6 @@ public:
     void removeEntity(entityID id) override;
     bool entityInSystem(entityID id) override;
 private:
-    clip getClip(Entity* e);
     std::vector<Entity*> to_check = std::vector<Entity*>();
 };
 

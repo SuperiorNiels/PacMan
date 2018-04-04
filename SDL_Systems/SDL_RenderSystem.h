@@ -22,6 +22,8 @@ public:
     ~SDL_RenderSystem() override;
 private:
     void renderCollisionBox(Entity* e);
+    SDL_Rect* getPosition(Entity* e);
+    SDL_Rect* getClip(Entity* e);
 };
 
 

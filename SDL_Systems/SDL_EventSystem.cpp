@@ -66,13 +66,9 @@ void SDL_EventSystem::update()
             {
                 auto* mc = en->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
                 mc->wanted_dir = dir;
+                mc->current_dir = dir; // fixme
                 if(!en->hasComponentType(COLLISION_COMPONENT))
                     mc->current_dir = dir;
-            }
-            if(en->hasComponentType(RENDER_COMPONENT))
-            {
-                auto* rc = en->getComponentByType<RenderComponent>(RENDER_COMPONENT);
-                rc->frame_offset = rc->direction_offsets[dir-1];
             }
         }
     }

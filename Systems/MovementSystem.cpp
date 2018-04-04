@@ -19,17 +19,42 @@ void MovementSystem::update()
             auto* p = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
             auto* m = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
 
-            p->x += movement_vector[m->current_dir][0] * m->speed;
-            p->y += movement_vector[m->current_dir][1] * m->speed;
+            if(m->state != MOVING && m->current_dir != STOP)
+            {
+                m->x_prev = p->x;
+                m->y_prev = p->y;
 
-            if(p->x > world->getWidth()-1)
-                p->x = 0;
-            if(p->x < 0)
-                p->x = world->getWidth()-1;
-            if(p->y > world->getHeight()-1)
-                p->y = 0;
-            if(p->y < 0)
-                p->y = world->getHeight()-1;
+                p->x += movement_vector[m->current_dir][0];
+                p->y += movement_vector[m->current_dir][1];
+
+                m->state = MOVING;
+
+                if(p->x > world->getWidth()-1)
+                {
+                    p->x = 0;
+                    m->state = IDLE;
+                }
+
+                if(p->x < 0)
+                {
+                    p->x = world->getWidth()-1;
+                    m->state = IDLE;
+                }
+
+                if(p->y > world->getHeight()-1)
+                {
+                    p->y = 0;
+                    m->state = IDLE;
+                }
+                if(p->y < 0)
+                {
+                    p->y = world->getHeight()-1;
+                    m->state = IDLE;
+                }
+                //m->current_dir = STOP;
+                //m->wanted_dir = STOP;
+
+            }
         }
     }
 }

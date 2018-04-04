@@ -32,6 +32,7 @@ private:
     EventSystem* events = nullptr;
     RenderSystem* render = nullptr;
     World* world = nullptr;
+    TimerSystem* timer = nullptr;
 };
 
 #endif //ECS_GAME_H

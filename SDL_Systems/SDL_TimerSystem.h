@@ -12,14 +12,18 @@
 
 class SDL_TimerSystem : public TimerSystem {
 public:
-    SDL_TimerSystem();
+    SDL_TimerSystem() = delete;
     explicit SDL_TimerSystem(int fps);
-    void start() override;
-    void cap() override;
+    void fpsStart() override;
+    void fpsCap() override;
+    void startTimer() override;
+    unsigned int getTimerStep() override;
+    unsigned int getTimerAndReset() override;
 private:
-    Uint32 time = 0;
-    int framecount = 0;
+    Uint32 fps_time = 0;
+    int frame_count = 0;
     Uint32 fps_startTime = 0;
+    Uint32 timer_start = 0;
 };
 
 

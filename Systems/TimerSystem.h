@@ -10,8 +10,21 @@
 class TimerSystem
 {
 public:
-    virtual void start() = 0; // fixme: fps en ticks/frame in constructor
-    virtual void cap() = 0;
+    TimerSystem()
+    {
+        SCREEN_FPS = 60;
+        SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
+    };
+    explicit TimerSystem(int fps)
+    {
+        SCREEN_FPS = fps;
+        SCREEN_TICKS_PER_FRAME = 1000 / SCREEN_FPS;
+    };
+    virtual void fpsStart() = 0;
+    virtual void fpsCap() = 0;
+    virtual void startTimer() = 0;
+    virtual unsigned int getTimerStep() = 0;
+    virtual unsigned int getTimerAndReset() = 0;
     int getFPS() { return SCREEN_FPS; };
 protected:
     int SCREEN_FPS = 0;

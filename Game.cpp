@@ -15,11 +15,12 @@ void Game::init()
     clear();
     Game::world = new World(config->getCollision_map());
     Game::manager = new SystemManager();
-    Game::render = factory->createRenderSystem(world,config->getScreen_x(),config->getScreen_y(),factory->createTimerSystem(config->getFps()));
+    Game::timer = factory->createTimerSystem(config->getFps());
+    Game::render = factory->createRenderSystem(world,config->getScreen_x(),config->getScreen_y(),timer);
     Game::events = factory->createEventSystem();
     manager->registerSystem(Game::events);
     //manager->registerSystem(new AISystem());
-    //manager->registerSystem(new CollisionSystem());
+    manager->registerSystem(new CollisionSystem());
     manager->registerSystem(new MovementSystem(world));
     manager->registerSystem(Game::render);
     createGame();
@@ -36,8 +37,10 @@ void Game::run()
 {
     while(events->getRunning())
     {
+        timer->fpsStart();
         manager->updateSystems();
         manager->updateEntities();
+        timer->fpsCap();
     }
 }
 
