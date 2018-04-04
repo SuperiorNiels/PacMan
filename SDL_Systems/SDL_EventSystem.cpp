@@ -66,7 +66,6 @@ void SDL_EventSystem::update()
             {
                 auto* mc = en->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
                 mc->wanted_dir = dir;
-                mc->current_dir = dir; // fixme
                 if(!en->hasComponentType(COLLISION_COMPONENT))
                     mc->current_dir = dir;
             }

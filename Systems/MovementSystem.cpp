@@ -51,9 +51,6 @@ void MovementSystem::update()
                     p->y = world->getHeight()-1;
                     m->state = IDLE;
                 }
-                //m->current_dir = STOP;
-                //m->wanted_dir = STOP;
-
             }
         }
     }

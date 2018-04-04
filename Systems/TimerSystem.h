@@ -26,6 +26,7 @@ public:
     virtual unsigned int getTimerStep() = 0;
     virtual unsigned int getTimerAndReset() = 0;
     int getFPS() { return SCREEN_FPS; };
+    int getTickPerFrame() { return SCREEN_TICKS_PER_FRAME; };
 protected:
     int SCREEN_FPS = 0;
     int SCREEN_TICKS_PER_FRAME = 0;

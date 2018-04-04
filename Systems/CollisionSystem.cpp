@@ -67,41 +67,61 @@ void CollisionSystem::update()
     // TODO: collision for ghosts
     for(auto* player : players)
     {
-        auto* pc = player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-        for (auto& entity : entities)
+        auto* mc = player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
+        if(mc->state == IDLE)
         {
-            auto *pc2 = entity->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-            if(entity->hasComponentType(POINTS_COMPONENT))
+            auto* pc = player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+
+            double wanted_x = pc->x + movement_vector[mc->wanted_dir][0];
+            double wanted_y = pc->y + movement_vector[mc->wanted_dir][1];
+            double new_x = pc->x + movement_vector[mc->current_dir][0];
+            double new_y = pc->y + movement_vector[mc->current_dir][1];
+
+            bool wanted_possible = true;
+            bool current_possible = true;
+
+            for (auto& entity : entities)
             {
-                if(pc->x == pc2->x && pc->y == pc2->y)
+                auto *pc2 = entity->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+                if(!entity->hasComponentType(POINTS_COMPONENT))
                 {
-                    if(player->hasComponentType(SCORE_COMPONENT))
+                    if(wanted_x == pc2->x && wanted_y == pc2->y)
+                        wanted_possible = false;
+
+                    if(new_x == pc2->x && new_y == pc2->y)
+                        current_possible = false;
+                }
+                else
+                {
+                    if(pc->x == pc2->x && pc->y == pc2->y)
                     {
-                        auto* sc = player->getComponentByType<ScoreComponent>(SCORE_COMPONENT);
-                        auto* pp = entity->getComponentByType<PointsComponent>(POINTS_COMPONENT);
-                        sc->score += pp->points;
-                        std::cout << "[Score] Added points. New score: " << sc->score << std::endl;
+                        if(player->hasComponentType(SCORE_COMPONENT))
+                        {
+                            auto* sc = player->getComponentByType<ScoreComponent>(SCORE_COMPONENT);
+                            auto* pp = entity->getComponentByType<PointsComponent>(POINTS_COMPONENT);
+                            sc->score += pp->points;
+                            std::cout << "[Score] Added points. New score: " << sc->score << std::endl;
+                        }
+                        entity->clearComponents();
                     }
-                    entity->clearComponents();
                 }
             }
-            else
+
+            if(wanted_possible)
+                mc->current_dir = mc->wanted_dir;
+            if(!wanted_possible && !current_possible)
             {
-                auto* mc = player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-                double new_x = pc->x + movement_vector[mc->wanted_dir][0];
-                double new_y = pc->y + movement_vector[mc->wanted_dir][1];
-                if(new_x == pc2->x && new_y == (pc2->y))
+                mc->wanted_dir = STOP;
+                mc->current_dir = STOP;
+            }
+
+            for (auto& ghost : ghosts)
+            {
+                auto *pc2 = ghost->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+                if(pc->x == pc2->x && pc->y == (pc2->y))
                 {
-                    mc->current_dir = STOP;
+                    std::cout << "you are dead" << std::endl;
                 }
-            }
-        }
-        for (auto& ghost : ghosts)
-        {
-            auto *pc2 = ghost->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-            if(pc->x == pc2->x && pc->y == (pc2->y))
-            {
-                std::cout << "you are dead" << std::endl;
             }
         }
     }

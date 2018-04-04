@@ -69,9 +69,9 @@ void SDL_RenderSystem::update()
             {
                 SDL_Rect position = getPosition(e);
 
-                //renderBox(&position,e);
+                renderBox(&position,e);
 
-                double x_offset = rc->x_render_offset*tile_width;
+                /*double x_offset = rc->x_render_offset*tile_width;
                 double y_offset = rc->y_render_offset*tile_width;
                 position.x = (int) (position.x - x_offset);
                 position.y = (int) (position.y - y_offset);
@@ -81,7 +81,7 @@ void SDL_RenderSystem::update()
                 position.w = (int) floor(clip.w * rc->scale);
                 position.h = (int) floor(clip.h * rc->scale);
 
-                SDL_RenderCopy(renderer, rc->texture, &clip, &position);
+                SDL_RenderCopy(renderer, rc->texture, &clip, &position);*/
             }
         }
     }
@@ -104,9 +104,9 @@ SDL_Rect SDL_RenderSystem::getPosition(Entity *e)
             auto* mc = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
             if(mc->state == MOVING)
             {
-                mc->time += timer->getTimerStep() / 1000.f;
+                mc->time += 1.f / 1000.f; // timer.getTimerStep() / 1000.f for fps independent movement
 
-                double t = mc->time / (1.f/mc->speed);
+                double t = mc->time / mc->speed;
 
                 if(t >= 1)
                 {
@@ -134,20 +134,21 @@ SDL_Rect SDL_RenderSystem::getClip(Entity *e)
     if (!rc->clips.empty())
     {
         clip = *rc->clips[0];
-        if (e->hasComponentType(MOVABLE_COMPONENT))
+        /*if (e->hasComponentType(MOVABLE_COMPONENT))
         {
             auto *m = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
             rc->frame_offset = rc->direction_offsets[m->current_dir-1];
-            if (m->state != IDLE || m->current_dir != STOP)
+            if (m->state == MOVING)
                 clip = *rc->clips[rc->current_frame + rc->frame_offset];
+            // TODO: animation check!!!!
         }
         if (rc->count > rc->animation_speed)
         {
             rc->current_frame = (rc->current_frame + 1) % rc->animation_length;
             rc->count = 0;
         }
-
-        rc->count++;
+        else
+            rc->count++;*/
     }
     return clip;
 }
@@ -172,7 +173,7 @@ void SDL_RenderSystem::renderBox(SDL_Rect* box, Entity* e)
     else
     {
         SDL_SetRenderDrawColor(renderer, 0, 0, 0xFF, 0xFF);
-        SDL_RenderDrawRect(renderer, box);
+        SDL_RenderFillRect(renderer, box);
     }
 }
 
