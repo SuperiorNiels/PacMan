@@ -130,6 +130,8 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
             entity_config->FirstChildElement("lives_component")->FirstChildElement("font")->QueryIntAttribute("size", &font_size);
             auto* lc = factory->createLivesComponent(font,font_size);
             entity_config->FirstChildElement("lives_component")->QueryIntAttribute("lives", &lc->lives);
+            lc->start_x = x;
+            lc->start_y = y;
             e->addComponent(lc);
         }
         return e;

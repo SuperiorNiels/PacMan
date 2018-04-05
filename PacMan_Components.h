@@ -99,6 +99,8 @@ class LivesComponent : public Component
 public:
     LivesComponent() { type = LIVES_COMPONENT; };
     int lives = 0;
+    int start_x = 0;
+    int start_y = 0;
 };
 
 

@@ -119,13 +119,15 @@ void CollisionSystem::update()
                     {
                         auto* lc = player->getComponentByType<LivesComponent>(LIVES_COMPONENT);
                         lc->lives--;
+                        pc->x = lc->start_x;
+                        pc->y = lc->start_y;
                     }
                 }
             }
 
             if(wanted_possible)
                 mc->current_dir = mc->wanted_dir;
-            if((!wanted_possible && !current_possible))
+            if((!wanted_possible && !current_possible) | dead)
             {
                 mc->wanted_dir = STOP;
                 mc->current_dir = STOP;
