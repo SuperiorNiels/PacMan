@@ -80,6 +80,8 @@ void CollisionSystem::update()
             bool wanted_possible = true;
             bool current_possible = true;
 
+            std::vector<Entity*> to_remove = std::vector<Entity*>();
+
             for (auto& entity : entities)
             {
                 auto *pc2 = entity->getComponentByType<PositionComponent>(POSITION_COMPONENT);
@@ -101,9 +103,16 @@ void CollisionSystem::update()
                             auto* pp = entity->getComponentByType<PointsComponent>(POINTS_COMPONENT);
                             sc->score += pp->points;
                         }
-                        entity->clearComponents();
+                        to_remove.push_back(entity);
                     }
                 }
+            }
+
+            // Remove entities if needed (points)
+            for(auto* e : to_remove)
+            {
+                e->clearComponents();
+                removeEntity(e->id);
             }
 
             bool dead = false;

@@ -8,6 +8,7 @@
 #include "ECS/ECS.h"
 #include "PacMan_Constants.h"
 #include "Systems/CollisionSystem.h"
+#include "World.h"
 
 enum ComponentTypes
 {
@@ -38,7 +39,7 @@ public:
     direction wanted_dir = STOP;
     double speed = 1;
     double time = 0;
-    entity_state state = IDLE;
+    entity_movable_state state = IDLE;
     int x_prev = 0;
     int y_prev = 0;
 };
@@ -55,6 +56,10 @@ public:
     AIComponent() { type = AI_COMPONENT; };
     int count = 0;
     int length = 1;
+    ai_states state = FOLLOWING;
+    World* world = nullptr;
+    Entity* goal = nullptr;
+
 };
 
 class RenderComponent : public Component

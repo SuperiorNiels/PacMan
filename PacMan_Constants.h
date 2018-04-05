@@ -14,10 +14,17 @@ enum direction
     DOWN
 };
 
-enum entity_state
+enum entity_movable_state
 {
     IDLE,
     MOVING
+};
+
+enum ai_states
+{
+    RANDOM,
+    FOLLOWING,
+    FLEE
 };
 
 // enum direction gives location of the move vector

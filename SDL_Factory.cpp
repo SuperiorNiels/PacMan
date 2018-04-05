@@ -7,41 +7,58 @@
 std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
 {
     std::vector<Entity*> entities = std::vector<Entity*>();
+
+    int i = 0; // ghost color
     int **map = world->getWorld();
     int tile_width = renderSystem->getTile_width();
+    std::vector<Entity*> walls = std::vector<Entity*>();
+    std::vector<Entity*> points = std::vector<Entity*>();
+    std::vector<Entity*> players = std::vector<Entity*>();
+    std::vector<Entity*> ais = std::vector<Entity*>();
     for(int x=0;x<world->getWidth();x++)
     {
         for(int y=0;y<world->getHeight();y++)
         {
-            //std::cout << map[y][x] << " ";
-            Entity* entity = nullptr;
             if(map[y][x] == 1)
             {
-                entity = config->createEntity("wall_tile",tile_width, x, y);
+                walls.push_back(config->createEntity("wall_tile",tile_width, x, y));
             }
             else if(map[y][x] == 3 || map[y][x] == 4)
             {
-                entity = config->createEntity("point",tile_width, x, y);
+                points.push_back(config->createEntity("point",tile_width, x, y));
             }
-            if(entity != nullptr)
-                entities.push_back(entity);
-        }
-        //std::cout << std::endl;
-    }
-    int i = 0;
-    for(int x=0;x<world->getWidth();x++)
-    {
-        for (int y = 0; y < world->getHeight(); y++)
-        {
             if(map[y][x] == 5)
-                entities.push_back(config->createEntity("player",renderSystem->getTile_width(),x,y));
+            {
+                SDL_Factory::player = config->createEntity("player", renderSystem->getTile_width(), x, y);
+                players.push_back(player);
+            }
             if(map[y][x] == 6)
             {
-                entities.push_back(config->createEntity("ghost",renderSystem->getTile_width(),x,y,0,i));
+                ais.push_back(config->createEntity("ghost",renderSystem->getTile_width(),x,y,0,i));
                 i++;
             }
         }
     }
+
+    if(player != nullptr)
+    {
+        for(auto* ai : ais)
+        {
+            if(ai->hasComponentType(AI_COMPONENT))
+            {
+                auto* ac = ai->getComponentByType<AIComponent>(AI_COMPONENT);
+                ac->goal = player; // fixme: better location to initialize the goal of the ai?
+            }
+        }
+    }
+
+    entities.insert(entities.begin(),ais.begin(),ais.end());
+    entities.insert(entities.begin(),players.begin(),players.end());
+    entities.insert(entities.begin(),walls.begin(),walls.end());
+    entities.insert(entities.begin(),points.begin(),points.end());
+
+    walls.clear(); points.clear(); players.clear(); ais.clear();
+
     return entities;
 }
 
