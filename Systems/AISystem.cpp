@@ -3,48 +3,51 @@
 //
 
 #include "AISystem.h"
-#include "../SDL_Components.h"
 
-
-AISystem::AISystem()
+AISystem::AISystem(World* world)
 {
     component_types = {AI_COMPONENT};
-    srand (time(NULL));
+    AISystem::world = world;
 }
 
 void AISystem::update()
 {
     for(auto& e : entities)
     {
-        auto* m = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-        auto* a = e->getComponentByType<AIComponent>(AI_COMPONENT);
-        auto* rc = e->getComponentByType<RenderComponent>(RENDER_COMPONENT);
-        if(m != nullptr && a != nullptr && rc != nullptr)
+        if(e->hasComponentTypes({AI_COMPONENT,MOVABLE_COMPONENT,POSITION_COMPONENT}))
         {
-            if(a->count > a->length)
+            auto* ac = e->getComponentByType<AIComponent>(AI_COMPONENT);
+            auto* mc = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
+            auto* pc = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+
+            auto* target = ac->goal;
+            if(target->hasComponentType(POSITION_COMPONENT))
             {
-                a->length = rand() % 10 + 1;
-                int r = rand() % 4 + 1;
-                m->current_dir = LEFT;
-                rc->frame_offset = rc->direction_offsets[0];
-                if (r == 1)
+                auto* target_pos = target->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+                if(target_pos->x - pc->x < 0 )
+                    mc->wanted_dir = LEFT;
+                else if(target_pos->x == pc->x)
                 {
-                    m->current_dir = RIGHT;
-                    rc->frame_offset = rc->direction_offsets[1];
+                    if(target_pos->y - pc->y < 0)
+                        mc->wanted_dir = UP;
+                    else if(target_pos->y == pc->y)
+                        mc->wanted_dir = STOP;
+                    else
+                        mc->wanted_dir = DOWN;
                 }
-                else if(r == 2)
-                {
-                    m->current_dir = UP;
-                    rc->frame_offset = rc->direction_offsets[3];
-                }
-                else if(r == 3)
-                {
-                    m->current_dir = DOWN;
-                    rc->frame_offset = rc->direction_offsets[2];
-                }
-                a->count = 0;
+                else
+                    mc->wanted_dir = RIGHT;
             }
-            a->count++;
         }
     }
+}
+
+std::vector<Node*> AISystem::getPath(int start_x, int start_y, int stop_x, int stop_y)
+{
+
+}
+
+double AISystem::calculateDistance(int x1, int x2, int y1, int y2)
+{
+    return sqrt(pow(x1-x2,2.f) + pow(y1-y2,2.f));
 }

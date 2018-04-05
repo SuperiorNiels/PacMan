@@ -76,7 +76,7 @@ void SDL_RenderSystem::update()
             {
                 SDL_Rect position = getPosition(e);
 
-                //renderBox(&position,e);
+                renderBox(&position,e);
 
                 double x_offset = rc->x_render_offset*tile_width;
                 double y_offset = rc->y_render_offset*tile_width;
@@ -94,7 +94,7 @@ void SDL_RenderSystem::update()
                 if(e->hasComponentType(LIVES_COMPONENT))
                     renderLives(e);
 
-                SDL_RenderCopy(renderer, rc->texture, &clip, &position);
+                //SDL_RenderCopy(renderer, rc->texture, &clip, &position);
             }
         }
     }

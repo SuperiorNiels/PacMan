@@ -54,12 +54,8 @@ class AIComponent : public Component
 {
 public:
     AIComponent() { type = AI_COMPONENT; };
-    int count = 0;
-    int length = 1;
     ai_states state = FOLLOWING;
-    World* world = nullptr;
     Entity* goal = nullptr;
-
 };
 
 class RenderComponent : public Component

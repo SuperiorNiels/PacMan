@@ -19,7 +19,7 @@ void Game::init()
     Game::render = factory->createRenderSystem(world,config->getScreen_x(),config->getScreen_y(),timer);
     Game::events = factory->createEventSystem();
     manager->registerSystem(Game::events);
-    manager->registerSystem(new AISystem());
+    manager->registerSystem(new AISystem(world));
     manager->registerSystem(new CollisionSystem());
     manager->registerSystem(new MovementSystem(world));
     manager->registerSystem(Game::render);

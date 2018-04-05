@@ -53,10 +53,10 @@
             <movable_component speed="0.005"/>
             <player_input_component />
             <score_component>
-                <font size="16">../data/Joystix.TTF</font>
+                <font size="18">../data/Joystix.TTF</font>
             </score_component>
             <lives_component lives="3">
-                <font size="16">../data/Joystix.TTF</font>
+                <font size="18">../data/Joystix.TTF</font>
             </lives_component>
         </player>
         <ghost>
