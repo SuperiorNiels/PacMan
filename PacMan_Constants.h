@@ -5,14 +5,6 @@
 #ifndef ECS_PACMAN_CONSTANTS_H
 #define ECS_PACMAN_CONSTANTS_H
 
-enum ghost_color
-{
-    RED_GHOST,
-    PINK_GHOST,
-    BLUE_GHOST,
-    ORANGE_GHOST
-};
-
 enum direction
 {
     STOP,

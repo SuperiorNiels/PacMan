@@ -4,16 +4,6 @@
 
 #include "SDL_Factory.h"
 
-Entity* SDL_Factory::createPacMan(int x, int y)
-{
-    return config->createEntity("player",renderSystem->getTile_width(),x,y);
-}
-
-Entity* SDL_Factory::createGhost(int x, int y, int color)
-{
-    return config->createEntity("ghost",renderSystem->getTile_width(),x,y,0,color);
-}
-
 std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
 {
     std::vector<Entity*> entities = std::vector<Entity*>();
@@ -44,10 +34,10 @@ std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
         for (int y = 0; y < world->getHeight(); y++)
         {
             if(map[y][x] == 5)
-                entities.push_back(createPacMan(x,y));
+                entities.push_back(config->createEntity("player",renderSystem->getTile_width(),x,y));
             if(map[y][x] == 6)
             {
-                entities.push_back(createGhost(x, y, RED_GHOST+i));
+                entities.push_back(config->createEntity("ghost",renderSystem->getTile_width(),x,y,0,i));
                 i++;
             }
         }
@@ -106,7 +96,7 @@ RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::vecto
     }
 
     if(clips.empty())
-        SDL_QueryTexture(newTexture, nullptr, nullptr, (int*) renderSystem->getTile_width(), (int*) renderSystem->getTile_width());
+        SDL_QueryTexture(newTexture, nullptr, nullptr, 0, 0); //fixme
 
     to_return->texture = newTexture;
 
@@ -123,6 +113,13 @@ RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::vecto
     to_return->clips = std::move(sdl_clips);
 
     return to_return;
+}
+
+ScoreComponent* SDL_Factory::createScoreComponent(std::string font, int font_size)
+{
+    auto* sc = new SDL_ScoreComponent();
+    sc->texture = new SDL_Text(font,font_size,renderSystem->renderer);
+    return sc;
 }
 
 void SDL_Factory::clearTextures()

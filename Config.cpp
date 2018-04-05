@@ -118,7 +118,10 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
         }
         if(entity_config->FirstChildElement("score_component") != nullptr)
         {
-            e->addComponent(new ScoreComponent());
+            int font_size = 0;
+            std::string font = entity_config->FirstChildElement("score_component")->FirstChildElement("font")->GetText();
+            entity_config->FirstChildElement("score_component")->FirstChildElement("font")->QueryIntAttribute("size", &font_size);
+            e->addComponent(factory->createScoreComponent(font,font_size));
         }
         return e;
     }

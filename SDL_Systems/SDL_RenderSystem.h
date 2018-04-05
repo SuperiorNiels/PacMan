@@ -16,12 +16,13 @@ class SDL_RenderSystem : public RenderSystem
 {
 public:
     SDL_RenderSystem(World* world, int screen_width, int screen_height, TimerSystem* timer);
-    SDL_Renderer* renderer = nullptr;
-    SDL_Window* window = nullptr;
     void update() override;
     ~SDL_RenderSystem() override;
+    SDL_Renderer* renderer = nullptr;
 private:
     void renderBox(SDL_Rect* box, Entity* e);
+    void renderScore(Entity* e);
+    SDL_Window* window = nullptr;
     SDL_Rect getPosition(Entity* e);
     SDL_Rect getClip(Entity* e);
 };

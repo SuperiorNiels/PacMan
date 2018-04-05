@@ -2,6 +2,7 @@
 // Created by niels on 05/03/18.
 //
 
+#include <sstream>
 #include "SDL_RenderSystem.h"
 
 SDL_RenderSystem::SDL_RenderSystem(World* world, int screen_width, int screen_height, TimerSystem* timer) :
@@ -48,6 +49,12 @@ SDL_RenderSystem::SDL_RenderSystem(World* world, int screen_width, int screen_he
                     {
                         std::cout << "SDL_image failed to initialize! Error: " << IMG_GetError() << std::endl;
                     }
+
+                    //Initialize SDL_ttf
+                    if(TTF_Init() == -1)
+                    {
+                        std::cout << "SDL_image failed to initialize! Error: " << TTF_GetError() << std::endl;
+                    }
                 }
             }
         }
@@ -80,6 +87,9 @@ void SDL_RenderSystem::update()
 
                 position.w = (int) floor(clip.w * rc->scale);
                 position.h = (int) floor(clip.h * rc->scale);
+
+                if(e->hasComponentType(SCORE_COMPONENT))
+                    renderScore(e);
 
                 SDL_RenderCopy(renderer, rc->texture, &clip, &position);
             }
@@ -151,6 +161,26 @@ SDL_Rect SDL_RenderSystem::getClip(Entity *e)
             rc->count++;*/
     }
     return clip;
+}
+
+void SDL_RenderSystem::renderScore(Entity *e)
+{
+    auto* sc = e->getComponentByType<SDL_ScoreComponent>(SCORE_COMPONENT);
+    auto* rc = e->getComponentByType<RenderComponent>(RENDER_COMPONENT);
+    SDL_Color text_color = {0xff,0xff,0xff,0};
+
+    std::ostringstream stringStream;
+    stringStream << "Score: " << sc->score;
+    std::string score_text = stringStream.str();
+
+    sc->texture->setText(score_text, text_color);
+    SDL_Texture* text = sc->texture->getTexture();
+
+    int w, h = 0;
+    SDL_QueryTexture(text, nullptr, nullptr, &w, &h);
+    SDL_Rect score_pos = {5 + x_screen_offset, world_height + y_screen_offset + 5, w , h};
+
+    SDL_RenderCopy(renderer,text, nullptr, &score_pos);
 }
 
 void SDL_RenderSystem::renderBox(SDL_Rect* box, Entity* e)

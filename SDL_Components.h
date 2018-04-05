@@ -8,7 +8,9 @@
 #include "ECS/ECS.h"
 #include "SDL2/SDL.h"
 #include "SDL2/SDL_image.h"
+#include "SDL2/SDL_ttf.h"
 #include "PacMan_Components.h"
+#include "SDL_Text.h"
 
 class SDL_RenderComponent : public RenderComponent
 {
@@ -20,6 +22,12 @@ public:
         for(auto& c : clips)
             delete c;
     };
+};
+
+class SDL_ScoreComponent : public ScoreComponent
+{
+public:
+    SDL_Text* texture = nullptr;
 };
 
 #endif //ECS_SDL_COMPONENTS_H

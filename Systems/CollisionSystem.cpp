@@ -100,7 +100,6 @@ void CollisionSystem::update()
                             auto* sc = player->getComponentByType<ScoreComponent>(SCORE_COMPONENT);
                             auto* pp = entity->getComponentByType<PointsComponent>(POINTS_COMPONENT);
                             sc->score += pp->points;
-                            std::cout << "[Score] Added points. New score: " << sc->score << std::endl;
                         }
                         entity->clearComponents();
                     }
