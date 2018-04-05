@@ -19,17 +19,22 @@ public:
         RenderSystem::screen_width = screen_width;
         RenderSystem::screen_height = screen_height;
         RenderSystem::timer = timer;
-        // Calculate tile_width
-        int min_screen = std::max(screen_width,screen_height);
-        int max_world = std::max(world->getHeight(),world->getWidth());
-        RenderSystem::tile_width = (int)floor(min_screen/max_world);
-        //std::cout << "Tile width: " << tile_width << std::endl;
+
+        double number1 = screen_height/world->getHeight();
+        double number2 = screen_width/world->getWidth();
+
+        RenderSystem::tile_width = (int)floor(std::min<double>(number1,number2));
+
+        RenderSystem::x_screen_offset = (int) floor((screen_width - world->getWidth() * tile_width) / 2.f);
+        RenderSystem::y_screen_offset = (int) floor((screen_height - world->getHeight() * tile_width) / 2.f);
     };
     int getTile_width() const { return tile_width; };
 protected:
     int tile_width = 0; // square : width = height
     int screen_width = 0;
     int screen_height = 0;
+    int x_screen_offset = 0;
+    int y_screen_offset = 0;
     TimerSystem* timer = nullptr;
 };
 

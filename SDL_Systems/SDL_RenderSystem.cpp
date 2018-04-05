@@ -26,7 +26,7 @@ SDL_RenderSystem::SDL_RenderSystem(World* world, int screen_width, int screen_he
         else
         {
             // Initialize renderer vsync: | SDL_RENDERER_PRESENTVSYNC
-            renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
+            renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
             if(renderer == nullptr)
             {
                 std::cout << "Failed to create renderer. Error: " << SDL_GetError() << std::endl;
@@ -122,7 +122,7 @@ SDL_Rect SDL_RenderSystem::getPosition(Entity *e)
             }
         }
 
-        position = {x, y, tile_width, tile_width};
+        position = {x + x_screen_offset, y + y_screen_offset, tile_width, tile_width};
     }
     return position;
 }

@@ -8,8 +8,8 @@ Config::Config(std::string path)
 {
     doc.LoadFile(path.c_str());
     doc.FirstChildElement("pacman")->FirstChildElement("game")->QueryIntAttribute("fps", &fps);
-    doc.FirstChildElement("pacman")->FirstChildElement("game")->QueryIntAttribute("screen_x", &screen_x);
-    doc.FirstChildElement("pacman")->FirstChildElement("game")->QueryIntAttribute("screen_y", &screen_y);
+    doc.FirstChildElement("pacman")->FirstChildElement("game")->QueryIntAttribute("window_width", &screen_x);
+    doc.FirstChildElement("pacman")->FirstChildElement("game")->QueryIntAttribute("window_height", &screen_y);
     collision_map = doc.FirstChildElement("pacman")->FirstChildElement("game")->FirstChildElement("collision")->GetText();
     sprites_sheet = doc.FirstChildElement("pacman")->FirstChildElement("game")->FirstChildElement("sprites")->GetText();
     doc.FirstChildElement("pacman")->FirstChildElement("game")->FirstChildElement("sprites")->QueryIntAttribute("tile_width", &sprite_tile_width);
@@ -93,7 +93,7 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
                 render_config->FirstChildElement("direction_offset")->QueryIntAttribute("up",&rc->direction_offsets[2]);
                 render_config->FirstChildElement("direction_offset")->QueryIntAttribute("down",&rc->direction_offsets[3]);
             }
-            rc->scale = tile_width/sprite_tile_width;
+            rc->scale = tile_width/(double)sprite_tile_width;
             e->addComponent(rc);
         }
         if(entity_config->FirstChildElement("points_component") != nullptr)
