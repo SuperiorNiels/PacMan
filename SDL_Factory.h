@@ -26,7 +26,8 @@ public:
     std::vector<Entity *> createWorldEntities(World *world) override;
     RenderSystem* createRenderSystem(World* world, int screen_width, int screen_height, TimerSystem* timer) override;
     RenderComponent* createRenderComponent(std::string path, std::vector<clip> clips) override;
-    ScoreComponent* createScoreComponent(std::string font, int fonst_size) override;
+    ScoreComponent* createScoreComponent(std::string font, int font_size) override;
+    LivesComponent* createLivesComponent(std::string font, int font_size) override;
     ~SDL_Factory() override;
 private:
     void clearTextures();

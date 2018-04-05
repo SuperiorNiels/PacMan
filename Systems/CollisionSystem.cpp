@@ -115,12 +115,17 @@ void CollisionSystem::update()
                 {
                     std::cout << "you are dead" << std::endl;
                     dead = true;
+                    if(player->hasComponentType(LIVES_COMPONENT))
+                    {
+                        auto* lc = player->getComponentByType<LivesComponent>(LIVES_COMPONENT);
+                        lc->lives--;
+                    }
                 }
             }
 
             if(wanted_possible)
                 mc->current_dir = mc->wanted_dir;
-            if((!wanted_possible && !current_possible) || dead)
+            if((!wanted_possible && !current_possible))
             {
                 mc->wanted_dir = STOP;
                 mc->current_dir = STOP;

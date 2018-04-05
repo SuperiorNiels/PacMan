@@ -91,6 +91,9 @@ void SDL_RenderSystem::update()
                 if(e->hasComponentType(SCORE_COMPONENT))
                     renderScore(e);
 
+                if(e->hasComponentType(LIVES_COMPONENT))
+                    renderLives(e);
+
                 SDL_RenderCopy(renderer, rc->texture, &clip, &position);
             }
         }
@@ -179,6 +182,28 @@ void SDL_RenderSystem::renderScore(Entity *e)
     int w, h = 0;
     SDL_QueryTexture(text, nullptr, nullptr, &w, &h);
     SDL_Rect score_pos = {5 + x_screen_offset, world_height + y_screen_offset + 5, w , h};
+
+    SDL_RenderCopy(renderer,text, nullptr, &score_pos);
+}
+
+void SDL_RenderSystem::renderLives(Entity *e)
+{
+    auto* lc = e->getComponentByType<SDL_LivesComponent>(LIVES_COMPONENT);
+
+    SDL_Color text_color = {0xff,0xff,0xff,0};
+
+    std::ostringstream stringStream;
+    stringStream << "Lives: " << lc->lives;
+    std::string lives_text = stringStream.str();
+
+    lc->text->setText(lives_text, text_color);
+
+    SDL_Texture* text = lc->text->getTexture();
+
+    int w, h = 0;
+    SDL_QueryTexture(text, nullptr, nullptr, &w, &h);
+    int test = world_width - w - 5 + x_screen_offset;
+    SDL_Rect score_pos = {test, world_height + y_screen_offset + 5, w , h};
 
     SDL_RenderCopy(renderer,text, nullptr, &score_pos);
 }

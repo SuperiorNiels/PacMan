@@ -123,6 +123,15 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
             entity_config->FirstChildElement("score_component")->FirstChildElement("font")->QueryIntAttribute("size", &font_size);
             e->addComponent(factory->createScoreComponent(font,font_size));
         }
+        if(entity_config->FirstChildElement("lives_component") != nullptr)
+        {
+            int font_size = 0;
+            std::string font = entity_config->FirstChildElement("lives_component")->FirstChildElement("font")->GetText();
+            entity_config->FirstChildElement("lives_component")->FirstChildElement("font")->QueryIntAttribute("size", &font_size);
+            auto* lc = factory->createLivesComponent(font,font_size);
+            entity_config->FirstChildElement("lives_component")->QueryIntAttribute("lives", &lc->lives);
+            e->addComponent(lc);
+        }
         return e;
     }
     return nullptr;

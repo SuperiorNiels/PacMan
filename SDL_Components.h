@@ -30,4 +30,10 @@ public:
     SDL_Text* texture = nullptr;
 };
 
+class SDL_LivesComponent : public LivesComponent
+{
+public:
+    SDL_Text* text = nullptr;
+    // TODO: maybe add option to change lives texture (for now take entity sprite)
+};
 #endif //ECS_SDL_COMPONENTS_H

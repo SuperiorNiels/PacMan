@@ -18,7 +18,8 @@ enum ComponentTypes
     RENDER_COMPONENT,
     COLLISION_COMPONENT,
     POINTS_COMPONENT,
-    SCORE_COMPONENT
+    SCORE_COMPONENT,
+    LIVES_COMPONENT
 };
 
 class PositionComponent : public Component
@@ -91,6 +92,13 @@ class ScoreComponent : public Component
 public:
     ScoreComponent() { type = SCORE_COMPONENT; };
     int score = 0;
+};
+
+class LivesComponent : public Component
+{
+public:
+    LivesComponent() { type = LIVES_COMPONENT; };
+    int lives = 0;
 };
 
 

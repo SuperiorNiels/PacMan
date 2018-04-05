@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <pacman>
-    <game fps="60" window_width="1000" window_height="1000">
+    <game fps="60" window_width="500" window_height="452">
         <collision>../data/world.map</collision>
         <sprites tile_width="8">../data/sprites.png</sprites>
         <graphics>SDL</graphics>
@@ -55,6 +55,9 @@
             <score_component>
                 <font size="16">../data/Joystix.TTF</font>
             </score_component>
+            <lives_component lives="3">
+                <font size="16">../data/Joystix.TTF</font>
+            </lives_component>
         </player>
         <ghost>
             <position_component />

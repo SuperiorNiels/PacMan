@@ -122,6 +122,13 @@ ScoreComponent* SDL_Factory::createScoreComponent(std::string font, int font_siz
     return sc;
 }
 
+LivesComponent* SDL_Factory::createLivesComponent(std::string font, int font_size)
+{
+    auto* lc = new SDL_LivesComponent();
+    lc->text = new SDL_Text(font,font_size,renderSystem->renderer);
+    return lc;
+}
+
 void SDL_Factory::clearTextures()
 {
     for(auto it = loadedTextures.begin(); it != loadedTextures.end(); it++)
