@@ -10,18 +10,17 @@ Node::Node(int x, int y)
     Node::y = y;
 }
 
-Node *Node::getPrevious() const {
-    return previous;
+Node *Node::getParent() const
+{
+    return parent;
 }
 
-void Node::setPrevious(Node *previous) {
-    Node::previous = previous;
+void Node::setParent(Node *parent)
+{
+    Node::parent = parent;
 }
 
-Node *Node::getNext() const {
-    return next;
-}
-
-void Node::setNext(Node *next) {
-    Node::next = next;
+Node::~Node()
+{
+    delete parent;
 }

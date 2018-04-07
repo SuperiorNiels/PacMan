@@ -51,6 +51,8 @@ void MovementSystem::update()
                     p->y = world->getHeight()-1;
                     m->state = IDLE;
                 }
+
+                //std::cout << "x: " << p->x << " y: " << p->y << std::endl;
             }
         }
     }

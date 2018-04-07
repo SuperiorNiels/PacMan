@@ -11,16 +11,13 @@ class Node
 public:
     Node() = delete;
     Node(int x, int y);
-    Node *getPrevious() const;
-    void setPrevious(Node *previous);
-    Node *getNext() const;
-    void setNext(Node *next);
+    Node *getParent() const;
+    void setParent(Node *parent);
+    ~Node();
 private:
     int x = 0;
     int y = 0;
-    Node* previous = nullptr;
-    Node* next = nullptr;
-
+    Node* parent = nullptr;
 };
 
 

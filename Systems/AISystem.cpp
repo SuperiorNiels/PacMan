@@ -3,11 +3,16 @@
 //
 
 #include "AISystem.h"
+#include "../Pathfinding/A_star.h"
 
 AISystem::AISystem(World* world)
 {
     component_types = {AI_COMPONENT};
     AISystem::world = world;
+    std::random_device r;
+    random_engine  = std::default_random_engine(r());
+    random_x = std::uniform_int_distribution<int>(0, world->getWidth());
+    random_y = std::uniform_int_distribution<int>(0, world->getHeight());
 }
 
 void AISystem::update()
@@ -20,34 +25,26 @@ void AISystem::update()
             auto* mc = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
             auto* pc = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
 
-            auto* target = ac->goal;
-            if(target->hasComponentType(POSITION_COMPONENT))
+            int target_pos_x = random_x(random_engine);
+            int target_pos_y = random_y(random_engine);
+
+            if(target_pos_x - pc->x < 0 )
+                mc->wanted_dir = LEFT;
+            else if(target_pos_x == pc->x)
             {
-                auto* target_pos = target->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-                if(target_pos->x - pc->x < 0 )
-                    mc->wanted_dir = LEFT;
-                else if(target_pos->x == pc->x)
-                {
-                    if(target_pos->y - pc->y < 0)
-                        mc->wanted_dir = UP;
-                    else if(target_pos->y == pc->y)
-                        mc->wanted_dir = STOP;
-                    else
-                        mc->wanted_dir = DOWN;
-                }
+                if(target_pos_y - pc->y < 0)
+                    mc->wanted_dir = UP;
+                else if(target_pos_y == pc->y)
+                    mc->wanted_dir = STOP;
                 else
-                    mc->wanted_dir = RIGHT;
+                    mc->wanted_dir = DOWN;
             }
+            else
+                mc->wanted_dir = RIGHT;
         }
+
+        Pathfinder* pathfinder = new A_star(world);
+        pathfinder->getPath(0,0,4,5);
+        delete pathfinder;
     }
-}
-
-std::vector<Node*> AISystem::getPath(int start_x, int start_y, int stop_x, int stop_y)
-{
-
-}
-
-double AISystem::calculateDistance(int x1, int x2, int y1, int y2)
-{
-    return sqrt(pow(x1-x2,2.f) + pow(y1-y2,2.f));
 }

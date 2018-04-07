@@ -5,6 +5,7 @@
 #ifndef ECS_AISYSTEM_H
 #define ECS_AISYSTEM_H
 
+#include <random>
 #include "../ECS/ECS.h"
 #include "../PacMan_Components.h"
 #include "../Pathfinding/Node.h"
@@ -16,8 +17,9 @@ public:
     void update() override;
 private:
     World* world;
-    std::vector<Node*> getPath(int start_x, int start_y, int stop_x, int stop_y);
-    double calculateDistance(int x1, int x2, int y1, int y2);
+    std::uniform_int_distribution<int> random_x;
+    std::uniform_int_distribution<int> random_y;
+    std::default_random_engine random_engine;
 };
 
 
