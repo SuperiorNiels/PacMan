@@ -17,9 +17,11 @@ class A_star : public Pathfinder
 public:
     A_star() = delete;
     explicit A_star(World* world) : Pathfinder(world) {};
-    std::vector<PathNode*> getPath(int start_x, int start_y, int stop_x, int stop_y) override;
+    std::vector<PathNode> getPath(int start_x, int start_y, int stop_x, int stop_y) override;
 private:
     double calculateDistance(int x1, int x2, int y1, int y2);
+    std::vector<PathNode> getNeighbors(PathNode* a);
+    bool checkIfPathNodeInVector(std::vector<PathNode>* vector, PathNode* a);
 };
 
 

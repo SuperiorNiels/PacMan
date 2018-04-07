@@ -2,6 +2,7 @@
 // Created by niels on 05/04/18.
 //
 
+#include <cmath>
 #include "PathNode.h"
 
 PathNode::PathNode(int x, int y)
@@ -33,6 +34,16 @@ void PathNode::setPriority(double priority)
 bool operator<(const PathNode &a, const PathNode &b)
 {
     return a.getPriority() > b.getPriority();
+}
+
+bool operator==(const PathNode &a, const PathNode &b)
+{
+    if(a.getX() == b.getX() && a.getY() == b.getY())
+    {
+        if(fabs(a.getPriority()-b.getPriority()) < 0.0001)
+            return true;
+    }
+    return false;
 }
 
 int PathNode::getX() const {

@@ -14,8 +14,8 @@ class Pathfinder
 public:
     Pathfinder() = default;
     explicit Pathfinder(World* world) { Pathfinder::world = world; };
-    virtual std::vector<PathNode*> getPath(int start_x, int start_y, int stop_x, int stop_y) = 0;
-private:
+    virtual std::vector<PathNode> getPath(int start_x, int start_y, int stop_x, int stop_y) = 0;
+protected:
     World* world = nullptr;
 };
 

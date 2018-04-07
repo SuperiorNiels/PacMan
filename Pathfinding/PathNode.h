@@ -20,6 +20,7 @@ public:
     void setPriority(double priority);
     double getPriority() const;
     friend bool operator<(const PathNode& a, const PathNode& b);
+    friend bool operator==(const PathNode& a, const PathNode& b);
     ~PathNode() = default;
 private:
     int x = 0;
