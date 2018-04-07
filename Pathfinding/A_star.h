@@ -7,17 +7,17 @@
 
 #include <cmath>
 #include <vector>
-#include <map>
+#include <queue>
 #include "../World.h"
-#include "Node.h"
 #include "Pathfinder.h"
+#include "PathNode.h"
 
 class A_star : public Pathfinder
 {
 public:
     A_star() = delete;
-    A_star(World* world) : Pathfinder(world) {};
-    std::vector<Node*> getPath(int start_x, int start_y, int stop_x, int stop_y) override;
+    explicit A_star(World* world) : Pathfinder(world) {};
+    std::vector<PathNode*> getPath(int start_x, int start_y, int stop_x, int stop_y) override;
 private:
     double calculateDistance(int x1, int x2, int y1, int y2);
 };

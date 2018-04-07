@@ -7,16 +7,16 @@
 
 #include <vector>
 #include "../World.h"
-#include "Node.h"
+#include "PathNode.h"
 
 class Pathfinder
 {
 public:
     Pathfinder() = default;
-    Pathfinder(World* world) { Pathfinder::world = world; };
-    virtual std::vector<Node*> getPath(int start_x, int start_y, int stop_x, int stop_y) = 0;
+    explicit Pathfinder(World* world) { Pathfinder::world = world; };
+    virtual std::vector<PathNode*> getPath(int start_x, int start_y, int stop_x, int stop_y) = 0;
 private:
-    World* world;
+    World* world = nullptr;
 };
 
 #endif //PACMAN_PATHFINDER_H

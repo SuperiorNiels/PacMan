@@ -13,6 +13,8 @@ AISystem::AISystem(World* world)
     random_engine  = std::default_random_engine(r());
     random_x = std::uniform_int_distribution<int>(0, world->getWidth());
     random_y = std::uniform_int_distribution<int>(0, world->getHeight());
+
+    AISystem::pathfinder = new A_star(world);
 }
 
 void AISystem::update()
@@ -43,8 +45,11 @@ void AISystem::update()
                 mc->wanted_dir = RIGHT;
         }
 
-        Pathfinder* pathfinder = new A_star(world);
         pathfinder->getPath(0,0,4,5);
-        delete pathfinder;
     }
+}
+
+AISystem::~AISystem()
+{
+    delete pathfinder;
 }

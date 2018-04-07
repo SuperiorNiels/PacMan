@@ -1,6 +1,6 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <pacman>
-    <game fps="60" window_width="1000" window_height="500">
+    <game fps="60" window_width="1000" window_height="700">
         <collision>../data/world.map</collision>
         <sprites tile_width="8">../data/sprites.png</sprites>
         <graphics>SDL</graphics>
