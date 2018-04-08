@@ -15,18 +15,33 @@ public:
     void setX(int x);
     int getY() const;
     void setY(int y);
-    PathNode *getParent() const;
-    void setParent(PathNode *parent);
+
+    int getParent_x() const;
+
+    void setParent_x(int parent_x);
+
+    int getPatent_y() const;
+
+    void setPatent_y(int patent_y);
+
     void setPriority(double priority);
     double getPriority() const;
+    double getG() const;
+    void setG(double g);
+    double getH() const;
+    void setH(double h);
     friend bool operator<(const PathNode& a, const PathNode& b);
     friend bool operator==(const PathNode& a, const PathNode& b);
     ~PathNode() = default;
-private:
+protected:
     int x = 0;
     int y = 0;
     double priority = 0;
-    PathNode* parent = nullptr;
+    double g = 9999;
+    double h = 0;
+    //PathNode* parent = nullptr;
+    int parent_x = 0;
+    int patent_y = 0;
 };
 
 

@@ -27,25 +27,41 @@ void AISystem::update()
             auto* mc = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
             auto* pc = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
 
-            int target_pos_x = random_x(random_engine);
-            int target_pos_y = random_y(random_engine);
+            auto* target = ac->goal->getComponentByType<PositionComponent>(POSITION_COMPONENT);
 
-            if(target_pos_x - pc->x < 0 )
-                mc->wanted_dir = LEFT;
-            else if(target_pos_x == pc->x)
+            if(ac->path.empty())
+                ac->path = pathfinder->getPath(pc->x,pc->y,target->x,target->y);
+
+            if(mc->state == MOVING)
+                continue;
+
+            PathNode next = ac->path[ac->path.size()-1];
+            ac->path.pop_back();
+
+            int direction = 0;
+            for(int i=0;i<5;i++)
             {
-                if(target_pos_y - pc->y < 0)
-                    mc->wanted_dir = UP;
-                else if(target_pos_y == pc->y)
-                    mc->wanted_dir = STOP;
-                else
-                    mc->wanted_dir = DOWN;
+                int new_x = pc->x + movement_vector[i][0];
+                int new_y = pc->y + movement_vector[i][1];
+                if(new_x == next.getX() && new_y == next.getY())
+                {
+                    direction = i;
+                    break;
+                }
             }
-            else
-                mc->wanted_dir = RIGHT;
-        }
 
-        //pathfinder->getPath(50,30,4,5);
+            if(direction == 0)
+                mc->wanted_dir = STOP;
+            if(direction == 1)
+                mc->wanted_dir = LEFT;
+            if(direction == 2)
+                mc->wanted_dir = RIGHT;
+            if(direction == 3)
+                mc->wanted_dir = UP;
+            if(direction == 4)
+                mc->wanted_dir = DOWN;
+
+        }
     }
 }
 

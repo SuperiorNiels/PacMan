@@ -9,6 +9,7 @@
 #include "PacMan_Constants.h"
 #include "Systems/CollisionSystem.h"
 #include "World.h"
+#include "Pathfinding/PathNode.h"
 
 enum ComponentTypes
 {
@@ -56,6 +57,7 @@ public:
     AIComponent() { type = AI_COMPONENT; };
     ai_states state = FOLLOWING;
     Entity* goal = nullptr;
+    std::vector<PathNode> path = std::vector<PathNode>();
 };
 
 class RenderComponent : public Component
