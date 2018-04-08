@@ -45,7 +45,7 @@ void AISystem::update()
                 mc->wanted_dir = RIGHT;
         }
 
-        pathfinder->getPath(50,30,4,5);
+        //pathfinder->getPath(50,30,4,5);
     }
 }
 
