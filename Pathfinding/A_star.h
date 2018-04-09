@@ -20,6 +20,8 @@ public:
     explicit A_star(World* world) : Pathfinder(world) {};
     std::vector<PathNode> getPath(int start_x, int start_y, int stop_x, int stop_y) override;
     double calculateDistance(int x1, int x2, int y1, int y2) override;
+    void printPath(std::vector<PathNode> path) override;
+    double calculateHeuristic(int x1, int x2, int y1, int y2);
 private:
     std::vector<PathNode> getNeighbors(PathNode* a);
     bool pathNodeInVector(std::vector<PathNode>* vector, PathNode* a);

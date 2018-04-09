@@ -47,7 +47,7 @@ std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
             if(ai->hasComponentType(AI_COMPONENT))
             {
                 auto* ac = ai->getComponentByType<AIComponent>(AI_COMPONENT);
-                ac->goal = player; // fixme: better location to initialize the goal of the ai?
+                ac->goal = player;
             }
         }
     }

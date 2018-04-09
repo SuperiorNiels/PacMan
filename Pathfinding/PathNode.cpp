@@ -2,7 +2,6 @@
 // Created by niels on 05/04/18.
 //
 
-#include <cmath>
 #include "PathNode.h"
 
 PathNode::PathNode(int x, int y)
@@ -69,24 +68,4 @@ double PathNode::getH() const
 void PathNode::setH(double h)
 {
     PathNode::h = h;
-}
-
-int PathNode::getParent_x() const
-{
-    return parent_x;
-}
-
-void PathNode::setParent_x(int parent_x)
-{
-    PathNode::parent_x = parent_x;
-}
-
-int PathNode::getPatent_y() const
-{
-    return patent_y;
-}
-
-void PathNode::setPatent_y(int patent_y)
-{
-    PathNode::patent_y = patent_y;
 }

@@ -4,6 +4,7 @@
 
 #include <unordered_set>
 #include <cstring>
+#include <map>
 #include "A_star.h"
 
 std::vector<PathNode> A_star::getPath(int start_x, int start_y, int stop_x, int stop_y)
@@ -15,6 +16,8 @@ std::vector<PathNode> A_star::getPath(int start_x, int start_y, int stop_x, int 
     open.emplace(start_node);
 
     std::vector<PathNode> closed = std::vector<PathNode>();
+
+    std::map<PathNode, PathNode> came_from = std::map<PathNode, PathNode>(); // map to keep the parents of each node checked
 
     PathNode current_node;
     while(!open.empty())
@@ -39,8 +42,9 @@ std::vector<PathNode> A_star::getPath(int start_x, int start_y, int stop_x, int 
                 continue; // not a better path
 
             neighbor.setG(score);
-            neighbor.setH(calculateDistance(neighbor.getX(),neighbor.getY(),stop_x,stop_y));
+            neighbor.setH(calculateHeuristic(neighbor.getX(),neighbor.getY(),stop_x,stop_y));
             neighbor.setPriority(neighbor.getG() + neighbor.getH());
+            came_from.emplace(neighbor,current_node);
 
             if(!pathNodeInPriorityQueue(open, &neighbor))
                 open.emplace(neighbor);
@@ -49,14 +53,10 @@ std::vector<PathNode> A_star::getPath(int start_x, int start_y, int stop_x, int 
 
     std::vector<PathNode> path = std::vector<PathNode>();
 
-    while(!(current_node == start_node)) // fixme: for loop weg (idee: came_from map bijhouden => parents hier bijhouden)
+    while(!(current_node == start_node))
     {
         path.push_back(current_node);
-        for(auto& node : closed)
-        {
-            if(node == PathNode(current_node.getParent_x(),current_node.getPatent_y()))
-                current_node = node;
-        }
+        current_node = came_from[current_node];
     }
 
     return path;
@@ -64,7 +64,7 @@ std::vector<PathNode> A_star::getPath(int start_x, int start_y, int stop_x, int 
 
 std::vector<PathNode> A_star::getNeighbors(PathNode* a)
 {
-    std::vector<PathNode> neighbors = std::vector<PathNode>(); // fixme: vector or unordered_set?
+    std::vector<PathNode> neighbors = std::vector<PathNode>();
     for(int i=1;i<5;i++)
     {
         int neighbor_x = a->getX() + movement_vector[i][0];
@@ -83,8 +83,6 @@ std::vector<PathNode> A_star::getNeighbors(PathNode* a)
         if(tile != 1)
         {
             PathNode neighbor = PathNode(neighbor_x,neighbor_y);
-            neighbor.setParent_x(a->getX());
-            neighbor.setPatent_y(a->getY());
             if(!pathNodeInVector(&neighbors, &neighbor))
                 neighbors.push_back(neighbor);
         }
@@ -116,5 +114,38 @@ bool A_star::pathNodeInPriorityQueue(std::priority_queue<PathNode> vector, PathN
 
 double A_star::calculateDistance(int x1, int x2, int y1, int y2)
 {
-    return sqrt(pow(x1-x2,2.f) + pow(y1-y2,2.f));
+    double dx = fabs(x1 - x2);
+    double dy = fabs(y1 - y2);
+    return sqrt(dx*dx + dy*dy);
+}
+
+double A_star::calculateHeuristic(int x1, int x2, int y1, int y2)
+{
+    double dx = fabs(x1 - x2);
+    double dy = fabs(y1 - y2);
+    return 2 * (dx + dy);
+}
+
+void A_star::printPath(std::vector<PathNode> path)
+{
+    for(int i=0;i<world->getHeight();i++)
+    {
+        for(int j=0;j<world->getWidth();j++)
+        {
+            bool found = false;
+            for(auto& node : path)
+            {
+                if(node.getX() == j && node.getY() == i)
+                {
+                    found = true;
+                    std::cout << "P";
+                    break;
+                }
+            }
+            if(!found)
+                std::cout << world->getWorld()[i][j];
+        }
+        std::cout << std::endl;
+    }
+    std::cout << std::endl;
 }

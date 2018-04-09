@@ -32,9 +32,12 @@ void AISystem::update()
             //std::cout << "Distance: " << pathfinder->calculateDistance(pc->x,pc->y,target->x,target->y) << std::endl;
 
             if(ac->path.empty())
-                ac->path = pathfinder->getPath(pc->x,pc->y,target->x,target->y);
+            {
+                ac->path = pathfinder->getPath(pc->x, pc->y, target->x, target->y);
+                //pathfinder->printPath(ac->path);
+            }
 
-            if(mc->state == MOVING || ac->path.empty())
+            if(mc->state == MOVING)
                 continue;
 
             PathNode next = ac->path[ac->path.size()-1];
