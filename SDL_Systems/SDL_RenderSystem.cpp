@@ -76,7 +76,7 @@ void SDL_RenderSystem::update()
             {
                 SDL_Rect position = getPosition(e);
 
-                renderBox(&position,e);
+                //renderBox(&position,e);
 
                 double x_offset = rc->x_render_offset*tile_width;
                 double y_offset = rc->y_render_offset*tile_width;
@@ -117,7 +117,7 @@ SDL_Rect SDL_RenderSystem::getPosition(Entity *e)
             auto* mc = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
             if(mc->state == MOVING)
             {
-                mc->time += timer->getTimerStep() / 1000.f; // timer.getTimerStep() / 1000.f for fps independent movement
+                mc->time += 1.f / 1000.f; // timer.getTimerStep() / 1000.f for fps independent movement
 
                 double t = mc->time / mc->speed;
 
@@ -169,7 +169,6 @@ SDL_Rect SDL_RenderSystem::getClip(Entity *e)
 void SDL_RenderSystem::renderScore(Entity *e)
 {
     auto* sc = e->getComponentByType<SDL_ScoreComponent>(SCORE_COMPONENT);
-    auto* rc = e->getComponentByType<RenderComponent>(RENDER_COMPONENT);
     SDL_Color text_color = {0xff,0xff,0xff,0};
 
     std::ostringstream stringStream;

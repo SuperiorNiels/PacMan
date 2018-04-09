@@ -29,7 +29,7 @@ void AISystem::update()
 
             auto* target = ac->goal->getComponentByType<PositionComponent>(POSITION_COMPONENT);
 
-            std::cout << "Distance: " << pathfinder->calculateDistance(pc->x,pc->y,target->x,target->y) << std::endl;
+            //std::cout << "Distance: " << pathfinder->calculateDistance(pc->x,pc->y,target->x,target->y) << std::endl;
 
             if(ac->path.empty())
                 ac->path = pathfinder->getPath(pc->x,pc->y,target->x,target->y);
