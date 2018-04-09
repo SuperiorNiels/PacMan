@@ -34,7 +34,7 @@ std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
             }
             if(map[y][x] == 6)
             {
-                ais.push_back(config->createEntity("ghost",renderSystem->getTile_width(),x,y,0,i));
+                ais.push_back(config->createEntity("ghost",renderSystem->getTile_width(),x,y,0,i % 4));
                 i++;
             }
         }

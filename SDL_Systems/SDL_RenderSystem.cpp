@@ -117,7 +117,7 @@ SDL_Rect SDL_RenderSystem::getPosition(Entity *e)
             auto* mc = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
             if(mc->state == MOVING)
             {
-                mc->time += 1.f / 1000.f; // timer.getTimerStep() / 1000.f for fps independent movement
+                mc->time += timer->getTimerStep() / 1000.f; // timer.getTimerStep() / 1000.f for fps independent movement
 
                 double t = mc->time / mc->speed;
 

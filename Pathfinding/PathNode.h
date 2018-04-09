@@ -15,15 +15,10 @@ public:
     void setX(int x);
     int getY() const;
     void setY(int y);
-
     int getParent_x() const;
-
     void setParent_x(int parent_x);
-
     int getPatent_y() const;
-
     void setPatent_y(int patent_y);
-
     void setPriority(double priority);
     double getPriority() const;
     double getG() const;

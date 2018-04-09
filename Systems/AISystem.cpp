@@ -29,10 +29,12 @@ void AISystem::update()
 
             auto* target = ac->goal->getComponentByType<PositionComponent>(POSITION_COMPONENT);
 
+            std::cout << "Distance: " << pathfinder->calculateDistance(pc->x,pc->y,target->x,target->y) << std::endl;
+
             if(ac->path.empty())
                 ac->path = pathfinder->getPath(pc->x,pc->y,target->x,target->y);
 
-            if(mc->state == MOVING)
+            if(mc->state == MOVING || ac->path.empty())
                 continue;
 
             PathNode next = ac->path[ac->path.size()-1];
@@ -50,7 +52,7 @@ void AISystem::update()
                 }
             }
 
-            if(direction == 0)
+            if(direction == 0 || (pc->x == target->x && pc->y == target->y))
                 mc->wanted_dir = STOP;
             if(direction == 1)
                 mc->wanted_dir = LEFT;

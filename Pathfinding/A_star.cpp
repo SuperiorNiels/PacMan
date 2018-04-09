@@ -79,8 +79,8 @@ std::vector<PathNode> A_star::getNeighbors(PathNode* a)
         if(neighbor_y > A_star::world->getHeight()-1)
             neighbor_y = A_star::world->getHeight()-1;
 
-        int tile = A_star::world->getWorld()[neighbor_x][neighbor_y];
-        if(tile != 1 && tile != 2)
+        int tile = A_star::world->getWorld()[neighbor_y][neighbor_x];
+        if(tile != 1)
         {
             PathNode neighbor = PathNode(neighbor_x,neighbor_y);
             neighbor.setParent_x(a->getX());
