@@ -34,7 +34,7 @@ private:
     Config* config = nullptr;
     Entity* player = nullptr; // Keep track of player entity, for ai entity initialization
     SDL_RenderSystem* renderSystem = nullptr;
-    std::unordered_map<std::string,SDL_Texture*> loadedTextures = std::unordered_map<std::string,SDL_Texture*>();
+    std::unordered_map<std::string,SDL_Texture*> loadedTextures;
 };
 
 
