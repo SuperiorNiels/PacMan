@@ -1,6 +1,5 @@
 
 #include "Game.h"
-#include "SDL_Factory.h"
 #include "Config.h"
 
 int main()
