@@ -58,6 +58,9 @@ public:
     ai_states state = FOLLOWING;
     Entity* goal = nullptr;
     direction previous = STOP;
+    int test_x = 0;
+    int test_y = 0;
+    int count = 0;
 };
 
 class RenderComponent : public Component

@@ -68,10 +68,9 @@ void CollisionSystem::update()
     for(auto* player : players)
     {
         auto* mc = player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
+        auto* pc = player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
         if(mc->state == IDLE)
         {
-            auto* pc = player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-
             double wanted_x = pc->x + movement_vector[mc->wanted_dir][0];
             double wanted_y = pc->y + movement_vector[mc->wanted_dir][1];
             double new_x = pc->x + movement_vector[mc->current_dir][0];
@@ -115,31 +114,31 @@ void CollisionSystem::update()
                 removeEntity(e->id);
             }
 
-            bool dead = false;
-
-            for (auto& ghost : ghosts)
-            {
-                auto *pc2 = ghost->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-                if(pc->x == pc2->x && pc->y == (pc2->y))
-                {
-                    std::cout << "you are dead" << std::endl;
-                    dead = true;
-                    if(player->hasComponentType(LIVES_COMPONENT))
-                    {
-                        auto* lc = player->getComponentByType<LivesComponent>(LIVES_COMPONENT);
-                        lc->lives--;
-                        pc->x = lc->start_x;
-                        pc->y = lc->start_y;
-                    }
-                }
-            }
-
             if(wanted_possible)
                 mc->current_dir = mc->wanted_dir;
-            if((!wanted_possible && !current_possible) | dead)
+            if(!wanted_possible && !current_possible)
             {
                 mc->wanted_dir = STOP;
                 mc->current_dir = STOP;
+            }
+        }
+
+        bool dead = false;
+
+        for (auto& ghost : ghosts)
+        {
+            auto *pc2 = ghost->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+            if(pc->x == pc2->x && pc->y == (pc2->y))
+            {
+                std::cout << "you are dead" << std::endl;
+                mc->wanted_dir = STOP; mc->current_dir = STOP;
+                if(player->hasComponentType(LIVES_COMPONENT))
+                {
+                    auto* lc = player->getComponentByType<LivesComponent>(LIVES_COMPONENT);
+                    lc->lives--;
+                    pc->x = lc->start_x;
+                    pc->y = lc->start_y;
+                }
             }
         }
     }

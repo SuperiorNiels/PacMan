@@ -24,71 +24,85 @@ void AISystem::update()
     {
         if(e->hasComponentTypes({AI_COMPONENT,MOVABLE_COMPONENT,POSITION_COMPONENT}))
         {
-            auto* ac = e->getComponentByType<AIComponent>(AI_COMPONENT);
-            auto* mc = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-            auto* pc = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+            auto *ac = e->getComponentByType<AIComponent>(AI_COMPONENT);
+            auto *mc = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
+            auto *pc = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
 
-            auto* target = ac->goal->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+            ac->count++;
 
-            //std::cout << "Distance: " << pathfinder->calculateDistance(pc->x,pc->y,target->x,target->y) << std::endl;
-
-            std::multimap<double, direction> best_dirs = std::multimap<double, direction>();
-
-            for(int i=1; i<5; i++)
+            if((pc->x == ac->test_x && pc->y == ac->test_y) || ac->count > 50)
             {
-                int new_x = pc->x + movement_vector[i][0];
-                int new_y = pc->y + movement_vector[i][1];
-                if(world->getWorld()[new_y][new_x] != 1)
+                ac->test_x = random_x(random_engine);
+                ac->test_y = random_y(random_engine);
+                ac->count = 0;
+                //std::cout << "x: " << ac->test_x << " y: " << ac->test_y << std::endl;
+            }
+
+            if (mc->state == IDLE)
+            {
+                auto* target = ac->goal->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+
+                //std::cout << "Distance: " << pathfinder->calculateDistance(pc->x,pc->y,target->x,target->y) << std::endl;
+
+                std::multimap<double, direction> best_dirs = std::multimap<double, direction>();
+
+                for(int i=1; i<5; i++)
                 {
-                    // Direction is possible
-                    double distance = calculateDistance(new_x, new_y, target->x, target->y);
+                    int new_x = pc->x + movement_vector[i][0];
+                    int new_y = pc->y + movement_vector[i][1];
+                    if(world->getWorld()[new_y][new_x] != 1)
+                    {
+                        // Direction is possible
+                        double distance = calculateDistance(new_x, new_y, ac->test_x, ac->test_y);
 
-                    direction wanted_dir = STOP;
-                    if(i == 1)
-                        wanted_dir = LEFT;
-                    else if(i == 2)
-                        wanted_dir = RIGHT;
-                    else if(i == 3)
-                        wanted_dir = UP;
-                    else if(i == 4)
-                        wanted_dir = DOWN;
+                        direction wanted_dir = STOP;
+                        if(i == 1)
+                            wanted_dir = LEFT;
+                        else if(i == 2)
+                            wanted_dir = RIGHT;
+                        else if(i == 3)
+                            wanted_dir = UP;
+                        else if(i == 4)
+                            wanted_dir = DOWN;
 
-                    best_dirs.emplace(distance, wanted_dir);
+                        best_dirs.emplace(distance, wanted_dir);
+                    }
+                }
+
+                for (auto &best_dir : best_dirs)
+                {
+                    bool change = false;
+                    switch(best_dir.second)
+                    {
+                        case LEFT:
+                            if(ac->previous != RIGHT)
+                                change = true;
+                            break;
+                        case RIGHT:
+                            if(ac->previous != LEFT)
+                                change = true;
+                            break;
+                        case UP:
+                            if(ac->previous != DOWN)
+                                change = true;
+                            break;
+                        case DOWN:
+                            if(ac->previous != UP)
+                                change = true;
+                            break;
+                        default:
+                            break;
+                    }
+
+                    if(change)
+                    {
+                        mc->wanted_dir = best_dir.second;
+                        ac->previous = best_dir.second;
+                        break;
+                    }
                 }
             }
 
-            for (auto &best_dir : best_dirs)
-            {
-                bool change = false;
-                switch(best_dir.second)
-                {
-                    case LEFT:
-                        if(ac->previous != RIGHT)
-                            change = true;
-                        break;
-                    case RIGHT:
-                        if(ac->previous != LEFT)
-                            change = true;
-                        break;
-                    case UP:
-                        if(ac->previous != DOWN)
-                            change = true;
-                        break;
-                    case DOWN:
-                        if(ac->previous != UP)
-                            change = true;
-                        break;
-                    default:
-                        break;
-                }
-
-                if(change)
-                {
-                    mc->wanted_dir = best_dir.second;
-                    ac->previous = best_dir.second;
-                    break;
-                }
-            }
         }
     }
 }

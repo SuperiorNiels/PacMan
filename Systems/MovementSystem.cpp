@@ -34,13 +34,11 @@ void MovementSystem::update()
                     p->x = 0;
                     m->state = IDLE;
                 }
-
                 if(p->x < 0)
                 {
                     p->x = world->getWidth()-1;
                     m->state = IDLE;
                 }
-
                 if(p->y > world->getHeight()-1)
                 {
                     p->y = 0;
