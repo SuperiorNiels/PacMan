@@ -17,6 +17,7 @@ public:
     void update() override;
     ~AISystem() override;
 private:
+    double calculateDistance(int x1, int y1, int x2, int y2);
     World* world;
     std::uniform_int_distribution<int> random_x;
     std::uniform_int_distribution<int> random_y;

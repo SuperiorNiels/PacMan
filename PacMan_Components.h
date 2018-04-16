@@ -57,7 +57,7 @@ public:
     AIComponent() { type = AI_COMPONENT; };
     ai_states state = FOLLOWING;
     Entity* goal = nullptr;
-    std::vector<PathNode> path = std::vector<PathNode>();
+    direction previous = STOP;
 };
 
 class RenderComponent : public Component
