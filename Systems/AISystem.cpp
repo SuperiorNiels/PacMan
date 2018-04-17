@@ -28,20 +28,28 @@ void AISystem::update()
             auto *mc = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
             auto *pc = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
 
+            auto* target = ac->goal->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+
             ac->count++;
 
             if((pc->x == ac->test_x && pc->y == ac->test_y) || ac->count > 50)
             {
-                ac->test_x = random_x(random_engine);
-                ac->test_y = random_y(random_engine);
+                if(calculateDistance(pc->x,pc->y,target->x,target->y) < 5.f)
+                {
+                    ac->test_x = target->x;
+                    ac->test_y = target->y;
+                    //std::cout << "following" << std::endl;
+                } else {
+                    ac->test_x = random_x(random_engine);
+                    ac->test_y = random_y(random_engine);
+                    //std::cout << "random" << std::endl;
+                }
                 ac->count = 0;
                 //std::cout << "x: " << ac->test_x << " y: " << ac->test_y << std::endl;
             }
 
             if (mc->state == IDLE)
             {
-                auto* target = ac->goal->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-
                 //std::cout << "Distance: " << pathfinder->calculateDistance(pc->x,pc->y,target->x,target->y) << std::endl;
 
                 std::multimap<double, direction> best_dirs = std::multimap<double, direction>();

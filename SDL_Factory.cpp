@@ -23,6 +23,10 @@ std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
             {
                 walls.push_back(config->createEntity("wall_tile",tile_width, x, y));
             }
+            if(map[y][x] == 2)
+            {
+                walls.push_back(config->createEntity("player_only_wall",tile_width, x, y));
+            }
             else if(map[y][x] == 3 || map[y][x] == 4)
             {
                 points.push_back(config->createEntity("point",tile_width, x, y));
