@@ -40,8 +40,8 @@ void AISystem::update()
                     ac->test_y = target->y;
                     //std::cout << "following" << std::endl;
                 } else {
-                    ac->test_x = random_x(random_engine);
-                    ac->test_y = random_y(random_engine);
+                    ac->test_x = 3;
+                    ac->test_y = 1;
                     //std::cout << "random" << std::endl;
                 }
                 ac->count = 0;

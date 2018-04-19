@@ -18,6 +18,7 @@ void Game::init()
     Game::timer = factory->createTimerSystem(config->getFps());
     Game::render = factory->createRenderSystem(world,config->getScreen_x(),config->getScreen_y(),timer);
     Game::events = factory->createEventSystem();
+    manager->registerSystem(new GameplaySystem());
     manager->registerSystem(Game::events);
     manager->registerSystem(new AISystem(world));
     manager->registerSystem(new CollisionSystem());

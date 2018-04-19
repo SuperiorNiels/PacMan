@@ -22,8 +22,8 @@ enum entity_movable_state
 
 enum ai_states
 {
-    RANDOM,
-    FOLLOWING,
+    SCATTER,
+    CHASE,
     FLEE
 };
 

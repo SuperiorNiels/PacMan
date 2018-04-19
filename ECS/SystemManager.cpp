@@ -100,16 +100,6 @@ void SystemManager::removeSystem(System *s)
     }
 }
 
-void SystemManager::lol()
-{
-    for(auto* e : entities)
-    {
-        e->removeComponentByType(COLLISION_COMPONENT);
-        e->addComponent(new MovableComponent());
-        e->addComponent(new AIComponent());
-    }
-}
-
 SystemManager::~SystemManager()
 {
     for(auto& e : entities)

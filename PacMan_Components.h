@@ -55,7 +55,7 @@ class AIComponent : public Component
 {
 public:
     AIComponent() { type = AI_COMPONENT; };
-    ai_states state = FOLLOWING;
+    ai_states state = SCATTER;
     Entity* goal = nullptr;
     direction previous = STOP;
     int test_x = 0;

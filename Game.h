@@ -14,6 +14,7 @@
 #include "Systems/EventSystem.h"
 #include "Systems/CollisionSystem.h"
 #include "Systems/RenderSystem.h"
+#include "Systems/GameplaySystem.h"
 
 class Game
 {
