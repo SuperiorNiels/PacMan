@@ -103,11 +103,7 @@ void SystemManager::removeSystem(System *s)
 SystemManager::~SystemManager()
 {
     for(auto& e : entities)
-    {
         delete e;
-    }
     for(auto& s : systems)
-    {
         delete s;
-    }
 }

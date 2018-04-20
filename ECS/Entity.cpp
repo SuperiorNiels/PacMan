@@ -40,10 +40,8 @@ bool Entity::hasComponentTypes(std::vector<int8_t> types)
             types.erase(it);
             it--;
         }
-        if(types.empty())
-            return true;
     }
-    return false;
+    return types.empty();
 }
 
 void Entity::removeComponentByType(int8_t type)

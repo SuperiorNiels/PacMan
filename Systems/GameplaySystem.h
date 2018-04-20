@@ -16,7 +16,6 @@ public:
     void update() override;
     void addEntity(Entity* e) override;
     void removeEntity(entityID id) override;
-    bool entityInSystem(entityID id) override;
 private:
     std::vector<Entity*> points = std::vector<Entity*>();
     std::vector<Entity*> ais = std::vector<Entity*>();

@@ -14,8 +14,6 @@ AISystem::AISystem(World* world)
     random_engine  = std::default_random_engine(r());
     random_x = std::uniform_int_distribution<int>(0, world->getWidth());
     random_y = std::uniform_int_distribution<int>(0, world->getHeight());
-
-    //AISystem::pathfinder = new A_star(world);
 }
 
 void AISystem::update()
@@ -106,6 +104,7 @@ void AISystem::update()
                     {
                         mc->wanted_dir = best_dir.second;
                         ac->previous = best_dir.second;
+                        mc->current_dir = best_dir.second;
                         break;
                     }
                 }

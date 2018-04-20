@@ -64,7 +64,6 @@ bool CollisionSystem::entityInSystem(entityID id)
 
 void CollisionSystem::update()
 {
-    // TODO: collision for ghosts
     for(auto* player : players)
     {
         auto* mc = player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
@@ -143,7 +142,7 @@ void CollisionSystem::update()
         }
     }
 
-    for(auto* ghost : ghosts)
+    /*for(auto* ghost : ghosts)
     {
         auto* mc = ghost->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
         if(mc->state == IDLE)
@@ -179,5 +178,5 @@ void CollisionSystem::update()
                 mc->current_dir = STOP;
             }
         }
-    }
+    }*/
 }
