@@ -10,6 +10,7 @@
 #include "Systems/CollisionSystem.h"
 #include "World.h"
 #include "Pathfinding/PathNode.h"
+#include "Systems/TimerSystem.h"
 
 enum ComponentTypes
 {
@@ -56,11 +57,17 @@ class AIComponent : public Component
 public:
     AIComponent() { type = AI_COMPONENT; };
     ai_states state = SCATTER;
-    Entity* goal = nullptr;
+    int target_x = 0;
+    int target_y = 0;
+    int home_x = 0;
+    int home_y = 0;
+    int scatter_x = 0;
+    int scatter_y = 0;
     direction previous = STOP;
-    int test_x = 0;
-    int test_y = 0;
-    int count = 0;
+    TimerSystem* timer = nullptr;
+    int score_before_leave = 0;
+    bool go_next_state = true;
+    int time_to_wait = 7000;
 };
 
 class RenderComponent : public Component

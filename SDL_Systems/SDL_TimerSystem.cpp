@@ -36,6 +36,16 @@ void SDL_TimerSystem::startTimer()
     timer_start = SDL_GetTicks();
 }
 
+unsigned int SDL_TimerSystem::getTime()
+{
+    return SDL_GetTicks() - timer_start;
+}
+
+void SDL_TimerSystem::resetTimer()
+{
+    timer_start = 0;
+}
+
 unsigned int SDL_TimerSystem::getTimerStep()
 {
     return SDL_GetTicks() - fps_time;

@@ -22,9 +22,17 @@ enum entity_movable_state
 
 enum ai_states
 {
+    HOME,
     SCATTER,
     CHASE,
     FLEE
+};
+
+enum game_state
+{
+    PAUSED,
+    PLAYING,
+    MENU
 };
 
 // enum direction gives location of the move vector

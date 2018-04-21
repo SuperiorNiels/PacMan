@@ -8,6 +8,7 @@
 
 #include "../ECS/ECS.h"
 #include "../PacMan_Components.h"
+#include "TimerSystem.h"
 
 class GameplaySystem : public System
 {

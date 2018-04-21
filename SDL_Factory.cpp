@@ -44,18 +44,6 @@ std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
         }
     }
 
-    if(player != nullptr)
-    {
-        for(auto* ai : ais)
-        {
-            if(ai->hasComponentType(AI_COMPONENT))
-            {
-                auto* ac = ai->getComponentByType<AIComponent>(AI_COMPONENT);
-                ac->goal = player;
-            }
-        }
-    }
-
     entities.insert(entities.begin(),ais.begin(),ais.end());
     entities.insert(entities.begin(),players.begin(),players.end());
     entities.insert(entities.begin(),walls.begin(),walls.end());
@@ -124,7 +112,7 @@ RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::vecto
     std::vector<SDL_Rect*> sdl_clips = std::vector<SDL_Rect*>();
     for(auto clip : clips)
     {
-        SDL_Rect* rect = new SDL_Rect();
+        auto * rect = new SDL_Rect();
         rect->x = clip.x;
         rect->y = clip.y;
         rect->w = clip.w;
@@ -152,9 +140,9 @@ LivesComponent* SDL_Factory::createLivesComponent(std::string font, int font_siz
 
 void SDL_Factory::clearTextures()
 {
-    for(auto it = loadedTextures.begin(); it != loadedTextures.end(); it++)
+    for (auto &loadedTexture : loadedTextures)
     {
-        SDL_DestroyTexture(it->second);
+        SDL_DestroyTexture(loadedTexture.second);
     }
     loadedTextures.clear();
 }

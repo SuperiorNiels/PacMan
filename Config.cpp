@@ -114,7 +114,11 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
         }
         if(entity_config->FirstChildElement("ai_component") != nullptr)
         {
-            e->addComponent(new AIComponent());
+            auto* ac = new AIComponent();
+            ac->timer = factory->createTimerSystem(fps);
+            ac->scatter_x = 3;
+            ac->scatter_y = 1;
+            e->addComponent(ac);
         }
         if(entity_config->FirstChildElement("score_component") != nullptr)
         {

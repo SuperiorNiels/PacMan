@@ -27,7 +27,7 @@ SDL_RenderSystem::SDL_RenderSystem(World* world, int screen_width, int screen_he
         else
         {
             // Initialize renderer vsync: | SDL_RENDERER_PRESENTVSYNC
-            renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED | SDL_RENDERER_PRESENTVSYNC);
+            renderer = SDL_CreateRenderer(window, -1, SDL_RENDERER_ACCELERATED);
             if(renderer == nullptr)
             {
                 std::cout << "Failed to create renderer. Error: " << SDL_GetError() << std::endl;
@@ -117,9 +117,10 @@ SDL_Rect SDL_RenderSystem::getPosition(Entity *e)
             auto* mc = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
             if(mc->state == MOVING)
             {
-                mc->time += 1.f / 1000.f; // timer.getTimerStep() / 1000.f for fps independent movement
+                mc->time += timer->getTimerStep() / 1000.f; // timer.getTimerStep() / 1000.f for fps independent movement
+                //std::cout << "step: " << timer->getTimerStep() << std::endl;
 
-                double t = mc->time / mc->speed;
+                double t = mc->time * mc->speed;
 
                 if(t >= 1)
                 {

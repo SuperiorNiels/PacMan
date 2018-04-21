@@ -17,6 +17,8 @@ public:
     void fpsStart() override;
     void fpsCap() override;
     void startTimer() override;
+    unsigned int getTime() override;
+    void resetTimer() override;
     unsigned int getTimerStep() override;
     unsigned int getTimerAndReset() override;
 private:

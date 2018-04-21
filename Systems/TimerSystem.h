@@ -23,6 +23,8 @@ public:
     virtual void fpsStart() = 0;
     virtual void fpsCap() = 0;
     virtual void startTimer() = 0;
+    virtual unsigned int getTime() = 0;
+    virtual void resetTimer() = 0;
     virtual unsigned int getTimerStep() = 0;
     virtual unsigned int getTimerAndReset() = 0;
     int getFPS() { return SCREEN_FPS; };

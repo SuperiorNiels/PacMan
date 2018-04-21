@@ -21,7 +21,7 @@ void Game::init()
     manager->registerSystem(new GameplaySystem());
     manager->registerSystem(Game::events);
     manager->registerSystem(new AISystem(world));
-    //manager->registerSystem(new CollisionSystem());
+    manager->registerSystem(new CollisionSystem());
     manager->registerSystem(new MovementSystem(world));
     manager->registerSystem(Game::render);
     createGame();

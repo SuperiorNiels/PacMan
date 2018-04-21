@@ -22,33 +22,12 @@ void AISystem::update()
     {
         if(e->hasComponentTypes({AI_COMPONENT,MOVABLE_COMPONENT,POSITION_COMPONENT}))
         {
-            auto *ac = e->getComponentByType<AIComponent>(AI_COMPONENT);
             auto *mc = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-            auto *pc = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-
-            auto* target = ac->goal->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-
-            ac->count++;
-
-            if((pc->x == ac->test_x && pc->y == ac->test_y) || ac->count > 50)
-            {
-                if(calculateDistance(pc->x,pc->y,target->x,target->y) < 5.f)
-                {
-                    ac->test_x = target->x;
-                    ac->test_y = target->y;
-                    //std::cout << "following" << std::endl;
-                } else {
-                    ac->test_x = 3;
-                    ac->test_y = 1;
-                    //std::cout << "random" << std::endl;
-                }
-                ac->count = 0;
-                //std::cout << "x: " << ac->test_x << " y: " << ac->test_y << std::endl;
-            }
 
             if (mc->state == IDLE)
             {
-                //std::cout << "Distance: " << pathfinder->calculateDistance(pc->x,pc->y,target->x,target->y) << std::endl;
+                auto *ac = e->getComponentByType<AIComponent>(AI_COMPONENT);
+                auto *pc = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
 
                 std::multimap<double, direction> best_dirs = std::multimap<double, direction>();
 
@@ -59,7 +38,7 @@ void AISystem::update()
                     if(world->getWorld()[new_y][new_x] != 1)
                     {
                         // Direction is possible
-                        double distance = calculateDistance(new_x, new_y, ac->test_x, ac->test_y);
+                        double distance = calculateDistance(new_x, new_y, ac->target_x, ac->target_y);
 
                         direction wanted_dir = STOP;
                         if(i == 1)
@@ -103,13 +82,12 @@ void AISystem::update()
                     if(change)
                     {
                         mc->wanted_dir = best_dir.second;
-                        ac->previous = best_dir.second;
                         mc->current_dir = best_dir.second;
+                        ac->previous = best_dir.second;
                         break;
                     }
                 }
             }
-
         }
     }
 }
