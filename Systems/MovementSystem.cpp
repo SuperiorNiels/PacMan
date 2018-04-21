@@ -50,6 +50,8 @@ void MovementSystem::update()
                     m->state = IDLE;
                 }
 
+                if(e->hasComponentType(PLAYER_INPUT_COMPONENT))
+                    std::cout << "x: " << p->x << " y: " << p->y << std::endl;
                 //std::cout << "x: " << p->x << " y: " << p->y << std::endl;
             }
         }

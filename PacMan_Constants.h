@@ -23,6 +23,8 @@ enum entity_movable_state
 enum ai_states
 {
     HOME,
+    LEAVE,
+    RETURN,
     SCATTER,
     CHASE,
     FLEE

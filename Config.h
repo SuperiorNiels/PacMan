@@ -25,7 +25,7 @@ public:
     const std::string &getCollision_map() const;
     const std::string &getSprites_sheet() const;
     AbstractFactory *getFactory() const;
-    Entity* createEntity(std::string entity_name, int tile_width, int x=0, int y=0, int x_offset=0, int y_offset = 0);
+    Entity* createEntity(std::string entity_name, int tile_width, int x=0, int y=0);
 private:
     AbstractFactory* factory = nullptr;
     XMLDocument doc;

@@ -56,15 +56,35 @@ void GameplaySystem::update()
         {
             auto* ac = ai->getComponentByType<AIComponent>(AI_COMPONENT);
             auto* player_pos = players[0]->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+            auto* ai_pos = ai->getComponentByType<PositionComponent>(POSITION_COMPONENT);
             switch(ac->state)
             {
+                case RETURN:
+                    ac->target_x = ac->home_x;
+                    ac->target_y = ac->home_y;
+                    if(ai_pos->x == ac->home_x && ai_pos->y == ac->home_y)
+                    {
+                        ac->state = HOME;
+                    }
+                    break;
                 case HOME:
-                    if(ac->score_before_leave < score->score)
+                    ac->target_x = ac->home_x;
+                    ac->target_y = ac->home_y;
+                    if(ac->score_before_leave <= score->score && ai_pos->x == ac->home_x && ai_pos->y == ac->home_y)
+                    {
+                        ac->timer->startTimer();
+                        ac->state = LEAVE;
+                    }
+                    break;
+                case LEAVE:
+                    ac->target_x = ac->leave_x;
+                    ac->target_y = ac->leave_y;
+                    if(ai_pos->x == ac->leave_x && ai_pos->y == ac->leave_y)
                     {
                         ac->timer->startTimer();
                         ac->state = SCATTER;
-                        break;
                     }
+                    break;
                 case SCATTER:
                     ac->target_x = ac->scatter_x;
                     ac->target_y = ac->scatter_y;
@@ -84,9 +104,19 @@ void GameplaySystem::update()
                         ac->timer->resetTimer();
                         ac->timer->startTimer();
                         ac->time_to_wait = 7000;
+                        ac->state = SCATTER;
                     }
                     break;
                 case FLEE:
+                    ac->target_x = 0;
+                    ac->target_y = 0;
+                    if(ac->timer->getTime() > ac->time_to_wait)
+                    {
+                        ac->timer->resetTimer();
+                        ac->timer->startTimer();
+                        ac->time_to_wait = 7000;
+                        ac->state = SCATTER;
+                    }
                     break;
                 default:
                     break;
@@ -94,6 +124,9 @@ void GameplaySystem::update()
 
         }
     }
+
+    if(lives->lives == 0)
+        std::cout << "Game Over!" << std::endl;
     if(points.empty())
         std::cout << "You Win!" << std::endl;
 }

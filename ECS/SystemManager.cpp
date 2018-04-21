@@ -49,10 +49,13 @@ void SystemManager::registerSystem(System *s)
 
 void SystemManager::registerEntity(Entity *e)
 {
-    entities.emplace(e);
-    for(auto* s : systems)
+    if(e != nullptr)
     {
-        s->addEntity(e);
+        entities.emplace(e);
+        for(auto* s : systems)
+        {
+            s->addEntity(e);
+        }
     }
 }
 

@@ -9,7 +9,6 @@
 #include "PacMan_Constants.h"
 #include "Systems/CollisionSystem.h"
 #include "World.h"
-#include "Pathfinding/PathNode.h"
 #include "Systems/TimerSystem.h"
 
 enum ComponentTypes
@@ -20,6 +19,7 @@ enum ComponentTypes
     AI_COMPONENT,
     RENDER_COMPONENT,
     COLLISION_COMPONENT,
+    ENERGIZER_COMPONENT,
     POINTS_COMPONENT,
     SCORE_COMPONENT,
     LIVES_COMPONENT
@@ -56,16 +56,18 @@ class AIComponent : public Component
 {
 public:
     AIComponent() { type = AI_COMPONENT; };
-    ai_states state = SCATTER;
+    ai_states state = HOME;
     int target_x = 0;
     int target_y = 0;
     int home_x = 0;
     int home_y = 0;
     int scatter_x = 0;
     int scatter_y = 0;
+    int leave_x = 0;
+    int leave_y = 0;
     direction previous = STOP;
     TimerSystem* timer = nullptr;
-    int score_before_leave = 0;
+    int score_before_leave = 200;
     bool go_next_state = true;
     int time_to_wait = 7000;
 };
@@ -98,6 +100,13 @@ class PointsComponent : public Component
 public:
     PointsComponent() { type = POINTS_COMPONENT; };
     int points = 0;
+};
+
+class EnergizerComponent : public Component
+{
+public:
+    EnergizerComponent() { type = ENERGIZER_COMPONENT; };
+    int points = 400;
 };
 
 class ScoreComponent : public Component

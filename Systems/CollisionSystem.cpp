@@ -83,7 +83,7 @@ void CollisionSystem::update()
             for (auto& entity : entities)
             {
                 auto *pc2 = entity->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-                if(!entity->hasComponentType(POINTS_COMPONENT))
+                if(!(entity->hasComponentType(POINTS_COMPONENT) || entity->hasComponentType(ENERGIZER_COMPONENT)))
                 {
                     if(wanted_x == pc2->x && wanted_y == pc2->y)
                         wanted_possible = false;
@@ -95,11 +95,28 @@ void CollisionSystem::update()
                 {
                     if(pc->x == pc2->x && pc->y == pc2->y)
                     {
-                        if(player->hasComponentType(SCORE_COMPONENT))
+                        if(player->hasComponentType(SCORE_COMPONENT) && entity->hasComponentType(POINTS_COMPONENT))
                         {
                             auto* sc = player->getComponentByType<ScoreComponent>(SCORE_COMPONENT);
                             auto* pp = entity->getComponentByType<PointsComponent>(POINTS_COMPONENT);
                             sc->score += pp->points;
+                        }
+                        if(player->hasComponentType(SCORE_COMPONENT) && entity->hasComponentType(ENERGIZER_COMPONENT))
+                        {
+                            auto* sc = player->getComponentByType<ScoreComponent>(SCORE_COMPONENT);
+                            auto* ec = entity->getComponentByType<EnergizerComponent>(ENERGIZER_COMPONENT);
+                            sc->score += ec->points;
+                            for(auto* ghost : ghosts)
+                            {
+                                auto* ac = ghost->getComponentByType<AIComponent>(AI_COMPONENT);
+                                if(ac->state != HOME)
+                                {
+                                    ac->state = FLEE;
+                                    ac->timer->resetTimer();
+                                    ac->timer->startTimer();
+                                    ac->time_to_wait = 10000; // 10 seconds in flee state
+                                }
+                            }
                         }
                         to_remove.push_back(entity);
                     }
@@ -122,61 +139,30 @@ void CollisionSystem::update()
             }
         }
 
-        bool dead = false;
-
         for (auto& ghost : ghosts)
         {
             auto *pc2 = ghost->getComponentByType<PositionComponent>(POSITION_COMPONENT);
             if(pc->x == pc2->x && pc->y == (pc2->y))
             {
                 std::cout << "you are dead" << std::endl;
-                mc->wanted_dir = STOP; mc->current_dir = STOP;
-                if(player->hasComponentType(LIVES_COMPONENT))
+                auto* ac = ghost->getComponentByType<AIComponent>(AI_COMPONENT);
+                if(ac->state == FLEE || ac->state == RETURN)
                 {
-                    auto* lc = player->getComponentByType<LivesComponent>(LIVES_COMPONENT);
-                    lc->lives--;
-                    pc->x = lc->start_x;
-                    pc->y = lc->start_y;
+                    // Pacman killed ghost
+                    ac->state = RETURN;
+                }
+                else
+                {
+                    mc->wanted_dir = STOP; mc->current_dir = STOP;
+                    if(player->hasComponentType(LIVES_COMPONENT))
+                    {
+                        auto* lc = player->getComponentByType<LivesComponent>(LIVES_COMPONENT);
+                        lc->lives--;
+                        pc->x = lc->start_x;
+                        pc->y = lc->start_y;
+                    }
                 }
             }
         }
     }
-
-    /*for(auto* ghost : ghosts)
-    {
-        auto* mc = ghost->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-        if(mc->state == IDLE)
-        {
-            auto *pc = ghost->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-
-            double wanted_x = pc->x + movement_vector[mc->wanted_dir][0];
-            double wanted_y = pc->y + movement_vector[mc->wanted_dir][1];
-            double new_x = pc->x + movement_vector[mc->current_dir][0];
-            double new_y = pc->y + movement_vector[mc->current_dir][1];
-
-            bool wanted_possible = true;
-            bool current_possible = true;
-
-            for (auto &entity : entities)
-            {
-                auto *pc2 = entity->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-                if (!entity->hasComponentType(POINTS_COMPONENT))
-                {
-                    if (wanted_x == pc2->x && wanted_y == pc2->y)
-                        wanted_possible = false;
-
-                    if (new_x == pc2->x && new_y == pc2->y)
-                        current_possible = false;
-                }
-            }
-
-            if(wanted_possible)
-                mc->current_dir = mc->wanted_dir;
-            if((!wanted_possible && !current_possible))
-            {
-                mc->wanted_dir = STOP;
-                mc->current_dir = STOP;
-            }
-        }
-    }*/
 }

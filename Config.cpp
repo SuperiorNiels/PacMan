@@ -22,7 +22,7 @@ Config::Config(std::string path)
     std::cout << "Config loaded." << std::endl;
 }
 
-Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int y, int x_offset, int y_offset)
+Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int y)
 {
     auto* entity_config = doc.FirstChildElement("pacman")->FirstChildElement("entities")->FirstChildElement(entity_name.c_str());
     if(entity_config != nullptr)
@@ -66,11 +66,6 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
                         clip_config->QueryIntAttribute("y",&c.y);
                         clip_config->QueryIntAttribute("w",&c.w);
                         clip_config->QueryIntAttribute("h",&c.h);
-                        int x_off, y_off = 0;
-                        render_config->FirstChildElement("clips")->QueryIntAttribute("x_offset", &x_off);
-                        render_config->FirstChildElement("clips")->QueryIntAttribute("y_offset", &y_off);
-                        c.x = c.x + (x_offset*x_off);
-                        c.y = c.y + (y_offset*y_off);
                         if(c.x == -1) c.x = x * sprite_tile_width;
                         if(c.y == -1) c.y = y * sprite_tile_width;
                         if(c.h == -1) c.h = sprite_tile_width;
@@ -102,6 +97,12 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
             entity_config->FirstChildElement("points_component")->QueryIntAttribute("points", &pp->points);
             e->addComponent(pp);
         }
+        if(entity_config->FirstChildElement("energizer_component") != nullptr)
+        {
+            auto* ec = new EnergizerComponent();
+            entity_config->FirstChildElement("energizer_component")->QueryIntAttribute("points", &ec->points);
+            e->addComponent(ec);
+        }
         if(entity_config->FirstChildElement("movable_component") != nullptr)
         {
             auto* mc = new MovableComponent();
@@ -116,8 +117,14 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
         {
             auto* ac = new AIComponent();
             ac->timer = factory->createTimerSystem(fps);
-            ac->scatter_x = 3;
-            ac->scatter_y = 1;
+            entity_config->FirstChildElement("ai_component")->FirstChildElement("score_before_leave")->QueryIntAttribute("value",&ac->score_before_leave);
+            entity_config->FirstChildElement("ai_component")->FirstChildElement("scatter_target")->QueryIntAttribute("x",&ac->scatter_x);
+            entity_config->FirstChildElement("ai_component")->FirstChildElement("scatter_target")->QueryIntAttribute("y",&ac->scatter_y);
+            entity_config->FirstChildElement("ai_component")->FirstChildElement("leave_home_target")->QueryIntAttribute("x",&ac->leave_x);
+            entity_config->FirstChildElement("ai_component")->FirstChildElement("leave_home_target")->QueryIntAttribute("y",&ac->leave_y);
+            ac->home_x = x;
+            ac->home_y = y;
+            std::cout << "[" <<  entity_name << "] x: " << x << " y: " << y << std::endl;
             e->addComponent(ac);
         }
         if(entity_config->FirstChildElement("score_component") != nullptr)

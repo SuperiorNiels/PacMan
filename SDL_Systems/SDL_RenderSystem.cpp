@@ -117,7 +117,7 @@ SDL_Rect SDL_RenderSystem::getPosition(Entity *e)
             auto* mc = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
             if(mc->state == MOVING)
             {
-                mc->time += timer->getTimerStep() / 1000.f; // timer.getTimerStep() / 1000.f for fps independent movement
+                mc->time += 2.f / 1000.f; // timer.getTimerStep() / 1000.f for fps independent movement
                 //std::cout << "step: " << timer->getTimerStep() << std::endl;
 
                 double t = mc->time * mc->speed;
@@ -147,22 +147,39 @@ SDL_Rect SDL_RenderSystem::getClip(Entity *e)
     SDL_Rect clip = SDL_Rect();
     if (!rc->clips.empty())
     {
-        clip = *rc->clips[0];
-        /*if (e->hasComponentType(MOVABLE_COMPONENT))
+        if(rc->clips.size() != 1)
         {
-            auto *m = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-            rc->frame_offset = rc->direction_offsets[m->current_dir-1];
-            if (m->state == MOVING)
-                clip = *rc->clips[rc->current_frame + rc->frame_offset];
-            // TODO: animation check!!!!
-        }
-        if (rc->count > rc->animation_speed)
-        {
-            rc->current_frame = (rc->current_frame + 1) % rc->animation_length;
-            rc->count = 0;
+            if (rc->count > rc->animation_speed)
+            {
+                rc->current_frame = (rc->current_frame + 1) % rc->animation_length;
+                rc->count = 0;
+            }
+            else
+                rc->count++;
+            if(e->hasComponentType(MOVABLE_COMPONENT))
+            {
+                auto* mc = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
+
+                rc->frame_offset = rc->direction_offsets[mc->current_dir-1];
+                if(e->hasComponentType(AI_COMPONENT))
+                {
+                    auto* ac = e->getComponentByType<AIComponent>(AI_COMPONENT);
+                    if(ac->state == FLEE)
+                        rc->frame_offset = (int) rc->clips.size()-2;
+                }
+
+                if(mc->current_dir != STOP)
+                    clip = *rc->clips[rc->current_frame + rc->frame_offset];
+                else
+                    clip = *rc->clips[0];
+            }
+            else
+                clip = *rc->clips[rc->current_frame];
         }
         else
-            rc->count++;*/
+        {
+            clip = *rc->clips[0];
+        }
     }
     return clip;
 }

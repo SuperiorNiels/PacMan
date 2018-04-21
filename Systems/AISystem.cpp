@@ -2,18 +2,12 @@
 // Created by niels on 06/03/18.
 //
 
-#include <map>
 #include "AISystem.h"
-#include "../Pathfinding/A_star.h"
 
 AISystem::AISystem(World* world)
 {
     component_types = {AI_COMPONENT};
     AISystem::world = world;
-    std::random_device r;
-    random_engine  = std::default_random_engine(r());
-    random_x = std::uniform_int_distribution<int>(0, world->getWidth());
-    random_y = std::uniform_int_distribution<int>(0, world->getHeight());
 }
 
 void AISystem::update()
@@ -37,6 +31,8 @@ void AISystem::update()
                     int new_y = pc->y + movement_vector[i][1];
                     if(world->getWorld()[new_y][new_x] != 1)
                     {
+                        if(world->getWorld()[new_y][new_x] == 2 && !(ac->state == HOME || ac->state == LEAVE || ac->state == RETURN))
+                            continue;
                         // Direction is possible
                         double distance = calculateDistance(new_x, new_y, ac->target_x, ac->target_y);
 
@@ -97,9 +93,4 @@ double AISystem::calculateDistance(int x1, int y1, int x2, int y2)
     int dx = x1 - x2;
     int dy = y1 - y2;
     return sqrt(dx*dx + dy*dy);
-}
-
-AISystem::~AISystem()
-{
-    delete pathfinder;
 }

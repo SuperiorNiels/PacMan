@@ -8,38 +8,49 @@ std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
 {
     std::vector<Entity*> entities = std::vector<Entity*>();
 
-    int i = 0; // ghost color
     int **map = world->getWorld();
     int tile_width = renderSystem->getTile_width();
     std::vector<Entity*> walls = std::vector<Entity*>();
     std::vector<Entity*> points = std::vector<Entity*>();
     std::vector<Entity*> players = std::vector<Entity*>();
     std::vector<Entity*> ais = std::vector<Entity*>();
+
     for(int x=0;x<world->getWidth();x++)
     {
         for(int y=0;y<world->getHeight();y++)
         {
-            if(map[y][x] == 1)
+            switch(map[y][x])
             {
-                walls.push_back(config->createEntity("wall_tile",tile_width, x, y));
-            }
-            if(map[y][x] == 2)
-            {
-                walls.push_back(config->createEntity("player_only_wall",tile_width, x, y));
-            }
-            else if(map[y][x] == 3 || map[y][x] == 4)
-            {
-                points.push_back(config->createEntity("point",tile_width, x, y));
-            }
-            if(map[y][x] == 5)
-            {
-                SDL_Factory::player = config->createEntity("player", renderSystem->getTile_width(), x, y);
-                players.push_back(player);
-            }
-            if(map[y][x] == 6)
-            {
-                ais.push_back(config->createEntity("ghost",renderSystem->getTile_width(),x,y,0,i % 4));
-                i++;
+                case 1:
+                    walls.push_back(config->createEntity("wall_tile",tile_width, x, y));
+                    break;
+                case 2:
+                    walls.push_back(config->createEntity("player_only_wall",tile_width, x, y));
+                    break;
+                case 3:
+                    points.push_back(config->createEntity("point",tile_width, x, y));
+                    break;
+                case 4:
+                    points.push_back(config->createEntity("big_point",tile_width, x, y));
+                    break;
+                case 5:
+                    SDL_Factory::player = config->createEntity("player", renderSystem->getTile_width(), x, y);
+                    players.push_back(player);
+                    break;
+                case 6:
+                    ais.push_back(config->createEntity("red_ghost",renderSystem->getTile_width(),x,y));
+                    break;
+                case 7:
+                    ais.push_back(config->createEntity("blue_ghost",renderSystem->getTile_width(),x,y));
+                    break;
+                case 8:
+                    ais.push_back(config->createEntity("pink_ghost",renderSystem->getTile_width(),x,y));
+                    break;
+                case 9:
+                    ais.push_back(config->createEntity("orange_ghost",renderSystem->getTile_width(),x,y));
+                    break;
+                default:
+                    break;
             }
         }
     }
