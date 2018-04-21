@@ -165,7 +165,9 @@ SDL_Rect SDL_RenderSystem::getClip(Entity *e)
                 {
                     auto* ac = e->getComponentByType<AIComponent>(AI_COMPONENT);
                     if(ac->state == FLEE)
-                        rc->frame_offset = (int) rc->clips.size()-2;
+                        rc->frame_offset = (int) rc->clips.size()-10;
+                    if(ac->state == RETURN)
+                        rc->frame_offset = (int) rc->clips.size()-8;
                 }
 
                 if(mc->current_dir != STOP)

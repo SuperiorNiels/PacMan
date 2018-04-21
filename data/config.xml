@@ -84,7 +84,7 @@
         <red_ghost>
             <position_component />
             <render_component x_render_offset="0.3" y_render_offset="0.3">
-                <clips total="10">
+                <clips total="18">
                     <clip x="457" y="65" w="14" h="13"/>
                     <clip x="473" y="65" w="14" h="13"/>
                     <clip x="553" y="65" w="14" h="13"/>
@@ -95,6 +95,14 @@
                     <clip x="537" y="65" w="14" h="13"/>
                     <clip x="585" y="65" w="14" h="13"/>
                     <clip x="601" y="65" w="14" h="13"/>
+                    <clip x="586" y="81" w="14" h="13"/>
+                    <clip x="586" y="81" w="14" h="13"/>
+                    <clip x="601" y="81" w="14" h="13"/>
+                    <clip x="601" y="81" w="14" h="13"/>
+                    <clip x="617" y="81" w="14" h="13"/>
+                    <clip x="617" y="81" w="14" h="13"/>
+                    <clip x="634" y="81" w="14" h="13"/>
+                    <clip x="634" y="81" w="14" h="13"/>
                 </clips>
                 <animation_length value="2"/>
                 <animation_speed value="20"/>
@@ -111,7 +119,7 @@
         <pink_ghost>
             <position_component />
             <render_component x_render_offset="0.3" y_render_offset="0.3">
-                <clips total="10">
+                <clips total="18">
                     <clip x="457" y="81" w="14" h="13"/>
                     <clip x="473" y="81" w="14" h="13"/>
                     <clip x="553" y="81" w="14" h="13"/>
@@ -122,6 +130,14 @@
                     <clip x="537" y="81" w="14" h="13"/>
                     <clip x="585" y="65" w="14" h="13"/>
                     <clip x="601" y="65" w="14" h="13"/>
+                    <clip x="586" y="81" w="14" h="13"/>
+                    <clip x="586" y="81" w="14" h="13"/>
+                    <clip x="601" y="81" w="14" h="13"/>
+                    <clip x="601" y="81" w="14" h="13"/>
+                    <clip x="617" y="81" w="14" h="13"/>
+                    <clip x="617" y="81" w="14" h="13"/>
+                    <clip x="634" y="81" w="14" h="13"/>
+                    <clip x="634" y="81" w="14" h="13"/>
                 </clips>
                 <animation_length value="2"/>
                 <animation_speed value="20"/>
@@ -138,7 +154,7 @@
         <blue_ghost>
             <position_component />
             <render_component x_render_offset="0.3" y_render_offset="0.3">
-                <clips total="10">
+                <clips total="18">
                     <clip x="457" y="97" w="14" h="13"/>
                     <clip x="473" y="97" w="14" h="13"/>
                     <clip x="553" y="97" w="14" h="13"/>
@@ -149,6 +165,14 @@
                     <clip x="537" y="97" w="14" h="13"/>
                     <clip x="585" y="65" w="14" h="13"/>
                     <clip x="601" y="65" w="14" h="13"/>
+                    <clip x="586" y="81" w="14" h="13"/>
+                    <clip x="586" y="81" w="14" h="13"/>
+                    <clip x="601" y="81" w="14" h="13"/>
+                    <clip x="601" y="81" w="14" h="13"/>
+                    <clip x="617" y="81" w="14" h="13"/>
+                    <clip x="617" y="81" w="14" h="13"/>
+                    <clip x="634" y="81" w="14" h="13"/>
+                    <clip x="634" y="81" w="14" h="13"/>
                 </clips>
                 <animation_length value="2"/>
                 <animation_speed value="20"/>
@@ -165,7 +189,7 @@
         <orange_ghost>
             <position_component />
             <render_component x_render_offset="0.3" y_render_offset="0.3">
-                <clips total="10">
+                <clips total="18">
                     <clip x="457" y="113" w="14" h="13"/>
                     <clip x="473" y="113" w="14" h="13"/>
                     <clip x="553" y="113" w="14" h="13"/>
@@ -176,6 +200,14 @@
                     <clip x="537" y="113" w="14" h="13"/>
                     <clip x="585" y="65" w="14" h="13"/>
                     <clip x="601" y="65" w="14" h="13"/>
+                    <clip x="586" y="81" w="14" h="13"/>
+                    <clip x="586" y="81" w="14" h="13"/>
+                    <clip x="601" y="81" w="14" h="13"/>
+                    <clip x="601" y="81" w="14" h="13"/>
+                    <clip x="617" y="81" w="14" h="13"/>
+                    <clip x="617" y="81" w="14" h="13"/>
+                    <clip x="634" y="81" w="14" h="13"/>
+                    <clip x="634" y="81" w="14" h="13"/>
                 </clips>
                 <animation_length value="2"/>
                 <animation_speed value="20"/>
