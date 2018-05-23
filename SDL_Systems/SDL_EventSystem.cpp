@@ -60,8 +60,9 @@ void SDL_EventSystem::update()
 
     if(update_entities)
     {
-        for (auto& en : entities)
+        for (auto it : entities)
         {
+            auto en = it.second; // get entity
             if(en->hasComponentType(MOVABLE_COMPONENT))
             {
                 auto* mc = en->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);

@@ -6,9 +6,8 @@
 #define ECS_SYSTEMMANAGER_H
 
 
+#include <map>
 #include "ECS.h"
-#include <unordered_set>
-#include <set>
 #include "../PacMan_Components.h"
 
 class SystemManager {
@@ -23,7 +22,7 @@ public:
     ~SystemManager();
 private:
     std::vector<System*> systems = std::vector<System*>();
-    std::set<Entity*> entities = std::set<Entity*>();
+    std::map<entityID, Entity*> entities;
 };
 
 

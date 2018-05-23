@@ -6,29 +6,20 @@
 
 Entity::~Entity()
 {
-    for(auto& c : components)
-        delete c;
-    components.clear();
+    clearComponents();
 };
 
 void Entity::addComponent(Component *c)
 {
     if(getComponentByType<Component>(c->type) == nullptr)
     {
-        components.push_back(c);
+        components[c->type] = c;
     }
 }
 
 bool Entity::hasComponentType(int8_t type)
 {
-    for(auto& c : components)
-    {
-        if(c->type == type)
-        {
-            return true;
-        }
-    }
-    return false;
+    return components.find(type) != components.end();
 }
 
 bool Entity::hasComponentTypes(std::vector<int8_t> types)
@@ -46,14 +37,11 @@ bool Entity::hasComponentTypes(std::vector<int8_t> types)
 
 void Entity::removeComponentByType(int8_t type)
 {
-    for(auto it = components.begin(); it < components.end(); it++)
+    if(hasComponentType(type))
     {
-        if(it.operator*()->type == type)
-        {
-            delete it.operator*();
-            components.erase(it);
-            break;
-        }
+        delete components[type];
+        auto it = components.find(type);
+        components.erase(it);
     }
 }
 
@@ -64,9 +52,9 @@ const int Entity::getComponentsSize()
 
 void Entity::clearComponents()
 {
-    for(auto* c : components)
+    for(auto it : components)
     {
-        delete c;
+        delete it.second;
     }
     components.clear();
 }

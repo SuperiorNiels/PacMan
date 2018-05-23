@@ -6,6 +6,7 @@
 #define ECS_ENTITY_H
 
 
+#include <map>
 #include <vector>
 #include "Component.h"
 
@@ -28,14 +29,15 @@ public:
     ~Entity();
     entityID id = getEntityID();
 private:
-    std::vector<Component*> components;
+    std::map<int8_t, Component*> components;
 };
 
 template <class T>
 T* Entity::getComponentByType(int8_t type)
 {
-    for(auto& c : components)
+    for(auto it : components)
     {
+        auto c = it.second;
         if(c->type == type)
         {
             return dynamic_cast<T*>(c);

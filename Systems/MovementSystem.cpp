@@ -12,8 +12,9 @@ MovementSystem::MovementSystem(World* world)
 
 void MovementSystem::update()
 {
-    for(auto& e : entities)
+    for (auto it : entities)
     {
+        auto e = it.second; // get entity
         if(e->hasComponentTypes({POSITION_COMPONENT,MOVABLE_COMPONENT}))
         {
             auto* p = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
@@ -49,10 +50,6 @@ void MovementSystem::update()
                     p->y = world->getHeight()-1;
                     m->state = IDLE;
                 }
-
-                if(e->hasComponentType(PLAYER_INPUT_COMPONENT))
-                    std::cout << "x: " << p->x << " y: " << p->y << std::endl;
-                //std::cout << "x: " << p->x << " y: " << p->y << std::endl;
             }
         }
     }

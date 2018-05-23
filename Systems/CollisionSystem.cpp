@@ -80,8 +80,9 @@ void CollisionSystem::update()
 
             std::vector<Entity*> to_remove = std::vector<Entity*>();
 
-            for (auto& entity : entities)
+            for (auto it : entities)
             {
+                auto entity = it.second; // get entity
                 auto *pc2 = entity->getComponentByType<PositionComponent>(POSITION_COMPONENT);
                 if(!(entity->hasComponentType(POINTS_COMPONENT) || entity->hasComponentType(ENERGIZER_COMPONENT)))
                 {

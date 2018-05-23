@@ -12,8 +12,9 @@ AISystem::AISystem(World* world)
 
 void AISystem::update()
 {
-    for(auto& e : entities)
+    for (auto it : entities)
     {
+        auto e = it.second; // get entity
         if(e->hasComponentTypes({AI_COMPONENT,MOVABLE_COMPONENT,POSITION_COMPONENT}))
         {
             auto *mc = e->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);

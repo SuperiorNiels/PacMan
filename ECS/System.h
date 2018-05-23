@@ -5,6 +5,7 @@
 #ifndef ECS_SYSTEM_H
 #define ECS_SYSTEM_H
 
+#include <map>
 #include <vector>
 #include "Entity.h"
 
@@ -18,7 +19,7 @@ public:
     virtual bool entityInSystem(entityID id);
     virtual ~System();
 protected:
-    std::vector<Entity*> entities = std::vector<Entity*>();
+    std::map<entityID, Entity*> entities;
     std::vector<int8_t> component_types = std::vector<int8_t>();
 };
 
@@ -28,20 +29,17 @@ inline void System::addEntity(Entity *e)
     {
         if (!entityInSystem(e->id))
         {
-            entities.push_back(e);
+            entities[e->id] = e;
         }
     }
 }
 
 inline void System::removeEntity(entityID id)
 {
-    for(auto it = entities.begin(); it < entities.end(); it++)
+    if(entityInSystem(id))
     {
-        if(it.operator*()->id == id)
-        {
-            entities.erase(it);
-            break;
-        }
+        auto it = entities.find(id);
+        entities.erase(it);
     }
 }
 
@@ -52,12 +50,7 @@ inline bool System::checkEntity(Entity* e)
 
 inline bool System::entityInSystem(entityID id)
 {
-    for(auto* e: entities)
-    {
-        if(e->id == id)
-            return true;
-    }
-    return false;
+    return entities.find(id) != entities.end();
 }
 
 inline System::~System()

@@ -67,8 +67,9 @@ void SDL_RenderSystem::update()
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
     SDL_RenderClear(renderer);
 
-    for (auto &e : entities)
+    for (auto it : entities)
     {
+        auto e = it.second; // get entity
         if (e->hasComponentTypes({POSITION_COMPONENT, RENDER_COMPONENT}))
         {
             auto *rc = e->getComponentByType<SDL_RenderComponent>(RENDER_COMPONENT);
