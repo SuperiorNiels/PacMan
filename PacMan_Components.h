@@ -22,7 +22,8 @@ enum ComponentTypes
     ENERGIZER_COMPONENT,
     POINTS_COMPONENT,
     SCORE_COMPONENT,
-    LIVES_COMPONENT
+    LIVES_COMPONENT,
+    TEXT_COMPONENT
 };
 
 class PositionComponent : public Component
@@ -123,6 +124,15 @@ public:
     int lives = 0;
     int start_x = 0;
     int start_y = 0;
+};
+
+class TextComponent : public Component
+{
+public:
+    TextComponent() { type = TEXT_COMPONENT; };
+    std::string text;
+    int x_pos = 0;
+    int y_pos = 0;
 };
 
 

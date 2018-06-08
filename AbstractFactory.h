@@ -23,6 +23,7 @@ public:
     virtual ScoreComponent* createScoreComponent(std::string font, int font_size) = 0;
     virtual LivesComponent* createLivesComponent(std::string font, int font_size) = 0;
     virtual RenderComponent* createRenderComponent(std::string path, std::vector<clip> clips) = 0;
+    virtual TextComponent* createTextComponent(std::string font, int font_size) = 0;
     virtual std::vector<Entity*> createWorldEntities(World *world) = 0;
     virtual ~AbstractFactory() = default;
 };

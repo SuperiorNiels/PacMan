@@ -23,6 +23,7 @@ private:
     void renderBox(SDL_Rect* box, Entity* e);
     void renderScore(Entity* e);
     void renderLives(Entity* e);
+    void renderText(Entity* e);
     SDL_Window* window = nullptr;
     SDL_Rect getPosition(Entity* e);
     SDL_Rect getClip(Entity* e);

@@ -12,6 +12,15 @@ void SystemManager::updateSystems()
     }
 }
 
+void SystemManager::updateUnpausableSystems()
+{
+    for(auto& s : systems)
+    {
+        if(!s->isPausable())
+            s->update();
+    }
+}
+
 void SystemManager::updateEntities()
 {
     // Check if entity belongs in system and add to new system (when needed)

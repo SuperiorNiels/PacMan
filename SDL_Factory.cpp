@@ -145,7 +145,14 @@ ScoreComponent* SDL_Factory::createScoreComponent(std::string font, int font_siz
 LivesComponent* SDL_Factory::createLivesComponent(std::string font, int font_size)
 {
     auto* lc = new SDL_LivesComponent();
-    lc->text = new SDL_Text(font,font_size,renderSystem->renderer);
+    lc->texture = new SDL_Text(font,font_size,renderSystem->renderer);
+    return lc;
+}
+
+TextComponent* SDL_Factory::createTextComponent(std::string font, int font_size)
+{
+    auto* lc = new SDL_TextComponent();
+    lc->texture = new SDL_Text(font,font_size,renderSystem->renderer);
     return lc;
 }
 

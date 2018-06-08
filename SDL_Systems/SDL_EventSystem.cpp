@@ -4,14 +4,11 @@
 
 #include "SDL_EventSystem.h"
 
-
-SDL_EventSystem::SDL_EventSystem()
-{
-    component_types = {PLAYER_INPUT_COMPONENT};
-}
-
 void SDL_EventSystem::update()
 {
+    // Clear event queue
+    events.clear();
+
     SDL_Event e = {};
     direction dir = STOP; // STOP = 0
     bool update_entities = false;
@@ -40,17 +37,8 @@ void SDL_EventSystem::update()
                     dir = DOWN;
                     update_entities = true;
                     break;
-                case SDLK_r:
-                    events.push_back(R_BUTTON);
-                    break;
                 case SDLK_p:
-                    events.push_back(P_BUTTON);
-                    break;
-                case SDLK_o:
-                    events.push_back(O_BUTTON);
-                    break;
-                case SDLK_m:
-                    events.push_back(M_BUTTON);
+                    events[PAUSE_GAME] = true;
                     break;
                 default:
                     break;

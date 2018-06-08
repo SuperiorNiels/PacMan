@@ -8,8 +8,6 @@
 SDL_RenderSystem::SDL_RenderSystem(World* world, int screen_width, int screen_height, TimerSystem* timer) :
         RenderSystem(world,screen_width,screen_height,timer)
 {
-    component_types = {RENDER_COMPONENT};
-
     // Initialze SDL
     if(SDL_Init(SDL_INIT_VIDEO) < 0)
     {
@@ -77,7 +75,7 @@ void SDL_RenderSystem::update()
             {
                 SDL_Rect position = getPosition(e);
 
-                //renderBox(&position,e);
+                renderBox(&position,e);
 
                 double x_offset = rc->x_render_offset*tile_width;
                 double y_offset = rc->y_render_offset*tile_width;
@@ -94,6 +92,9 @@ void SDL_RenderSystem::update()
 
                 if(e->hasComponentType(LIVES_COMPONENT))
                     renderLives(e);
+
+                if(e->hasComponentType(TEXT_COMPONENT))
+                    renderText(e);
 
                 SDL_RenderCopy(renderer, rc->texture, &clip, &position);
             }
@@ -216,14 +217,32 @@ void SDL_RenderSystem::renderLives(Entity *e)
     stringStream << "Lives: " << lc->lives;
     std::string lives_text = stringStream.str();
 
-    lc->text->setText(lives_text, text_color);
+    lc->texture->setText(lives_text, text_color);
 
-    SDL_Texture* text = lc->text->getTexture();
+    SDL_Texture* text = lc->texture->getTexture();
 
     int w, h = 0;
     SDL_QueryTexture(text, nullptr, nullptr, &w, &h);
     int test = world_width - w - 5 + x_screen_offset;
     SDL_Rect score_pos = {test, world_height + y_screen_offset + 5, w , h};
+
+    SDL_RenderCopy(renderer,text, nullptr, &score_pos);
+}
+
+void SDL_RenderSystem::renderText(Entity *e)
+{
+    auto* lc = e->getComponentByType<SDL_TextComponent>(TEXT_COMPONENT);
+
+    SDL_Color text_color = {0xff,0xff,0xff,0};
+
+    lc->texture->setText(lc->text, text_color);
+
+    SDL_Texture* text = lc->texture->getTexture();
+
+    int w, h = 0;
+    SDL_QueryTexture(text, nullptr, nullptr, &w, &h);
+    int test = world_width - w - 5 + x_screen_offset;
+    SDL_Rect score_pos = {0, 0, w , h};
 
     SDL_RenderCopy(renderer,text, nullptr, &score_pos);
 }

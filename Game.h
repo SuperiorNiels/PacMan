@@ -23,10 +23,10 @@ public:
     explicit Game(Config* config);
     void init();
     void run();
-    void createGame();
     ~Game();
 private:
     void clear();
+    void createEntities();
     Config* config = nullptr;
     AbstractFactory* factory = nullptr;
     SystemManager* manager = nullptr;
@@ -34,6 +34,7 @@ private:
     RenderSystem* render = nullptr;
     World* world = nullptr;
     TimerSystem* timer = nullptr;
+    bool paused = false;
 };
 
 #endif //ECS_GAME_H

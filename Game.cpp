@@ -24,10 +24,10 @@ void Game::init()
     manager->registerSystem(new CollisionSystem());
     manager->registerSystem(new MovementSystem(world));
     manager->registerSystem(Game::render);
-    createGame();
+    createEntities();
 }
 
-void Game::createGame()
+void Game::createEntities()
 {
     std::vector<Entity*> map = factory->createWorldEntities(world);
     for(auto& e : map)
@@ -38,9 +38,20 @@ void Game::run()
 {
     while(events->getRunning())
     {
+        if(events->events.find(PAUSE_GAME) != events->events.end())
+        {
+            paused = !paused;
+            // add text component to an entity
+        }
+
+
         timer->fpsStart();
-        manager->updateSystems();
-        manager->updateEntities();
+        if(!paused) {
+            manager->updateSystems();
+            manager->updateEntities();
+        } else {
+            manager->updateUnpausableSystems();
+        }
         timer->fpsCap();
     }
 }

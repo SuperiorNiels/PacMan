@@ -28,6 +28,7 @@ public:
     RenderComponent* createRenderComponent(std::string path, std::vector<clip> clips) override;
     ScoreComponent* createScoreComponent(std::string font, int font_size) override;
     LivesComponent* createLivesComponent(std::string font, int font_size) override;
+    TextComponent* createTextComponent(std::string font, int font_size) override;
     ~SDL_Factory() override;
 private:
     void clearTextures();

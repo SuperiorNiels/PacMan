@@ -6,32 +6,27 @@
 #define ECS_EVENTSYSTEM_H
 
 #include "../ECS/ECS.h"
+#include "../PacMan_Components.h"
 
 enum events_numbers
 {
-    R_BUTTON,
-    P_BUTTON,
-    O_BUTTON,
-    M_BUTTON
+    PAUSE_GAME,
 };
 
 class EventSystem : public System
 {
 public:
-    const bool getRunning()
-    {
-        return running;
-    };
-    const std::vector<events_numbers> getEvents()
-    {
-        std::vector<events_numbers> res = events;
-        events.clear();
-        return res;
-    };
+    EventSystem() {
+        // System settings
+        component_types = {PLAYER_INPUT_COMPONENT};
+        pausable = false;
+    }
+    const bool getRunning() { return running; };
+    std::map<events_numbers , bool> events;
 protected:
     bool running = true;
-    double speed = 0;
-    std::vector<events_numbers> events = std::vector<events_numbers>();
+    //std::vector<events_numbers> events = std::vector<events_numbers>();
+
 };
 
 #endif //ECS_EVENTSYSTEM_H

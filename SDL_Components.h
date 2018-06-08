@@ -33,6 +33,12 @@ public:
 class SDL_LivesComponent : public LivesComponent
 {
 public:
-    SDL_Text* text = nullptr;
+    SDL_Text* texture = nullptr;
+};
+
+class SDL_TextComponent : public TextComponent
+{
+public:
+    SDL_Text* texture = nullptr;
 };
 #endif //ECS_SDL_COMPONENTS_H

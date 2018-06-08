@@ -18,9 +18,11 @@ public:
     virtual bool checkEntity(Entity* e);
     virtual bool entityInSystem(entityID id);
     virtual ~System();
+    bool isPausable();
 protected:
     std::map<entityID, Entity*> entities;
     std::vector<int8_t> component_types = std::vector<int8_t>();
+    bool pausable = true;
 };
 
 inline void System::addEntity(Entity *e)
@@ -57,6 +59,11 @@ inline System::~System()
 {
     entities.clear();
     component_types.clear();
+}
+
+inline bool System::isPausable()
+{
+    return pausable;
 }
 
 #endif //ECS_SYSTEM_H

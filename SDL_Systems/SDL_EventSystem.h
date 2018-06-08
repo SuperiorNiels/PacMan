@@ -12,7 +12,6 @@
 
 class SDL_EventSystem : public EventSystem {
 public:
-    SDL_EventSystem();
     void update() override;
 };
 
