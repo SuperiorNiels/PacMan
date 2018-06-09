@@ -10,21 +10,23 @@
 #include "ECS.h"
 #include "../PacMan_Components.h"
 
-class SystemManager {
-public:
-    void updateSystems();
-    void updateUnpausableSystems();
-    void updateEntities();
-    void registerSystem(System* s);
-    void registerEntity(Entity* e);
-    void unregisterEntity(Entity* e);
-    void clearEntities();
-    void removeSystem(System* s);
-    ~SystemManager();
-private:
-    std::vector<System*> systems = std::vector<System*>();
-    std::map<entityID, Entity*> entities;
-};
-
+namespace ECS
+{
+    class SystemManager {
+    public:
+        void updateSystems();
+        void updateUnpausableSystems();
+        void updateEntities();
+        void registerSystem(System* s);
+        void registerEntity(Entity* e);
+        void unregisterEntity(Entity* e);
+        void clearEntities();
+        void removeSystem(System* s);
+        ~SystemManager();
+    private:
+        std::vector<System*> systems = std::vector<System*>();
+        std::map<entityID, Entity*> entities;
+    };
+}
 
 #endif //ECS_SYSTEMMANAGER_H

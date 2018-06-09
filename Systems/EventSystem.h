@@ -8,6 +8,8 @@
 #include "../ECS/ECS.h"
 #include "../PacMan_Components.h"
 
+using namespace ECS;
+
 enum events_numbers
 {
     PAUSE_GAME,

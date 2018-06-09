@@ -10,6 +10,7 @@
 #include "../PacMan_Components.h"
 #include "../PacMan_Constants.h"
 
+using namespace ECS;
 
 class CollisionSystem : public System
 {
@@ -20,8 +21,8 @@ public:
     void removeEntity(entityID id) override;
     bool entityInSystem(entityID id) override;
 private:
-    std::vector<Entity*> players = std::vector<Entity*>();
-    std::vector<Entity*> ghosts = std::vector<Entity*>();
+    std::map<entityID, Entity*> players;
+    std::map<entityID, Entity*> ghosts;
 };
 
 

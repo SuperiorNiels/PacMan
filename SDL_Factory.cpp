@@ -34,20 +34,19 @@ std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
                     points.push_back(config->createEntity("big_point",tile_width, x, y));
                     break;
                 case 5:
-                    SDL_Factory::player = config->createEntity("player", renderSystem->getTile_width(), x, y);
-                    players.push_back(player);
+                    players.push_back(config->createEntity("player", tile_width, x, y));
                     break;
                 case 6:
-                    ais.push_back(config->createEntity("red_ghost",renderSystem->getTile_width(),x,y));
+                    ais.push_back(config->createEntity("red_ghost", tile_width,x,y));
                     break;
                 case 7:
-                    ais.push_back(config->createEntity("blue_ghost",renderSystem->getTile_width(),x,y));
+                    ais.push_back(config->createEntity("blue_ghost", tile_width,x,y));
                     break;
                 case 8:
-                    ais.push_back(config->createEntity("pink_ghost",renderSystem->getTile_width(),x,y));
+                    ais.push_back(config->createEntity("pink_ghost", tile_width,x,y));
                     break;
                 case 9:
-                    ais.push_back(config->createEntity("orange_ghost",renderSystem->getTile_width(),x,y));
+                    ais.push_back(config->createEntity("orange_ghost", tile_width,x,y));
                     break;
                 default:
                     break;
@@ -67,7 +66,6 @@ std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
 
 RenderSystem* SDL_Factory::createRenderSystem(World* world, int screen_width, int screen_height, TimerSystem* timer)
 {
-    // Check if render system already exists
     auto* res = new SDL_RenderSystem(world,screen_width,screen_height,timer);
     clearTextures();
     renderSystem = res;
@@ -138,6 +136,9 @@ RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::vecto
 ScoreComponent* SDL_Factory::createScoreComponent(std::string font, int font_size)
 {
     auto* sc = new SDL_ScoreComponent();
+    auto* color = new SDL_Color();
+    color->r = 0xff; color->g = 0xff; color->b = 0xff; color->a = 0xff;
+    sc->color = color;
     sc->texture = new SDL_Text(font,font_size,renderSystem->renderer);
     return sc;
 }
@@ -145,6 +146,9 @@ ScoreComponent* SDL_Factory::createScoreComponent(std::string font, int font_siz
 LivesComponent* SDL_Factory::createLivesComponent(std::string font, int font_size)
 {
     auto* lc = new SDL_LivesComponent();
+    auto* color = new SDL_Color();
+    color->r = 0xff; color->g = 0xff; color->b = 0xff; color->a = 0xff;
+    lc->color = color;
     lc->texture = new SDL_Text(font,font_size,renderSystem->renderer);
     return lc;
 }
@@ -152,6 +156,9 @@ LivesComponent* SDL_Factory::createLivesComponent(std::string font, int font_siz
 TextComponent* SDL_Factory::createTextComponent(std::string font, int font_size)
 {
     auto* lc = new SDL_TextComponent();
+    auto* color = new SDL_Color();
+    color->r = 0xff; color->g = 0xff; color->b = 0xff; color->a = 0xff;
+    lc->color = color;
     lc->texture = new SDL_Text(font,font_size,renderSystem->renderer);
     return lc;
 }

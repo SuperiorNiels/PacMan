@@ -34,6 +34,7 @@ private:
     RenderSystem* render = nullptr;
     World* world = nullptr;
     TimerSystem* timer = nullptr;
+    Entity* player = nullptr;
     bool paused = false;
 };
 

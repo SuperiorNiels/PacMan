@@ -28,17 +28,36 @@ class SDL_ScoreComponent : public ScoreComponent
 {
 public:
     SDL_Text* texture = nullptr;
+    SDL_Color* color = nullptr;
+    ~SDL_ScoreComponent() override
+    {
+        delete texture;
+        delete color;
+    };
 };
 
 class SDL_LivesComponent : public LivesComponent
 {
 public:
     SDL_Text* texture = nullptr;
+    SDL_Color* color = nullptr;
+    ~SDL_LivesComponent() override
+    {
+        delete texture;
+        delete color;
+    };
+
 };
 
 class SDL_TextComponent : public TextComponent
 {
 public:
     SDL_Text* texture = nullptr;
+    SDL_Color* color = nullptr;
+    ~SDL_TextComponent() override
+    {
+        delete texture;
+        delete color;
+    };
 };
 #endif //ECS_SDL_COMPONENTS_H

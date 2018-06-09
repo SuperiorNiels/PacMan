@@ -31,19 +31,32 @@ void Game::createEntities()
 {
     std::vector<Entity*> map = factory->createWorldEntities(world);
     for(auto& e : map)
+    {
+        if(e->hasComponentType(PLAYER_INPUT_COMPONENT))
+            Game::player = e;
         manager->registerEntity(e);
+    }
+
 }
 
 void Game::run()
 {
+    auto* pause_text = factory->createTextComponent("../data/Joystix.TTF", 22);
+    pause_text->text = "Game Paused. Press space to start.";
+
     while(events->getRunning())
     {
         if(events->events.find(PAUSE_GAME) != events->events.end())
         {
             paused = !paused;
-            // add text component to an entity
+            if(paused) {
+                Game::player->addComponent(pause_text);
+                manager->updateEntities();
+                manager->updateSystems();
+            } else {
+                Game::player->removeComponentByType(TEXT_COMPONENT);
+            }
         }
-
 
         timer->fpsStart();
         if(!paused) {

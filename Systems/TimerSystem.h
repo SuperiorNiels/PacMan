@@ -7,6 +7,8 @@
 
 #include "../ECS/ECS.h"
 
+using namespace ECS;
+
 class TimerSystem
 {
 public:

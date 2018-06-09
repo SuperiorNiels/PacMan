@@ -13,12 +13,12 @@ void CollisionSystem::addEntity(Entity *e)
 {
     if(e->hasComponentType(PLAYER_INPUT_COMPONENT) && !entityInSystem(e->id))
     {
-        players.push_back(e);
+        players[e->id] = e;
         return;
     }
     if(e->hasComponentType(AI_COMPONENT) && !entityInSystem(e->id))
     {
-        ghosts.push_back(e);
+        ghosts[e->id] = e;
         return;
     }
     System::addEntity(e);
@@ -26,46 +26,35 @@ void CollisionSystem::addEntity(Entity *e)
 
 void CollisionSystem::removeEntity(entityID id)
 {
-    for(auto it = players.begin(); it != players.end(); it++)
+    if(players.find(id) != players.end())
     {
-        Entity* e = it.operator*();
-        if(e->id == id)
-        {
-            players.erase(it);
-            return;
-        }
+        auto it = players.find(id);
+        players.erase(it);
+        return;
     }
-    for(auto it = ghosts.begin(); it != ghosts.end(); it++)
+    if(ghosts.find(id) != ghosts.end())
     {
-        Entity* e = it.operator*();
-        if(e->id == id)
-        {
-            ghosts.erase(it);
-            return;
-        }
+        auto it = ghosts.find(id);
+        ghosts.erase(it);
+        return;
     }
     System::removeEntity(id);
 }
 
 bool CollisionSystem::entityInSystem(entityID id)
 {
-    for(auto* e : players)
-    {
-        if(e->id == id)
-            return true;
-    }
-    for(auto* e : ghosts)
-    {
-        if(e->id == id)
-            return true;
-    }
+    if(players.find(id) != players.end())
+        return true;
+    if(ghosts.find(id) != ghosts.end())
+        return true;
     return System::entityInSystem(id);
 }
 
 void CollisionSystem::update()
 {
-    for(auto* player : players)
+    for(auto p_it : players)
     {
+        auto* player = p_it.second;
         auto* mc = player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
         auto* pc = player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
         if(mc->state == IDLE)
@@ -107,8 +96,9 @@ void CollisionSystem::update()
                             auto* sc = player->getComponentByType<ScoreComponent>(SCORE_COMPONENT);
                             auto* ec = entity->getComponentByType<EnergizerComponent>(ENERGIZER_COMPONENT);
                             sc->score += ec->points;
-                            for(auto* ghost : ghosts)
+                            for(auto g_it : ghosts)
                             {
+                                auto* ghost = g_it.second;
                                 auto* ac = ghost->getComponentByType<AIComponent>(AI_COMPONENT);
                                 if(ac->state != HOME)
                                 {
@@ -140,8 +130,9 @@ void CollisionSystem::update()
             }
         }
 
-        for (auto& ghost : ghosts)
+        for (auto& it : ghosts)
         {
+            auto* ghost = it.second;
             auto *pc2 = ghost->getComponentByType<PositionComponent>(POSITION_COMPONENT);
             if(pc->x == pc2->x && pc->y == (pc2->y))
             {

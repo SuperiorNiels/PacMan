@@ -11,6 +11,8 @@
 #include "World.h"
 #include "Systems/TimerSystem.h"
 
+using namespace ECS;
+
 enum ComponentTypes
 {
     POSITION_COMPONENT,
@@ -122,7 +124,7 @@ class LivesComponent : public Component
 public:
     LivesComponent() { type = LIVES_COMPONENT; };
     int lives = 0;
-    int start_x = 0;
+    int start_x = 0; // keep starting position, when player dies use this to 'teleport' player
     int start_y = 0;
 };
 

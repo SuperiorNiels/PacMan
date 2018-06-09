@@ -10,40 +10,44 @@
 #include <vector>
 #include "Component.h"
 
-using entityID = int16_t;
-
-inline entityID getEntityID() {
-    static entityID id = 0;
-    return id++;
-};
-
-class Entity {
-public:
-    void addComponent(Component* c);
-    template <class T> T* getComponentByType(int8_t type);
-    bool hasComponentType(int8_t type);
-    bool hasComponentTypes(std::vector<int8_t> types);
-    void removeComponentByType(int8_t type);
-    const int getComponentsSize();
-    void clearComponents();
-    ~Entity();
-    entityID id = getEntityID();
-private:
-    std::map<int8_t, Component*> components;
-};
-
-template <class T>
-T* Entity::getComponentByType(int8_t type)
+namespace ECS
 {
-    for(auto it : components)
+    using entityID = int16_t;
+
+    inline entityID getEntityID() {
+        static entityID id = 0;
+        return id++;
+    };
+
+    class Entity {
+    public:
+        void addComponent(Component* c);
+        template <class T> T* getComponentByType(int8_t type);
+        bool hasComponentType(int8_t type);
+        bool hasComponentTypes(std::vector<int8_t> types);
+        void destoryComponentByType(int8_t type);
+        void removeComponentByType(int8_t type);
+        const int getComponentsSize();
+        void clearComponents();
+        ~Entity();
+        entityID id = getEntityID();
+    private:
+        std::map<int8_t, Component*> components;
+    };
+
+    template <class T>
+    T* Entity::getComponentByType(int8_t type)
     {
-        auto c = it.second;
-        if(c->type == type)
+        for(auto it : components)
         {
-            return dynamic_cast<T*>(c);
+            auto c = it.second;
+            if(c->type == type)
+            {
+                return dynamic_cast<T*>(c);
+            }
         }
+        return nullptr;
     }
-    return nullptr;
 }
 
 #endif //ECS_ENTITY_H

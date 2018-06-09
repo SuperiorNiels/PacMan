@@ -11,6 +11,8 @@
 #include "../PacMan_Components.h"
 #include "TimerSystem.h"
 
+using namespace ECS;
+
 class RenderSystem : public System
 {
 public:
@@ -19,7 +21,6 @@ public:
     {
         // System settings
         RenderSystem::component_types = {RENDER_COMPONENT};
-        RenderSystem::pausable = true;
 
         RenderSystem::screen_width = screen_width;
         RenderSystem::screen_height = screen_height - (int) floor(0.1*screen_height); // 10% of window height for point and lives

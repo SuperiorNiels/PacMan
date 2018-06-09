@@ -4,58 +4,70 @@
 
 #include "Entity.h"
 
-Entity::~Entity()
+namespace ECS
 {
-    clearComponents();
-};
-
-void Entity::addComponent(Component *c)
-{
-    if(getComponentByType<Component>(c->type) == nullptr)
+    Entity::~Entity()
     {
-        components[c->type] = c;
-    }
-}
+        clearComponents();
+    };
 
-bool Entity::hasComponentType(int8_t type)
-{
-    return components.find(type) != components.end();
-}
-
-bool Entity::hasComponentTypes(std::vector<int8_t> types)
-{
-    for(auto it = types.begin(); it < types.end(); it++)
+    void Entity::addComponent(Component *c)
     {
-        if(hasComponentType(it.operator*()))
+        if(getComponentByType<Component>(c->type) == nullptr)
         {
-            types.erase(it);
-            it--;
+            components[c->type] = c;
         }
     }
-    return types.empty();
-}
 
-void Entity::removeComponentByType(int8_t type)
-{
-    if(hasComponentType(type))
+    bool Entity::hasComponentType(int8_t type)
     {
-        delete components[type];
-        auto it = components.find(type);
-        components.erase(it);
+        return components.find(type) != components.end();
+    }
+
+    bool Entity::hasComponentTypes(std::vector<int8_t> types)
+    {
+        for(auto it = types.begin(); it < types.end(); it++)
+        {
+            if(hasComponentType(it.operator*()))
+            {
+                types.erase(it);
+                it--;
+            }
+        }
+        return types.empty();
+    }
+
+    void Entity::destoryComponentByType(int8_t type)
+    {
+        if(hasComponentType(type))
+        {
+            delete components[type];
+            auto it = components.find(type);
+            components.erase(it);
+        }
+    }
+
+    void Entity::removeComponentByType(int8_t type)
+    {
+        if(hasComponentType(type))
+        {
+            auto it = components.find(type);
+            components.erase(it);
+        }
+    }
+
+
+    const int Entity::getComponentsSize()
+    {
+        return (int)components.size();
+    }
+
+    void Entity::clearComponents()
+    {
+        for(auto it : components)
+        {
+            delete it.second;
+        }
+        components.clear();
     }
 }
-
-const int Entity::getComponentsSize()
-{
-    return (int)components.size();
-}
-
-void Entity::clearComponents()
-{
-    for(auto it : components)
-    {
-        delete it.second;
-    }
-    components.clear();
-}
-

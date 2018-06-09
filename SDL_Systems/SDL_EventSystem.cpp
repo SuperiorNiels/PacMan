@@ -37,7 +37,7 @@ void SDL_EventSystem::update()
                     dir = DOWN;
                     update_entities = true;
                     break;
-                case SDLK_p:
+                case SDLK_SPACE:
                     events[PAUSE_GAME] = true;
                     break;
                 default:

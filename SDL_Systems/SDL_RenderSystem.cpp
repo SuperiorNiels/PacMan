@@ -65,38 +65,41 @@ void SDL_RenderSystem::update()
     SDL_SetRenderDrawColor(renderer, 0, 0, 0, 0xFF);
     SDL_RenderClear(renderer);
 
-    for (auto it : entities)
+    std::map<entityID, Entity*>* to_render[2] = {&entities, &foreground};
+
+    for(auto list : to_render)
     {
-        auto e = it.second; // get entity
-        if (e->hasComponentTypes({POSITION_COMPONENT, RENDER_COMPONENT}))
+        for (auto it : *list)
         {
-            auto *rc = e->getComponentByType<SDL_RenderComponent>(RENDER_COMPONENT);
-            if (rc->visible)
+            auto e = it.second; // get entity
+            if (e->hasComponentType(RENDER_COMPONENT))
             {
-                SDL_Rect position = getPosition(e);
+                auto *rc = e->getComponentByType<SDL_RenderComponent>(RENDER_COMPONENT);
+                if (rc->visible)
+                {
+                    SDL_Rect position = getPosition(e);
 
-                renderBox(&position,e);
+                    double x_offset = rc->x_render_offset * tile_width;
+                    double y_offset = rc->y_render_offset * tile_width;
+                    position.x = (int) (position.x - x_offset);
+                    position.y = (int) (position.y - y_offset);
 
-                double x_offset = rc->x_render_offset*tile_width;
-                double y_offset = rc->y_render_offset*tile_width;
-                position.x = (int) (position.x - x_offset);
-                position.y = (int) (position.y - y_offset);
+                    SDL_Rect clip = getClip(e);
 
-                SDL_Rect clip = getClip(e);
+                    position.w = (int) floor(clip.w * rc->scale);
+                    position.h = (int) floor(clip.h * rc->scale);
 
-                position.w = (int) floor(clip.w * rc->scale);
-                position.h = (int) floor(clip.h * rc->scale);
+                    if (e->hasComponentType(SCORE_COMPONENT))
+                        renderScore(e);
 
-                if(e->hasComponentType(SCORE_COMPONENT))
-                    renderScore(e);
+                    if (e->hasComponentType(LIVES_COMPONENT))
+                        renderLives(e);
 
-                if(e->hasComponentType(LIVES_COMPONENT))
-                    renderLives(e);
+                    if (e->hasComponentType(TEXT_COMPONENT))
+                        renderText(e);
 
-                if(e->hasComponentType(TEXT_COMPONENT))
-                    renderText(e);
-
-                SDL_RenderCopy(renderer, rc->texture, &clip, &position);
+                    SDL_RenderCopy(renderer, rc->texture, &clip, &position);
+                }
             }
         }
     }
@@ -191,13 +194,12 @@ SDL_Rect SDL_RenderSystem::getClip(Entity *e)
 void SDL_RenderSystem::renderScore(Entity *e)
 {
     auto* sc = e->getComponentByType<SDL_ScoreComponent>(SCORE_COMPONENT);
-    SDL_Color text_color = {0xff,0xff,0xff,0};
 
     std::ostringstream stringStream;
     stringStream << "Score: " << sc->score;
     std::string score_text = stringStream.str();
 
-    sc->texture->setText(score_text, text_color);
+    sc->texture->setText(score_text, *sc->color);
     SDL_Texture* text = sc->texture->getTexture();
 
     int w, h = 0;
@@ -211,13 +213,11 @@ void SDL_RenderSystem::renderLives(Entity *e)
 {
     auto* lc = e->getComponentByType<SDL_LivesComponent>(LIVES_COMPONENT);
 
-    SDL_Color text_color = {0xff,0xff,0xff,0};
-
     std::ostringstream stringStream;
     stringStream << "Lives: " << lc->lives;
     std::string lives_text = stringStream.str();
 
-    lc->texture->setText(lives_text, text_color);
+    lc->texture->setText(lives_text, *lc->color);
 
     SDL_Texture* text = lc->texture->getTexture();
 
@@ -231,44 +231,50 @@ void SDL_RenderSystem::renderLives(Entity *e)
 
 void SDL_RenderSystem::renderText(Entity *e)
 {
-    auto* lc = e->getComponentByType<SDL_TextComponent>(TEXT_COMPONENT);
+    auto* tc = e->getComponentByType<SDL_TextComponent>(TEXT_COMPONENT);
 
-    SDL_Color text_color = {0xff,0xff,0xff,0};
+    tc->texture->setText(tc->text, *tc->color);
 
-    lc->texture->setText(lc->text, text_color);
-
-    SDL_Texture* text = lc->texture->getTexture();
+    SDL_Texture* text = tc->texture->getTexture();
 
     int w, h = 0;
     SDL_QueryTexture(text, nullptr, nullptr, &w, &h);
-    int test = world_width - w - 5 + x_screen_offset;
-    SDL_Rect score_pos = {0, 0, w , h};
+    SDL_Rect score_pos = {tc->x_pos, tc->y_pos, w , h};
 
     SDL_RenderCopy(renderer,text, nullptr, &score_pos);
 }
 
-void SDL_RenderSystem::renderBox(SDL_Rect* box, Entity* e)
+void SDL_RenderSystem::addEntity(Entity *e)
 {
-    if(e->hasComponentType(AI_COMPONENT))
+    if(e->hasComponentType(PLAYER_INPUT_COMPONENT) && !entityInSystem(e->id))
     {
-        SDL_SetRenderDrawColor(renderer, 0xFF, 0, 0, 0xFF);
-        SDL_RenderDrawRect(renderer, box);
+        foreground[e->id] = e;
+        return;
     }
-    else if(e->hasComponentType(PLAYER_INPUT_COMPONENT))
+    if(e->hasComponentType(AI_COMPONENT) && !entityInSystem(e->id))
     {
-        SDL_SetRenderDrawColor(renderer, 0xFF, 0xFF, 0, 0xFF);
-        SDL_RenderFillRect(renderer, box);
+        foreground[e->id] = e;
+        return;
     }
-    else if(e->hasComponentType(POINTS_COMPONENT))
+    System::addEntity(e);
+}
+
+void SDL_RenderSystem::removeEntity(entityID id)
+{
+    if(foreground.find(id) != foreground.end())
     {
-        SDL_SetRenderDrawColor(renderer, 0xFF, 0xAB, 0x00, 0xFF);
-        SDL_RenderDrawRect(renderer, box);
+        auto it = foreground.find(id);
+        foreground.erase(it);
+        return;
     }
-    else
-    {
-        SDL_SetRenderDrawColor(renderer, 0, 0, 0xFF, 0xFF);
-        SDL_RenderFillRect(renderer, box);
-    }
+    System::removeEntity(id);
+}
+
+bool SDL_RenderSystem::entityInSystem(entityID id)
+{
+    if(foreground.find(id) != foreground.end())
+        return true;
+    return System::entityInSystem(id);
 }
 
 SDL_RenderSystem::~SDL_RenderSystem()

@@ -10,6 +10,8 @@
 #include "../ECS/ECS.h"
 #include "../PacMan_Components.h"
 
+using namespace ECS;
+
 class AISystem : public System {
 public:
     AISystem() = delete;

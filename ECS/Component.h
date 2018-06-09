@@ -7,19 +7,23 @@
 
 #include <iostream>
 
-using componentID = int16_t;
-
-inline componentID getComponentID() {
-    static componentID id = 0;
-    return id++;
-};
-
-class Component
+namespace ECS
 {
-public:
-    componentID id = getComponentID();
-    int8_t type = -1;
-    virtual ~Component() = default;
-};
+    using componentID = int16_t;
+
+    inline componentID getComponentID() {
+        static componentID id = 0;
+        return id++;
+    };
+
+    class Component
+    {
+    public:
+        componentID id = getComponentID();
+        int8_t type = -1;
+        virtual ~Component() = default;
+    };
+}
+
 
 #endif //ECS_COMPONENT_H

@@ -10,6 +10,8 @@
 #include "../PacMan_Components.h"
 #include "TimerSystem.h"
 
+using namespace ECS;
+
 class GameplaySystem : public System
 {
 public:
