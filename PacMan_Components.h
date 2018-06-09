@@ -73,6 +73,7 @@ public:
     int score_before_leave = 200;
     bool go_next_state = true;
     int time_to_wait = 7000;
+    Entity* player = nullptr;
 };
 
 class RenderComponent : public Component

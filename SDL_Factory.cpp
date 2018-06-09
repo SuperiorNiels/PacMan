@@ -54,6 +54,15 @@ std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
         }
     }
 
+    if(!players.empty())
+    {
+        for(auto ai : ais)
+        {
+            auto* aic = ai->getComponentByType<AIComponent>(AI_COMPONENT);
+            aic->player = players[0];
+        }
+    }
+
     entities.insert(entities.begin(),ais.begin(),ais.end());
     entities.insert(entities.begin(),players.begin(),players.end());
     entities.insert(entities.begin(),walls.begin(),walls.end());

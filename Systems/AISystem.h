@@ -18,6 +18,9 @@ public:
     explicit AISystem(World* world);
     void update() override;
 private:
+    std::mt19937 gen;
+    std::uniform_int_distribution<> dis;
+    void updateState(Entity* e);
     double calculateDistance(int x1, int y1, int x2, int y2);
     World* world;
 };

@@ -42,8 +42,11 @@ void Game::createEntities()
 void Game::run()
 {
     auto* pause_text = factory->createTextComponent("../data/Joystix.TTF", 22);
-    pause_text->text = "Game Paused. Press space to start.";
-
+    pause_text->text = "Press space to start.";
+    player->addComponent(pause_text);
+    paused = true; // start game paused
+    manager->updateSystems();
+    
     while(events->getRunning())
     {
         if(events->events.find(PAUSE_GAME) != events->events.end())
