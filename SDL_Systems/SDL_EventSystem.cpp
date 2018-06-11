@@ -40,6 +40,9 @@ void SDL_EventSystem::update()
                 case SDLK_SPACE:
                     events[PAUSE_GAME] = true;
                     break;
+                case SDLK_r:
+                    events[RESTART] = true;
+                    break;
                 default:
                     break;
             }

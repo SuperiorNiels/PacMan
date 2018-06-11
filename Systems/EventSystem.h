@@ -13,6 +13,7 @@ using namespace ECS;
 enum events_numbers
 {
     PAUSE_GAME,
+    RESTART,
 };
 
 class EventSystem : public System

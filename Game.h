@@ -36,6 +36,7 @@ private:
     TimerSystem* timer = nullptr;
     Entity* player = nullptr;
     bool paused = false;
+    TextComponent *pause_text = nullptr;
 };
 
 #endif //ECS_GAME_H
