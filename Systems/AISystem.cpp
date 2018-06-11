@@ -97,7 +97,6 @@ void AISystem::update()
 void AISystem::updateState(Entity* e)
 {
     auto* ac = e->getComponentByType<AIComponent>(AI_COMPONENT);
-    auto* player_pos = ac->player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
     auto* player_score = ac->player->getComponentByType<ScoreComponent>(SCORE_COMPONENT);
     auto* ai_pos = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
     switch(ac->state)
@@ -135,13 +134,17 @@ void AISystem::updateState(Entity* e)
             {
                 ac->timer->resetTimer();
                 ac->timer->startTimer();
-                ac->time_to_wait = 20000;
+                ac->time_to_wait = 8000;
                 ac->state = CHASE;
             }
             break;
         case CHASE:
-            ac->target_x = player_pos->x;
-            ac->target_y = player_pos->y;
+            if(ac->ai_type == RED)
+                calculateRedTarget(e);
+            else if(ac->ai_type == PINK)
+                calculatePinkTarget(e);
+            else if(ac->ai_type == ORANGE)
+                calculateOrangeTarget(e);
             if(ac->timer->getTime() > ac->time_to_wait)
             {
                 ac->timer->resetTimer();
@@ -157,13 +160,108 @@ void AISystem::updateState(Entity* e)
             {
                 ac->timer->resetTimer();
                 ac->timer->startTimer();
-                ac->time_to_wait = 7000;
+                ac->time_to_wait = 3000;
                 ac->state = SCATTER;
             }
             break;
         default:
             break;
     }
+}
+
+void AISystem::calculateRedTarget(Entity *e)
+{
+    auto* ac = e->getComponentByType<AIComponent>(AI_COMPONENT);
+    auto* player_pos = ac->player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+    ac->target_x = player_pos->x;
+    ac->target_y = player_pos->y;
+}
+
+void AISystem::calculatePinkTarget(Entity *e)
+{
+    auto* ac = e->getComponentByType<AIComponent>(AI_COMPONENT);
+    auto* player_pos = ac->player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+    auto* player_mov = ac->player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
+
+    int new_x = player_pos->x;
+    int new_y = player_pos->y;
+    switch(player_mov->current_dir)
+    {
+        case LEFT:
+            new_x -= 4;
+            break;
+        case RIGHT:
+            new_x += 4;
+            break;
+        case UP:
+            new_y -= 4;
+            break;
+        case DOWN:
+            new_y += 4;
+            break;
+        default:
+            break;
+    }
+    ac->target_x = new_x;
+    ac->target_y = new_y;
+}
+
+void AISystem::calculateOrangeTarget(Entity *e)
+{
+    auto* pc = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+    auto* ac = e->getComponentByType<AIComponent>(AI_COMPONENT);
+    auto* player_pos = ac->player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+
+    double distance = sqrt(calculateDistance(pc->x, pc->y, player_pos->x, player_pos->y));
+
+    if(distance < 8.)
+    {
+        ac->target_x = ac->scatter_x;
+        ac->target_y = ac->scatter_y;
+        return;
+    }
+
+    ac->target_x = player_pos->x;
+    ac->target_y = player_pos->y;
+}
+
+void AISystem::calculateBlueTarget(Entity *e)
+{
+    auto* pc = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+    auto* ac = e->getComponentByType<AIComponent>(AI_COMPONENT);
+    auto* player_pos = ac->player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+
+    double distance = sqrt(calculateDistance(pc->x, pc->y, player_pos->x, player_pos->y));
+
+    if(distance < 8.)
+    {
+        ac->target_x = ac->scatter_x;
+        ac->target_y = ac->scatter_y;
+        return;
+    }
+
+    auto* player_mov = ac->player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
+    int new_x = player_pos->x;
+    int new_y = player_pos->y;
+    switch(player_mov->current_dir)
+    {
+        case LEFT:
+            new_x -= 4;
+            break;
+        case RIGHT:
+            new_x += 4;
+            break;
+        case UP:
+            new_y -= 4;
+            break;
+        case DOWN:
+            new_y += 4;
+            break;
+        default:
+            break;
+    }
+    ac->target_x = new_x;
+    ac->target_y = new_y;
 }
 
 double AISystem::calculateDistance(int x1, int y1, int x2, int y2)

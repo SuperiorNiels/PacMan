@@ -109,8 +109,8 @@
                 <direction_offset down="2" right="0" left="4" up="6"/>
             </render_component>
             <collision_component />
-            <movable_component speed="30"/>
-            <ai_component>
+            <movable_component speed="50"/>
+            <ai_component type="RED">
                 <score_before_leave value="0"/>
                 <scatter_target x="23" y="1"/>
                 <leave_home_target x="13" y="11"/>
@@ -144,8 +144,8 @@
                 <direction_offset down="2" right="0" left="4" up="6"/>
             </render_component>
             <collision_component />
-            <movable_component speed="30"/>
-            <ai_component>
+            <movable_component speed="50"/>
+            <ai_component type="PINK">
                 <score_before_leave value="0"/>
                 <scatter_target x="3" y="1"/>
                 <leave_home_target x="13" y="11"/>
@@ -179,8 +179,8 @@
                 <direction_offset down="2" right="0" left="4" up="6"/>
             </render_component>
             <collision_component />
-            <movable_component speed="30"/>
-            <ai_component>
+            <movable_component speed="50"/>
+            <ai_component type="BLUE">
                 <score_before_leave value="3000"/>
                 <scatter_target x="23" y="29"/>
                 <leave_home_target x="13" y="11"/>
@@ -214,8 +214,8 @@
                 <direction_offset down="2" right="0" left="4" up="6"/>
             </render_component>
             <collision_component />
-            <movable_component speed="30"/>
-            <ai_component>
+            <movable_component speed="50"/>
+            <ai_component type="ORANGE">
                 <score_before_leave value="18300"/>
                 <scatter_target x="3" y="29"/>
                 <leave_home_target x="13" y="11"/>

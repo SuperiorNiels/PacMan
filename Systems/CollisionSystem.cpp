@@ -105,7 +105,7 @@ void CollisionSystem::update()
                                     ac->state = FLEE;
                                     ac->timer->resetTimer();
                                     ac->timer->startTimer();
-                                    ac->time_to_wait = 10000; // 10 seconds in flee state
+                                    ac->time_to_wait = 2500; // 2.5 seconds in flee state
                                 }
                             }
                         }

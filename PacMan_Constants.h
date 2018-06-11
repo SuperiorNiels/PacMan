@@ -30,11 +30,12 @@ enum ai_states
     FLEE
 };
 
-enum game_state
+enum ghost_type
 {
-    PAUSED,
-    PLAYING,
-    MENU
+    RED,
+    PINK,
+    BLUE,
+    ORANGE
 };
 
 // enum direction gives location of the move vector

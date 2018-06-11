@@ -35,6 +35,7 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
             pc->x = x; pc->y = y;
             e->addComponent(pc);
         }
+
         if(entity_config->FirstChildElement("collision_component") != nullptr)
         {
             auto* cc = new CollisionComponent();
@@ -44,6 +45,7 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
             cc->collision_box.h = 1;
             e->addComponent(cc);
         }
+
         if(entity_config->FirstChildElement("render_component") != nullptr)
         {
             std::vector<clip> clips = std::vector<clip>();
@@ -91,32 +93,48 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
             rc->scale = tile_width/(double)sprite_tile_width;
             e->addComponent(rc);
         }
+
         if(entity_config->FirstChildElement("points_component") != nullptr)
         {
             auto* pp = new PointsComponent();
             entity_config->FirstChildElement("points_component")->QueryIntAttribute("points", &pp->points);
             e->addComponent(pp);
         }
+
         if(entity_config->FirstChildElement("energizer_component") != nullptr)
         {
             auto* ec = new EnergizerComponent();
             entity_config->FirstChildElement("energizer_component")->QueryIntAttribute("points", &ec->points);
             e->addComponent(ec);
         }
+
         if(entity_config->FirstChildElement("movable_component") != nullptr)
         {
             auto* mc = new MovableComponent();
             entity_config->FirstChildElement("movable_component")->QueryDoubleAttribute("speed", &mc->speed);
             e->addComponent(mc);
         }
+
         if(entity_config->FirstChildElement("player_input_component") != nullptr)
         {
             e->addComponent(new PlayerInputComponent());
         }
+
         if(entity_config->FirstChildElement("ai_component") != nullptr)
         {
             auto* ac = new AIComponent();
             ac->timer = factory->createTimerSystem(fps);
+
+            std::string type = entity_config->FirstChildElement("ai_component")->Attribute("type");
+            if(type == "RED")
+                ac->ai_type = RED;
+            else if(type == "PINK")
+                ac->ai_type = PINK;
+            else if(type == "BLUE")
+                ac->ai_type = BLUE;
+            else if(type == "ORANGE")
+                ac->ai_type = ORANGE;
+
             entity_config->FirstChildElement("ai_component")->FirstChildElement("score_before_leave")->QueryIntAttribute("value",&ac->score_before_leave);
             entity_config->FirstChildElement("ai_component")->FirstChildElement("scatter_target")->QueryIntAttribute("x",&ac->scatter_x);
             entity_config->FirstChildElement("ai_component")->FirstChildElement("scatter_target")->QueryIntAttribute("y",&ac->scatter_y);
@@ -127,6 +145,7 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
             std::cout << "[" <<  entity_name << "] x: " << x << " y: " << y << std::endl;
             e->addComponent(ac);
         }
+
         if(entity_config->FirstChildElement("score_component") != nullptr)
         {
             int font_size = 0;
@@ -134,6 +153,7 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
             entity_config->FirstChildElement("score_component")->FirstChildElement("font")->QueryIntAttribute("size", &font_size);
             e->addComponent(factory->createScoreComponent(font,font_size));
         }
+
         if(entity_config->FirstChildElement("lives_component") != nullptr)
         {
             int font_size = 0;
@@ -145,8 +165,10 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
             lc->start_y = y;
             e->addComponent(lc);
         }
+
         return e;
     }
+
     return nullptr;
 }
 

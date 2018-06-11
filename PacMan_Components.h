@@ -71,9 +71,9 @@ public:
     direction previous = STOP;
     TimerSystem* timer = nullptr;
     int score_before_leave = 200;
-    bool go_next_state = true;
     int time_to_wait = 7000;
     Entity* player = nullptr;
+    ghost_type ai_type = RED;
 };
 
 class RenderComponent : public Component

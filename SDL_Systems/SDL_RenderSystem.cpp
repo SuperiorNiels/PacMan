@@ -67,6 +67,8 @@ void SDL_RenderSystem::update()
 
     std::map<entityID, Entity*>* to_render[2] = {&entities, &foreground};
 
+    std::vector<Entity*> render_text;
+
     for(auto list : to_render)
     {
         for (auto it : *list)
@@ -89,19 +91,25 @@ void SDL_RenderSystem::update()
                     position.w = (int) floor(clip.w * rc->scale);
                     position.h = (int) floor(clip.h * rc->scale);
 
-                    if (e->hasComponentType(SCORE_COMPONENT))
-                        renderScore(e);
-
-                    if (e->hasComponentType(LIVES_COMPONENT))
-                        renderLives(e);
-
-                    if (e->hasComponentType(TEXT_COMPONENT))
-                        renderText(e);
+                    if (e->hasComponentType(SCORE_COMPONENT) || e->hasComponentType(LIVES_COMPONENT) ||e->hasComponentType(TEXT_COMPONENT))
+                        render_text.push_back(e);
 
                     SDL_RenderCopy(renderer, rc->texture, &clip, &position);
                 }
             }
         }
+    }
+
+    for(auto e : render_text)
+    {
+        if (e->hasComponentType(SCORE_COMPONENT))
+            renderScore(e);
+
+        if (e->hasComponentType(LIVES_COMPONENT))
+            renderLives(e);
+
+        if (e->hasComponentType(TEXT_COMPONENT))
+            renderText(e);
     }
 
     SDL_RenderPresent(renderer);
@@ -239,7 +247,9 @@ void SDL_RenderSystem::renderText(Entity *e)
 
     int w, h = 0;
     SDL_QueryTexture(text, nullptr, nullptr, &w, &h);
-    SDL_Rect score_pos = {tc->x_pos, tc->y_pos, w , h};
+    int x = (world_width + 2*x_screen_offset)/2 - w/2;
+    int y = (world_height + 2*y_screen_offset)/2 - h/2;
+    SDL_Rect score_pos = {x, y, w , h};
 
     SDL_RenderCopy(renderer,text, nullptr, &score_pos);
 }
