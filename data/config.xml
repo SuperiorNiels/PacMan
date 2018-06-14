@@ -1,9 +1,9 @@
 <?xml version="1.0" encoding="UTF-8" ?>
 <pacman>
-    <game fps="60" window_width="1000" window_height="700">
+    <game fps="60" window_width="800" window_height="800">
         <collision>../data/world.map</collision>
         <sprites tile_width="8">../data/sprites.png</sprites>
-        <graphics>SDL</graphics>
+        <graphics smooth_movement="1">SDL</graphics>
     </game>
     <entities>
         <wall_tile>
@@ -24,6 +24,7 @@
                     <clip x="-1" y="-1" w="-1" h="-1"/>
                 </clips>
             </render_component>
+            <collision_component/>
         </player_only_wall>
         <point>
             <position_component />
@@ -74,12 +75,8 @@
             <collision_component />
             <movable_component speed="80"/>
             <player_input_component />
-            <score_component>
-                <font size="18">../data/Joystix.TTF</font>
-            </score_component>
-            <lives_component lives="3">
-                <font size="18">../data/Joystix.TTF</font>
-            </lives_component>
+            <score_component/>
+            <lives_component lives="3"/>
         </player>
         <red_ghost>
             <position_component />
@@ -115,6 +112,7 @@
                 <scatter_target x="23" y="1"/>
                 <leave_home_target x="13" y="11"/>
             </ai_component>
+            <points_component points="250"/>
         </red_ghost>
         <pink_ghost>
             <position_component />
@@ -150,6 +148,7 @@
                 <scatter_target x="3" y="1"/>
                 <leave_home_target x="13" y="11"/>
             </ai_component>
+            <points_component points="250"/>
         </pink_ghost>
         <blue_ghost>
             <position_component />
@@ -185,6 +184,7 @@
                 <scatter_target x="23" y="29"/>
                 <leave_home_target x="13" y="11"/>
             </ai_component>
+            <points_component points="250"/>
         </blue_ghost>
         <orange_ghost>
             <position_component />
@@ -220,6 +220,7 @@
                 <scatter_target x="3" y="29"/>
                 <leave_home_target x="13" y="11"/>
             </ai_component>
+            <points_component points="250"/>
         </orange_ghost>
     </entities>
 </pacman>

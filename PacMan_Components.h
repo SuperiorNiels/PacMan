@@ -47,6 +47,7 @@ public:
     entity_movable_state state = IDLE;
     int x_prev = 0;
     int y_prev = 0;
+    bool animate = false;
 };
 
 class PlayerInputComponent : public Component

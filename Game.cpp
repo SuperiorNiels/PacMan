@@ -25,7 +25,7 @@ void Game::init()
     manager->registerSystem(new MovementSystem(world));
     manager->registerSystem(Game::render);
     createEntities();
-    Game::pause_text = factory->createTextComponent("../data/Joystix.TTF", 22);
+    Game::pause_text = factory->createTextComponent();
     pause_text->text = "Press space to start.";
 }
 
@@ -48,8 +48,7 @@ void Game::run()
     
     while(events->getRunning())
     {
-        if(events->events.find(PAUSE_GAME) != events->events.end())
-        {
+        if (events->events.find(PAUSE_GAME) != events->events.end()) {
             paused = !paused;
             if(paused) {
                 Game::player->addComponent(pause_text);
@@ -63,7 +62,7 @@ void Game::run()
         if (events->events.find(RESTART) != events->events.end()) {
             manager->clearEntities();
             createEntities();
-            Game::pause_text = factory->createTextComponent("../data/Joystix.TTF", 22);
+            Game::pause_text = factory->createTextComponent();
             pause_text->text = "Press space to start.";
             player->addComponent(pause_text);
             paused = true; // start game paused

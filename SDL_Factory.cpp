@@ -142,32 +142,35 @@ RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::vecto
     return to_return;
 }
 
-ScoreComponent* SDL_Factory::createScoreComponent(std::string font, int font_size)
+ScoreComponent *SDL_Factory::createScoreComponent()
 {
     auto* sc = new SDL_ScoreComponent();
     auto* color = new SDL_Color();
     color->r = 0xff; color->g = 0xff; color->b = 0xff; color->a = 0xff;
     sc->color = color;
+    int font_size = (int) std::round(renderSystem->getTile_width() * 1.3);
     sc->texture = new SDL_Text(font,font_size,renderSystem->renderer);
     return sc;
 }
 
-LivesComponent* SDL_Factory::createLivesComponent(std::string font, int font_size)
+LivesComponent *SDL_Factory::createLivesComponent()
 {
     auto* lc = new SDL_LivesComponent();
     auto* color = new SDL_Color();
     color->r = 0xff; color->g = 0xff; color->b = 0xff; color->a = 0xff;
     lc->color = color;
+    int font_size = (int) std::round(renderSystem->getTile_width() * 1.3);
     lc->texture = new SDL_Text(font,font_size,renderSystem->renderer);
     return lc;
 }
 
-TextComponent* SDL_Factory::createTextComponent(std::string font, int font_size)
+TextComponent *SDL_Factory::createTextComponent()
 {
     auto* lc = new SDL_TextComponent();
     auto* color = new SDL_Color();
     color->r = 0xff; color->g = 0xff; color->b = 0xff; color->a = 0xff;
     lc->color = color;
+    int font_size = (int) std::round(renderSystem->getTile_width() * 1.8);
     lc->texture = new SDL_Text(font,font_size,renderSystem->renderer);
     return lc;
 }

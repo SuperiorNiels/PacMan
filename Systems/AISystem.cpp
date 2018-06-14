@@ -145,6 +145,8 @@ void AISystem::updateState(Entity* e)
                 calculatePinkTarget(e);
             else if(ac->ai_type == ORANGE)
                 calculateOrangeTarget(e);
+            else if (ac->ai_type == BLUE)
+                calculateBlueTarget(e);
             if(ac->timer->getTime() > ac->time_to_wait)
             {
                 ac->timer->resetTimer();

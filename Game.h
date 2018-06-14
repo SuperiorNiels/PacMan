@@ -27,6 +27,8 @@ public:
 private:
     void clear();
     void createEntities();
+
+    bool paused = false;
     Config* config = nullptr;
     AbstractFactory* factory = nullptr;
     SystemManager* manager = nullptr;
@@ -35,7 +37,6 @@ private:
     World* world = nullptr;
     TimerSystem* timer = nullptr;
     Entity* player = nullptr;
-    bool paused = false;
     TextComponent *pause_text = nullptr;
 };
 

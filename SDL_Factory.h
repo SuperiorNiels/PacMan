@@ -26,16 +26,19 @@ public:
     std::vector<Entity *> createWorldEntities(World *world) override;
     RenderSystem* createRenderSystem(World* world, int screen_width, int screen_height, TimerSystem* timer) override;
     RenderComponent* createRenderComponent(std::string path, std::vector<clip> clips) override;
-    ScoreComponent* createScoreComponent(std::string font, int font_size) override;
-    LivesComponent* createLivesComponent(std::string font, int font_size) override;
-    TextComponent* createTextComponent(std::string font, int font_size) override;
+
+    ScoreComponent *createScoreComponent() override;
+
+    LivesComponent *createLivesComponent() override;
+
+    TextComponent *createTextComponent() override;
     ~SDL_Factory() override;
 private:
     void clearTextures();
     Config* config = nullptr;
-    Entity* player = nullptr; // Keep track of player entity, for ai entity initialization
     SDL_RenderSystem* renderSystem = nullptr;
     std::unordered_map<std::string,SDL_Texture*> loadedTextures;
+    std::string font = "../data/Joystix.TTF"; // fixme: in config file?
 };
 
 

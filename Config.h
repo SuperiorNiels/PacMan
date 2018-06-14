@@ -33,6 +33,7 @@ private:
     int screen_x = 0;
     int screen_y = 0;
     int sprite_tile_width = 0;
+    bool smooth_movement = false;
     std::string collision_map = std::string();
     std::string sprites_sheet = std::string();
 };

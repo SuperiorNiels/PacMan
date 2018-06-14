@@ -20,10 +20,13 @@ public:
     virtual RenderSystem* createRenderSystem(World* world, int screen_width, int screen_height, TimerSystem* timer) = 0;
     virtual EventSystem* createEventSystem() = 0;
     virtual TimerSystem* createTimerSystem(int fps) = 0;
-    virtual ScoreComponent* createScoreComponent(std::string font, int font_size) = 0;
-    virtual LivesComponent* createLivesComponent(std::string font, int font_size) = 0;
+
+    virtual ScoreComponent *createScoreComponent() = 0;
+
+    virtual LivesComponent *createLivesComponent() = 0;
     virtual RenderComponent* createRenderComponent(std::string path, std::vector<clip> clips) = 0;
-    virtual TextComponent* createTextComponent(std::string font, int font_size) = 0;
+
+    virtual TextComponent *createTextComponent() = 0;
     virtual std::vector<Entity*> createWorldEntities(World *world) = 0;
     virtual ~AbstractFactory() = default;
 };

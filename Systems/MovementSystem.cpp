@@ -51,6 +51,15 @@ void MovementSystem::update()
                     m->state = IDLE;
                 }
             }
+
+            if (m->state == MOVING && !m->animate) {
+                if (100 - m->speed < m->time) {
+                    m->state = IDLE;
+                    m->time = 0;
+                } else {
+                    m->time += 4;
+                }
+            }
         }
     }
 }

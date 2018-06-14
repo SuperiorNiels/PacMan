@@ -19,7 +19,10 @@ Config::Config(std::string path)
         // Create SDL factory
         factory = new SDL_Factory(this);
     }
-    std::cout << "Config loaded." << std::endl;
+    int movement = 0;
+    doc.FirstChildElement("pacman")->FirstChildElement("game")->FirstChildElement("graphics")->QueryIntAttribute(
+            "smooth_movement", &movement);
+    smooth_movement = movement == 1;
 }
 
 Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int y)
@@ -27,7 +30,6 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
     auto* entity_config = doc.FirstChildElement("pacman")->FirstChildElement("entities")->FirstChildElement(entity_name.c_str());
     if(entity_config != nullptr)
     {
-        //std::cout << "entity found." << std::endl;
         auto* e = new Entity();
         if(entity_config->FirstChildElement("position_component") != nullptr)
         {
@@ -112,6 +114,7 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
         {
             auto* mc = new MovableComponent();
             entity_config->FirstChildElement("movable_component")->QueryDoubleAttribute("speed", &mc->speed);
+            mc->animate = smooth_movement;
             e->addComponent(mc);
         }
 
@@ -142,24 +145,17 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
             entity_config->FirstChildElement("ai_component")->FirstChildElement("leave_home_target")->QueryIntAttribute("y",&ac->leave_y);
             ac->home_x = x;
             ac->home_y = y;
-            std::cout << "[" <<  entity_name << "] x: " << x << " y: " << y << std::endl;
             e->addComponent(ac);
         }
 
         if(entity_config->FirstChildElement("score_component") != nullptr)
         {
-            int font_size = 0;
-            std::string font = entity_config->FirstChildElement("score_component")->FirstChildElement("font")->GetText();
-            entity_config->FirstChildElement("score_component")->FirstChildElement("font")->QueryIntAttribute("size", &font_size);
-            e->addComponent(factory->createScoreComponent(font,font_size));
+            e->addComponent(factory->createScoreComponent());
         }
 
         if(entity_config->FirstChildElement("lives_component") != nullptr)
         {
-            int font_size = 0;
-            std::string font = entity_config->FirstChildElement("lives_component")->FirstChildElement("font")->GetText();
-            entity_config->FirstChildElement("lives_component")->FirstChildElement("font")->QueryIntAttribute("size", &font_size);
-            auto* lc = factory->createLivesComponent(font,font_size);
+            auto *lc = factory->createLivesComponent();
             entity_config->FirstChildElement("lives_component")->QueryIntAttribute("lives", &lc->lives);
             lc->start_x = x;
             lc->start_y = y;
