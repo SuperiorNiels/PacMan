@@ -9,6 +9,7 @@ namespace Pacman {
     Game::Game(Config *config) {
         Game::config = config;
         Game::factory = config->getFactory();
+        Game::events = new std::map<events_numbers, bool>();
     }
 
     void Game::init() {
@@ -17,7 +18,6 @@ namespace Pacman {
         Game::manager = new SystemManager();
         Game::timer = factory->createTimerSystem(config->getFps());
         Game::render = factory->createRenderSystem(world, config->getScreen_x(), config->getScreen_y(), timer);
-        Game::events = new std::map<events_numbers, bool>();
         Game::eventSystem = factory->createEventSystem(Game::events);
         manager->registerSystem(Game::eventSystem);
         manager->registerSystem(new AISystem(world));
@@ -104,11 +104,6 @@ namespace Pacman {
 
         if (manager->entitiesWithComponent(POINTS_COMPONENT) - 4 == 0 &&
             manager->entitiesWithComponent(ENERGIZER_COMPONENT) == 0) {
-            struct timespec tim1{}, tim2{};
-            tim1.tv_sec = 2;
-            tim1.tv_nsec = 0L;
-            nanosleep(&tim1, &tim2);
-
             // all points are taken, go to next level
             player_component->level++;
             Game::player->removeComponentByType(TEXT_COMPONENT);

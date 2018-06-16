@@ -23,11 +23,13 @@ distribution.
 
 #include "tinyxml2.h"
 
+#include <new>        // yes, this one new style header, is in the Android SDK.
 #if defined(ANDROID_NDK) || defined(__BORLANDC__) || defined(__QNXNTO__)
 #   include <stddef.h>
 #   include <stdarg.h>
 #else
 
+#   include <cstddef>
 #   include <cstdarg>
 #endif
 
@@ -1003,7 +1005,11 @@ char* XMLNode::ParseDeep( char* p, StrPair* parentEndTag, int* curLineNumPtr )
     // 'endTag' is the end tag for this node, it is returned by a call to a child.
     // 'parentEnd' is the end tag for the parent, which is filled in and returned.
 
-    while( p && *p ) {
+    XMLDocument::DepthTracker tracker(_document);
+    if (_document->Error())
+        return 0;
+
+    while (p && *p) {
         XMLNode* node = 0;
 
         p = _document->Identify( p, &node );
@@ -1966,44 +1972,46 @@ bool XMLElement::Accept( XMLVisitor* visitor ) const
 
 // Warning: List must match 'enum XMLError'
 const char* XMLDocument::_errorNames[XML_ERROR_COUNT] = {
-    "XML_SUCCESS",
-    "XML_NO_ATTRIBUTE",
-    "XML_WRONG_ATTRIBUTE_TYPE",
-    "XML_ERROR_FILE_NOT_FOUND",
-    "XML_ERROR_FILE_COULD_NOT_BE_OPENED",
-    "XML_ERROR_FILE_READ_ERROR",
-    "UNUSED_XML_ERROR_ELEMENT_MISMATCH",
-    "XML_ERROR_PARSING_ELEMENT",
-    "XML_ERROR_PARSING_ATTRIBUTE",
-    "UNUSED_XML_ERROR_IDENTIFYING_TAG",
-    "XML_ERROR_PARSING_TEXT",
-    "XML_ERROR_PARSING_CDATA",
-    "XML_ERROR_PARSING_COMMENT",
-    "XML_ERROR_PARSING_DECLARATION",
-    "XML_ERROR_PARSING_UNKNOWN",
-    "XML_ERROR_EMPTY_DOCUMENT",
-    "XML_ERROR_MISMATCHED_ELEMENT",
-    "XML_ERROR_PARSING",
-    "XML_CAN_NOT_CONVERT_TEXT",
-    "XML_NO_TEXT_NODE"
+            "XML_SUCCESS",
+            "XML_NO_ATTRIBUTE",
+            "XML_WRONG_ATTRIBUTE_TYPE",
+            "XML_ERROR_FILE_NOT_FOUND",
+            "XML_ERROR_FILE_COULD_NOT_BE_OPENED",
+            "XML_ERROR_FILE_READ_ERROR",
+            "UNUSED_XML_ERROR_ELEMENT_MISMATCH",
+            "XML_ERROR_PARSING_ELEMENT",
+            "XML_ERROR_PARSING_ATTRIBUTE",
+            "UNUSED_XML_ERROR_IDENTIFYING_TAG",
+            "XML_ERROR_PARSING_TEXT",
+            "XML_ERROR_PARSING_CDATA",
+            "XML_ERROR_PARSING_COMMENT",
+            "XML_ERROR_PARSING_DECLARATION",
+            "XML_ERROR_PARSING_UNKNOWN",
+            "XML_ERROR_EMPTY_DOCUMENT",
+            "XML_ERROR_MISMATCHED_ELEMENT",
+            "XML_ERROR_PARSING",
+            "XML_CAN_NOT_CONVERT_TEXT",
+            "XML_NO_TEXT_NODE",
+            "XML_ELEMENT_DEPTH_EXCEEDED"
 };
 
 
 XMLDocument::XMLDocument( bool processEntities, Whitespace whitespaceMode ) :
-    XMLNode( 0 ),
-    _writeBOM( false ),
-    _processEntities( processEntities ),
-    _errorID(XML_SUCCESS),
-    _whitespaceMode( whitespaceMode ),
-    _errorStr(),
-    _errorLineNum( 0 ),
-    _charBuffer( 0 ),
-    _parseCurLineNum( 0 ),
-    _unlinked(),
-    _elementPool(),
-    _attributePool(),
-    _textPool(),
-    _commentPool()
+        XMLNode( 0 ),
+        _writeBOM( false ),
+        _processEntities( processEntities ),
+        _errorID(XML_SUCCESS),
+        _whitespaceMode( whitespaceMode ),
+        _errorStr(),
+        _errorLineNum( 0 ),
+        _charBuffer( 0 ),
+        _parseCurLineNum( 0 ),
+        _parsingDepth(0),
+        _unlinked(),
+        _elementPool(),
+        _attributePool(),
+        _textPool(),
+        _commentPool()
 {
     // avoid VC++ C4355 warning about 'this' in initializer list (C4355 is off by default in VS2012+)
     _document = this;
@@ -2043,6 +2051,7 @@ void XMLDocument::Clear()
 
     delete [] _charBuffer;
     _charBuffer = 0;
+    _parsingDepth = 0;
 
 #if 0
     _textPool.Trace( "text" );
@@ -2376,6 +2385,18 @@ void XMLDocument::Parse()
     ParseDeep(p, 0, &_parseCurLineNum );
 }
 
+    void XMLDocument::PushDepth() {
+        _parsingDepth++;
+        if (_parsingDepth == TINYXML2_MAX_ELEMENT_DEPTH) {
+            SetError(XML_ELEMENT_DEPTH_EXCEEDED, _parseCurLineNum, "Element nesting is too deep.");
+        }
+    }
+
+    void XMLDocument::PopDepth() {
+        TIXMLASSERT(_parsingDepth > 0);
+        --_parsingDepth;
+    }
+
 XMLPrinter::XMLPrinter( FILE* file, bool compact, int depth ) :
     _elementJustOpened( false ),
     _stack(),
@@ -2501,14 +2522,15 @@ void XMLPrinter::PrintString( const char* p, bool restricted )
             ++q;
             TIXMLASSERT( p <= q );
         }
-    }
-    // Flush the remaining string. This will be the entire
-    // string if an entity wasn't found.
-    TIXMLASSERT( p <= q );
-    if ( !_processEntities || ( p < q ) ) {
-        const size_t delta = q - p;
-        const int toPrint = ( INT_MAX < delta ) ? INT_MAX : (int)delta;
-        Write( p, toPrint );
+        // Flush the remaining string. This will be the entire
+        // string if an entity wasn't found.
+        if (p < q) {
+            const size_t delta = q - p;
+            const int toPrint = (INT_MAX < delta) ? INT_MAX : (int) delta;
+            Write(p, toPrint);
+        }
+    } else {
+        Write(p);
     }
 }
 

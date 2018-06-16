@@ -83,7 +83,7 @@ namespace Systems {
                             for (auto g_it : ghosts) {
                                 auto *ghost = g_it.second;
                                 auto *ac = ghost->getComponentByType<AIComponent>(AI_COMPONENT);
-                                if (ac->state != HOME) {
+                                if (ac->state == CHASE || ac->state == SCATTER) {
                                     ac->state = FLEE;
                                     ac->timer->resetTimer();
                                     ac->timer->startTimer();
@@ -121,10 +121,6 @@ namespace Systems {
                                 auto *pp = ghost->getComponentByType<PointsComponent>(POINTS_COMPONENT);
                                 sc->score += pp->points;
                             }
-                            struct timespec tim1{}, tim2{};
-                            tim1.tv_sec = 0;
-                            tim1.tv_nsec = 500000000L;
-                            nanosleep(&tim1, &tim2);
                             ac->state = RETURN;
                         } else {
                             mc->wanted_dir = STOP;

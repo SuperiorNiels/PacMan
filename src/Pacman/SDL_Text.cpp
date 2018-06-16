@@ -36,6 +36,7 @@ namespace Pacman {
 
     SDL_Text::~SDL_Text() {
         free();
+        TTF_CloseFont(font);
     }
 
 };

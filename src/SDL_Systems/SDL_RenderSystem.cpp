@@ -254,6 +254,7 @@ namespace SDL_Systems {
         renderer = nullptr;
         IMG_Quit();
         SDL_Quit();
+        TTF_Quit();
     }
 
 };
