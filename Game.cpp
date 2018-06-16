@@ -62,6 +62,8 @@ void Game::run()
 }
 
 void Game::checkEvents() {
+    auto *player_component = player->getComponentByType<PlayerComponent>(PLAYER_COMPONENT);
+
     if (events->find(PAUSE_GAME) != events->end()) {
         paused = !paused;
         if (paused) {
@@ -71,10 +73,13 @@ void Game::checkEvents() {
             manager->updateSystems();
         } else {
             Game::player->removeComponentByType(TEXT_COMPONENT);
+            if (player_component->lives <= 0)
+                events->operator[](RESTART) = true;
         }
     }
 
     if (events->find(RESTART) != events->end()) {
+        pause_text->text = "Press space to start.";
         Game::player->removeComponentByType(TEXT_COMPONENT);
         manager->clearEntities();
         createEntities();
@@ -87,14 +92,15 @@ void Game::checkEvents() {
     if (paused)
         return;
 
-    auto *sc = player->getComponentByType<ScoreComponent>(SCORE_COMPONENT);
-    auto *lc = player->getComponentByType<LivesComponent>(LIVES_COMPONENT);
-
     if (events->find(RESET) != events->end()) {
         reset();
-        lc->lives--;
+        player_component->lives--;
+        if (player_component->lives <= 0 && !paused) {
+            pause_text->text = "Game Over!";
+        } else {
+            pause_text->text = "You died! Press space to start.";
+        }
         paused = true;
-        pause_text->text = "You died! Press space to start.";
         Game::player->addComponent(pause_text);
         manager->updateEntities();
         manager->updateSystems();
@@ -108,17 +114,21 @@ void Game::checkEvents() {
         nanosleep(&tim1, &tim2);
 
         // all points are taken, go to next level
+        player_component->level++;
         Game::player->removeComponentByType(TEXT_COMPONENT);
-        int score = sc->score;
-        int lives = lc->lives;
+        Game::player->removeComponentByType(PLAYER_COMPONENT);
 
         manager->clearEntities();
         createEntities();
+        player->destoryComponentByType(PLAYER_COMPONENT);
+        player->addComponent(player_component);
 
-        auto *new_sc = player->getComponentByType<ScoreComponent>(SCORE_COMPONENT);
-        auto *new_lc = player->getComponentByType<LivesComponent>(LIVES_COMPONENT);
-        new_sc->score = score;
-        new_lc->lives = lives;
+        for (auto e : manager->entities) {
+            if (e.second->hasComponentType(AI_COMPONENT)) {
+                auto *ac = e.second->getComponentByType<AIComponent>(AI_COMPONENT);
+                ac->time_scale += 50;
+            }
+        }
 
         pause_text->text = "New Level! Press space to start.";
         player->addComponent(pause_text);
@@ -127,17 +137,20 @@ void Game::checkEvents() {
     }
 
     if (events->find(TEST) != events->end()) {
-
         for (auto e : manager->entities) {
-            if (e.second->hasComponentType(POINTS_COMPONENT)) {
+            if (e.second->hasComponentType(POINTS_COMPONENT) || e.second->hasComponentType(ENERGIZER_COMPONENT)) {
+                auto *pc = e.second->getComponentByType<PositionComponent>(POSITION_COMPONENT);
                 auto *ac = new AIComponent();
                 ac->player = player;
                 ac->timer = factory->createTimerSystem(config->getFps());
                 ac->state = CHASE;
                 ac->time_to_wait = 10000000;
+                ac->home_x = pc->x;
+                ac->home_y = pc->y;
                 e.second->addComponent(ac);
                 auto *mc = new MovableComponent();
-                mc->speed = 80;
+                mc->speed = 30;
+                mc->animate = true;
                 e.second->addComponent(mc);
             }
 
@@ -146,10 +159,10 @@ void Game::checkEvents() {
 }
 
 void Game::reset() {
-    auto *lc = player->getComponentByType<LivesComponent>(LIVES_COMPONENT);
+    auto *player_component = player->getComponentByType<PlayerComponent>(PLAYER_COMPONENT);
     auto *pc = player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-    pc->x = lc->start_x;
-    pc->y = lc->start_y;
+    pc->x = player_component->start_x;
+    pc->y = player_component->start_y;
     auto *mc = player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
     mc->state = IDLE;
     mc->time = 0;

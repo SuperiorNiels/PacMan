@@ -12,7 +12,7 @@ CollisionSystem::CollisionSystem(std::map<events_numbers, bool> *events)
 
 void CollisionSystem::addEntity(Entity *e)
 {
-    if(e->hasComponentType(PLAYER_INPUT_COMPONENT) && !entityInSystem(e->id))
+    if (e->hasComponentType(PLAYER_COMPONENT) && !entityInSystem(e->id))
     {
         players[e->id] = e;
         return;
@@ -51,13 +51,12 @@ bool CollisionSystem::entityInSystem(entityID id)
     return System::entityInSystem(id);
 }
 
-void CollisionSystem::update()
-{
-    for(auto p_it : players)
-    {
-        auto* player = p_it.second;
-        auto* mc = player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-        auto* pc = player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+void CollisionSystem::update() {
+    for (auto p_it : players) {
+        auto *player = p_it.second;
+        auto *mc = player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
+        auto *pc = player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+        auto *player_component = player->getComponentByType<PlayerComponent>(PLAYER_COMPONENT);
 
         double wanted_x = pc->x + movement_vector[mc->wanted_dir][0];
         double wanted_y = pc->y + movement_vector[mc->wanted_dir][1];
@@ -80,15 +79,13 @@ void CollisionSystem::update()
                     current_possible = false;
             } else {
                 if (pc->x == pc2->x && pc->y == pc2->y) {
-                    if (player->hasComponentType(SCORE_COMPONENT) && entity->hasComponentType(POINTS_COMPONENT)) {
-                        auto *sc = player->getComponentByType<ScoreComponent>(SCORE_COMPONENT);
+                    if (entity->hasComponentType(POINTS_COMPONENT)) {
                         auto *pp = entity->getComponentByType<PointsComponent>(POINTS_COMPONENT);
-                        sc->score += pp->points;
+                        player_component->score += pp->points;
                     }
-                    if (player->hasComponentType(SCORE_COMPONENT) && entity->hasComponentType(ENERGIZER_COMPONENT)) {
-                        auto *sc = player->getComponentByType<ScoreComponent>(SCORE_COMPONENT);
+                    if (entity->hasComponentType(ENERGIZER_COMPONENT)) {
                         auto *ec = entity->getComponentByType<EnergizerComponent>(ENERGIZER_COMPONENT);
-                        sc->score += ec->points;
+                        player_component->score += ec->points;
                         for (auto g_it : ghosts) {
                             auto *ghost = g_it.second;
                             auto *ac = ghost->getComponentByType<AIComponent>(AI_COMPONENT);
@@ -117,17 +114,16 @@ void CollisionSystem::update()
             mc->current_dir = STOP;
         }
 
-        for (auto& it : ghosts)
-        {
-            auto* ghost = it.second;
+        for (auto &it : ghosts) {
+            auto *ghost = it.second;
 
             auto *ac = ghost->getComponentByType<AIComponent>(AI_COMPONENT);
             if (ac->state != RETURN) {
                 auto *pc2 = ghost->getComponentByType<PositionComponent>(POSITION_COMPONENT);
                 if (pc->x == pc2->x && pc->y == (pc2->y)) {
                     if (ac->state == FLEE) {
-                        if (player->hasComponentType(SCORE_COMPONENT) && ghost->hasComponentType(POINTS_COMPONENT)) {
-                            auto *sc = player->getComponentByType<ScoreComponent>(SCORE_COMPONENT);
+                        if (ghost->hasComponentType(POINTS_COMPONENT)) {
+                            auto *sc = player->getComponentByType<PlayerComponent>(PLAYER_COMPONENT);
                             auto *pp = ghost->getComponentByType<PointsComponent>(POINTS_COMPONENT);
                             sc->score += pp->points;
                         }
@@ -139,9 +135,7 @@ void CollisionSystem::update()
                     } else {
                         mc->wanted_dir = STOP;
                         mc->current_dir = STOP;
-                        if (player->hasComponentType(LIVES_COMPONENT)) {
-                            events->operator[](RESET) = true;
-                        }
+                        events->operator[](RESET) = true;
                     }
                 }
             }

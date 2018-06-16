@@ -148,15 +148,10 @@ Entity* Config::createEntity(std::string entity_name, int tile_width, int x, int
             e->addComponent(ac);
         }
 
-        if(entity_config->FirstChildElement("score_component") != nullptr)
+        if (entity_config->FirstChildElement("player_component") != nullptr)
         {
-            e->addComponent(factory->createScoreComponent());
-        }
-
-        if(entity_config->FirstChildElement("lives_component") != nullptr)
-        {
-            auto *lc = factory->createLivesComponent();
-            entity_config->FirstChildElement("lives_component")->QueryIntAttribute("lives", &lc->lives);
+            auto *lc = factory->createPlayerComponent();
+            entity_config->FirstChildElement("player_component")->QueryIntAttribute("lives", &lc->lives);
             lc->start_x = x;
             lc->start_y = y;
             e->addComponent(lc);

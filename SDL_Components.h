@@ -24,29 +24,21 @@ public:
     };
 };
 
-class SDL_ScoreComponent : public ScoreComponent
+class SDL_PlayerComponent : public PlayerComponent
 {
 public:
-    SDL_Text* texture = nullptr;
+    SDL_Text *lives_texture = nullptr;
+    SDL_Text *score_texture = nullptr;
+    SDL_Text *level_texture = nullptr;
     SDL_Color* color = nullptr;
-    ~SDL_ScoreComponent() override
+
+    ~SDL_PlayerComponent() override
     {
-        delete texture;
+        delete lives_texture;
+        delete score_texture;
+        delete level_texture;
         delete color;
     };
-};
-
-class SDL_LivesComponent : public LivesComponent
-{
-public:
-    SDL_Text* texture = nullptr;
-    SDL_Color* color = nullptr;
-    ~SDL_LivesComponent() override
-    {
-        delete texture;
-        delete color;
-    };
-
 };
 
 class SDL_TextComponent : public TextComponent

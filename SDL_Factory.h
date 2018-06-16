@@ -28,10 +28,7 @@ public:
     RenderSystem* createRenderSystem(World* world, int screen_width, int screen_height, TimerSystem* timer) override;
     RenderComponent* createRenderComponent(std::string path, std::vector<clip> clips) override;
 
-    ScoreComponent *createScoreComponent() override;
-
-    LivesComponent *createLivesComponent() override;
-
+    PlayerComponent *createPlayerComponent() override;
     TextComponent *createTextComponent() override;
     ~SDL_Factory() override;
 private:

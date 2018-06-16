@@ -49,7 +49,7 @@ std::vector<Entity *> SDL_Factory::createWorldEntities(World *world) {
     if (!entities.empty()) {
         Entity *player = nullptr;
         for (auto *e : entities) {
-            if (e->hasComponentType(PLAYER_INPUT_COMPONENT))
+            if (e->hasComponentType(PLAYER_COMPONENT))
                 player = e;
         }
 
@@ -134,26 +134,16 @@ RenderComponent* SDL_Factory::createRenderComponent(std::string path, std::vecto
     return to_return;
 }
 
-ScoreComponent *SDL_Factory::createScoreComponent()
-{
-    auto* sc = new SDL_ScoreComponent();
+PlayerComponent *SDL_Factory::createPlayerComponent() {
+    auto *pc = new SDL_PlayerComponent();
     auto* color = new SDL_Color();
     color->r = 0xff; color->g = 0xff; color->b = 0xff; color->a = 0xff;
-    sc->color = color;
+    pc->color = color;
     auto font_size = (int) std::round(renderSystem->getTile_width() * 1.3);
-    sc->texture = new SDL_Text(font,font_size,renderSystem->renderer);
-    return sc;
-}
-
-LivesComponent *SDL_Factory::createLivesComponent()
-{
-    auto* lc = new SDL_LivesComponent();
-    auto* color = new SDL_Color();
-    color->r = 0xff; color->g = 0xff; color->b = 0xff; color->a = 0xff;
-    lc->color = color;
-    auto font_size = (int) std::round(renderSystem->getTile_width() * 1.3);
-    lc->texture = new SDL_Text(font,font_size,renderSystem->renderer);
-    return lc;
+    pc->score_texture = new SDL_Text(font, font_size, renderSystem->renderer);
+    pc->lives_texture = new SDL_Text(font, font_size, renderSystem->renderer);
+    pc->level_texture = new SDL_Text(font, font_size, renderSystem->renderer);
+    return pc;
 }
 
 TextComponent *SDL_Factory::createTextComponent()

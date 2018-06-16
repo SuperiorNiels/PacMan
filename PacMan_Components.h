@@ -25,7 +25,8 @@ enum ComponentTypes
     POINTS_COMPONENT,
     SCORE_COMPONENT,
     LIVES_COMPONENT,
-    TEXT_COMPONENT
+    TEXT_COMPONENT,
+    PLAYER_COMPONENT
 };
 
 class PositionComponent : public Component
@@ -73,6 +74,7 @@ public:
     TimerSystem* timer = nullptr;
     int score_before_leave = 200;
     int time_to_wait = 7000;
+    int time_scale = 1;
     Entity* player = nullptr;
     ghost_type ai_type = RED;
 };
@@ -114,20 +116,15 @@ public:
     int points = 400;
 };
 
-class ScoreComponent : public Component
+class PlayerComponent : public Component
 {
 public:
-    ScoreComponent() { type = SCORE_COMPONENT; };
+    PlayerComponent() { type = PLAYER_COMPONENT; }
     int score = 0;
-};
-
-class LivesComponent : public Component
-{
-public:
-    LivesComponent() { type = LIVES_COMPONENT; };
     int lives = 0;
-    int start_x = 0; // keep starting position, when player dies use this to 'teleport' player
+    int start_x = 0;
     int start_y = 0;
+    int level = 1;
 };
 
 class TextComponent : public Component

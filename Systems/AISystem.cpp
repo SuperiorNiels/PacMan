@@ -97,7 +97,7 @@ void AISystem::update()
 void AISystem::updateState(Entity* e)
 {
     auto* ac = e->getComponentByType<AIComponent>(AI_COMPONENT);
-    auto* player_score = ac->player->getComponentByType<ScoreComponent>(SCORE_COMPONENT);
+    auto *player_score = ac->player->getComponentByType<PlayerComponent>(PLAYER_COMPONENT);
     auto* ai_pos = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
     switch(ac->state)
     {
@@ -134,7 +134,7 @@ void AISystem::updateState(Entity* e)
             {
                 ac->timer->resetTimer();
                 ac->timer->startTimer();
-                ac->time_to_wait = 8000;
+                ac->time_to_wait = 8000 * ac->time_scale;
                 ac->state = CHASE;
             }
             break;
@@ -151,7 +151,7 @@ void AISystem::updateState(Entity* e)
             {
                 ac->timer->resetTimer();
                 ac->timer->startTimer();
-                ac->time_to_wait = 7000;
+                ac->time_to_wait = 6000 / ac->time_scale;
                 ac->state = SCATTER;
             }
             break;
@@ -162,7 +162,7 @@ void AISystem::updateState(Entity* e)
             {
                 ac->timer->resetTimer();
                 ac->timer->startTimer();
-                ac->time_to_wait = 3000;
+                ac->time_to_wait = 2000;
                 ac->state = SCATTER;
             }
             break;

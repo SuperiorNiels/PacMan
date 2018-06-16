@@ -91,7 +91,7 @@ void SDL_RenderSystem::update()
                     position.w = (int) floor(clip.w * rc->scale);
                     position.h = (int) floor(clip.h * rc->scale);
 
-                    if (e->hasComponentType(SCORE_COMPONENT) || e->hasComponentType(LIVES_COMPONENT) ||e->hasComponentType(TEXT_COMPONENT))
+                    if (e->hasComponentType(PLAYER_COMPONENT) || e->hasComponentType(TEXT_COMPONENT))
                         render_text.push_back(e);
 
                     SDL_RenderCopy(renderer, rc->texture, &clip, &position);
@@ -102,11 +102,8 @@ void SDL_RenderSystem::update()
 
     for(auto e : render_text)
     {
-        if (e->hasComponentType(SCORE_COMPONENT))
-            renderScore(e);
-
-        if (e->hasComponentType(LIVES_COMPONENT))
-            renderLives(e);
+        if (e->hasComponentType(PLAYER_COMPONENT))
+            renderPlayerComponent(e);
 
         if (e->hasComponentType(TEXT_COMPONENT))
             renderText(e);
@@ -199,42 +196,47 @@ SDL_Rect SDL_RenderSystem::getClip(Entity *e)
     return clip;
 }
 
-void SDL_RenderSystem::renderScore(Entity *e)
-{
-    auto* sc = e->getComponentByType<SDL_ScoreComponent>(SCORE_COMPONENT);
+void SDL_RenderSystem::renderPlayerComponent(Entity *e) {
+    auto *player_component = e->getComponentByType<SDL_PlayerComponent>(PLAYER_COMPONENT);
 
     std::ostringstream stringStream;
-    stringStream << "Score: " << sc->score;
+    stringStream << "Score: " << player_component->score;
     std::string score_text = stringStream.str();
 
-    sc->texture->setText(score_text, *sc->color);
-    SDL_Texture* text = sc->texture->getTexture();
-
-    int w, h = 0;
-    SDL_QueryTexture(text, nullptr, nullptr, &w, &h);
-    SDL_Rect score_pos = {5 + x_screen_offset, world_height + y_screen_offset + 5, w , h};
-
-    SDL_RenderCopy(renderer,text, nullptr, &score_pos);
-}
-
-void SDL_RenderSystem::renderLives(Entity *e)
-{
-    auto* lc = e->getComponentByType<SDL_LivesComponent>(LIVES_COMPONENT);
-
-    std::ostringstream stringStream;
-    stringStream << "Lives: " << lc->lives;
+    stringStream.clear();
+    stringStream.str("");
+    stringStream << "Lives: " << player_component->lives;
     std::string lives_text = stringStream.str();
 
-    lc->texture->setText(lives_text, *lc->color);
+    stringStream.clear();
+    stringStream.str("");
+    stringStream << player_component->level;
+    std::string level_text = stringStream.str();
 
-    SDL_Texture* text = lc->texture->getTexture();
+    player_component->score_texture->setText(score_text, *player_component->color);
+    SDL_Texture *score = player_component->score_texture->getTexture();
+
+    player_component->lives_texture->setText(lives_text, *player_component->color);
+    SDL_Texture *lives = player_component->lives_texture->getTexture();
+
+    player_component->level_texture->setText(level_text, *player_component->color);
+    SDL_Texture *level = player_component->level_texture->getTexture();
 
     int w, h = 0;
-    SDL_QueryTexture(text, nullptr, nullptr, &w, &h);
-    int test = world_width - w - 5 + x_screen_offset;
-    SDL_Rect score_pos = {test, world_height + y_screen_offset + 5, w , h};
+    SDL_QueryTexture(score, nullptr, nullptr, &w, &h);
+    SDL_Rect score_pos = {5 + x_screen_offset, world_height + y_screen_offset + 5, w , h};
 
-    SDL_RenderCopy(renderer,text, nullptr, &score_pos);
+    SDL_QueryTexture(lives, nullptr, nullptr, &w, &h);
+    int test = world_width - w - 5 + x_screen_offset;
+    SDL_Rect lives_pos = {test, world_height + y_screen_offset + 5, w, h};
+
+    SDL_QueryTexture(level, nullptr, nullptr, &w, &h);
+    int x = (world_width + 2 * x_screen_offset) / 2 - w / 2;
+    SDL_Rect level_pos = {x, world_height + y_screen_offset + 5, w, h};
+
+    SDL_RenderCopy(renderer, score, nullptr, &score_pos);
+    SDL_RenderCopy(renderer, lives, nullptr, &lives_pos);
+    SDL_RenderCopy(renderer, level, nullptr, &level_pos);
 }
 
 void SDL_RenderSystem::renderText(Entity *e)

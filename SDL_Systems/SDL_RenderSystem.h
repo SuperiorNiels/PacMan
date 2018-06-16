@@ -23,8 +23,7 @@ public:
     ~SDL_RenderSystem() override;
     SDL_Renderer* renderer = nullptr;
 private:
-    void renderScore(Entity* e);
-    void renderLives(Entity* e);
+    void renderPlayerComponent(Entity *e);
     void renderText(Entity* e);
     SDL_Window* window = nullptr;
     SDL_Rect getPosition(Entity* e);
