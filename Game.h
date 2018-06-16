@@ -14,7 +14,6 @@
 #include "Systems/EventSystem.h"
 #include "Systems/CollisionSystem.h"
 #include "Systems/RenderSystem.h"
-#include "Systems/GameplaySystem.h"
 
 class Game
 {
@@ -28,16 +27,20 @@ private:
     void clear();
     void createEntities();
 
+    void checkEvents();
+
+    void reset();
     bool paused = false;
+    World *world = nullptr;
     Config* config = nullptr;
+    Entity *player = nullptr;
+    TimerSystem *timer = nullptr;
+    TextComponent *pause_text = nullptr;
     AbstractFactory* factory = nullptr;
     SystemManager* manager = nullptr;
-    EventSystem* events = nullptr;
     RenderSystem* render = nullptr;
-    World* world = nullptr;
-    TimerSystem* timer = nullptr;
-    Entity* player = nullptr;
-    TextComponent *pause_text = nullptr;
+    EventSystem *eventSystem = nullptr;
+    std::map<events_numbers, bool> *events;
 };
 
 #endif //ECS_GAME_H

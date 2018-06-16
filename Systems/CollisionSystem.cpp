@@ -4,9 +4,10 @@
 
 #include "CollisionSystem.h"
 
-CollisionSystem::CollisionSystem()
+CollisionSystem::CollisionSystem(std::map<events_numbers, bool> *events)
 {
     component_types = {COLLISION_COMPONENT};
+    CollisionSystem::events = events;
 }
 
 void CollisionSystem::addEntity(Entity *e)
@@ -139,10 +140,7 @@ void CollisionSystem::update()
                         mc->wanted_dir = STOP;
                         mc->current_dir = STOP;
                         if (player->hasComponentType(LIVES_COMPONENT)) {
-                            auto *lc = player->getComponentByType<LivesComponent>(LIVES_COMPONENT);
-                            lc->lives--;
-                            pc->x = lc->start_x;
-                            pc->y = lc->start_y;
+                            events->operator[](RESET) = true;
                         }
                     }
                 }

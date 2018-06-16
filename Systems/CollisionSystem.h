@@ -15,7 +15,7 @@ using namespace ECS;
 class CollisionSystem : public System
 {
 public:
-    CollisionSystem();
+    explicit CollisionSystem(std::map<events_numbers, bool> *events);
     void update() override;
     void addEntity(Entity* e) override;
     void removeEntity(entityID id) override;
@@ -23,6 +23,7 @@ public:
 private:
     std::map<entityID, Entity*> players;
     std::map<entityID, Entity*> ghosts;
+    std::map<events_numbers, bool> *events;
 };
 
 

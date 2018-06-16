@@ -38,6 +38,13 @@ enum ghost_type
     ORANGE
 };
 
+enum events_numbers {
+    PAUSE_GAME,
+    RESTART,
+    RESET, // when pacman dies
+    TEST
+};
+
 // enum direction gives location of the move vector
 static const int movement_vector[5][2] = {{0,0},{-1,0},{1,0},{0,-1},{0,1}};
 

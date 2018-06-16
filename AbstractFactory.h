@@ -18,7 +18,8 @@ class AbstractFactory
 public:
     AbstractFactory() = default;
     virtual RenderSystem* createRenderSystem(World* world, int screen_width, int screen_height, TimerSystem* timer) = 0;
-    virtual EventSystem* createEventSystem() = 0;
+
+    virtual EventSystem *createEventSystem(std::map<events_numbers, bool> *events) = 0;
     virtual TimerSystem* createTimerSystem(int fps) = 0;
 
     virtual ScoreComponent *createScoreComponent() = 0;

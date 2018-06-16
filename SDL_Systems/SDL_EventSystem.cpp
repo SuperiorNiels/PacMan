@@ -7,7 +7,7 @@
 void SDL_EventSystem::update()
 {
     // Clear event queue
-    events.clear();
+    events->clear();
 
     SDL_Event e = {};
     direction dir = STOP; // STOP = 0
@@ -38,10 +38,13 @@ void SDL_EventSystem::update()
                     update_entities = true;
                     break;
                 case SDLK_SPACE:
-                    events[PAUSE_GAME] = true;
+                    events->operator[](PAUSE_GAME) = true;
                     break;
                 case SDLK_r:
-                    events[RESTART] = true;
+                    events->operator[](RESTART) = true;
+                    break;
+                case SDLK_t:
+                    events->operator[](TEST) = true;
                     break;
                 default:
                     break;

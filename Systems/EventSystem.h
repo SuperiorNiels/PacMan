@@ -10,25 +10,19 @@
 
 using namespace ECS;
 
-enum events_numbers
-{
-    PAUSE_GAME,
-    RESTART,
-};
-
 class EventSystem : public System
 {
 public:
-    EventSystem() {
+    explicit EventSystem(std::map<events_numbers, bool> *events) {
         // System settings
         component_types = {PLAYER_INPUT_COMPONENT};
         pausable = false;
+        EventSystem::events = events;
     }
     const bool getRunning() { return running; };
-    std::map<events_numbers , bool> events;
+    std::map<events_numbers, bool> *events = nullptr;
 protected:
     bool running = true;
-    //std::vector<events_numbers> events = std::vector<events_numbers>();
 
 };
 

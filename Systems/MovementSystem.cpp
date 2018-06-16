@@ -7,7 +7,7 @@
 MovementSystem::MovementSystem(World* world)
 {
     component_types = {MOVABLE_COMPONENT};
-    MovementSystem::world = world; //fixme: shared pointer?
+    MovementSystem::world = world;
 }
 
 void MovementSystem::update()

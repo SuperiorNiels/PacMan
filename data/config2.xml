@@ -1,0 +1,228 @@
+<?xml version="1.0" encoding="UTF-8" ?>
+<pacman>
+    <game fps="60" window_width="800" window_height="800">
+        <collision>../data/world2.map</collision>
+        <sprites tile_width="8">../data/sprites.png</sprites>
+        <graphics smooth_movement="1">SDL</graphics>
+    </game>
+    <entities>
+        <wall_tile>
+            <position_component/>
+            <render_component>
+                <clips total="1">
+                    <!-- x:y: -1 == get coordinates from map, w:h: -1 == tile_width -->
+                    <clip x="-1" y="-1" w="-1" h="-1"/>
+                </clips>
+            </render_component>
+            <collision_component/>
+        </wall_tile>
+        <player_only_wall>
+            <position_component/>
+            <render_component>
+                <clips total="1">
+                    <!-- x:y: -1 == get coordinates from map, w:h: -1 == tile_width -->
+                    <clip x="-1" y="-1" w="-1" h="-1"/>
+                </clips>
+            </render_component>
+            <collision_component/>
+        </player_only_wall>
+        <point>
+            <position_component/>
+            <render_component>
+                <clips total="1">
+                    <!-- x:y: -1 == get coordinates from map, w:h: -1 == tile_width -->
+                    <clip x="-1" y="-1" w="-1" h="-1"/>
+                </clips>
+            </render_component>
+            <collision_component/>
+            <points_component points="100"/>
+        </point>
+        <big_point>
+            <position_component/>
+            <render_component>
+                <clips total="2">
+                    <!-- x:y: -1 == get coordinates from map, w:h: -1 == tile_width -->
+                    <clip x="-1" y="-1" w="-1" h="-1"/>
+                    <clip x="470" y="200" w="-1" h="-1"/>
+                </clips>
+                <animation_length value="2"/>
+                <animation_speed value="20"/>
+            </render_component>
+            <collision_component/>
+            <energizer_component points="100"/>
+        </big_point>
+        <player>
+            <position_component/>
+            <render_component x_render_offset="0.25" y_render_offset="0.25">
+                <clips total="12">
+                    <clip x="489" y="1" w="13" h="13"/>
+                    <clip x="473" y="1" w="13" h="13"/>
+                    <clip x="457" y="1" w="13" h="13"/>
+                    <clip x="489" y="1" w="13" h="13"/>
+                    <clip x="473" y="17" w="13" h="13"/>
+                    <clip x="457" y="17" w="13" h="13"/>
+                    <clip x="489" y="1" w="13" h="13"/>
+                    <clip x="473" y="34" w="13" h="13"/>
+                    <clip x="457" y="34" w="13" h="13"/>
+                    <clip x="489" y="1" w="13" h="13"/>
+                    <clip x="473" y="49" w="13" h="13"/>
+                    <clip x="457" y="49" w="13" h="13"/>
+                </clips>
+                <animation_length value="3"/>
+                <animation_speed value="2"/>
+                <direction_offset left="3" right="0" up="6" down="9"/>
+            </render_component>
+            <collision_component/>
+            <movable_component speed="80"/>
+            <ai_component type="RED">
+                <score_before_leave value="0"/>
+                <scatter_target x="23" y="1"/>
+                <leave_home_target x="13" y="11"/>
+            </ai_component>
+            <player_input_component/>
+            <score_component/>
+            <lives_component lives="3"/>
+        </player>
+        <red_ghost>
+            <position_component/>
+            <render_component x_render_offset="0.3" y_render_offset="0.3">
+                <clips total="18">
+                    <clip x="457" y="65" w="14" h="13"/>
+                    <clip x="473" y="65" w="14" h="13"/>
+                    <clip x="553" y="65" w="14" h="13"/>
+                    <clip x="569" y="65" w="14" h="13"/>
+                    <clip x="489" y="65" w="14" h="13"/>
+                    <clip x="505" y="65" w="14" h="13"/>
+                    <clip x="521" y="65" w="14" h="13"/>
+                    <clip x="537" y="65" w="14" h="13"/>
+                    <clip x="585" y="65" w="14" h="13"/>
+                    <clip x="601" y="65" w="14" h="13"/>
+                    <clip x="586" y="81" w="14" h="13"/>
+                    <clip x="586" y="81" w="14" h="13"/>
+                    <clip x="601" y="81" w="14" h="13"/>
+                    <clip x="601" y="81" w="14" h="13"/>
+                    <clip x="617" y="81" w="14" h="13"/>
+                    <clip x="617" y="81" w="14" h="13"/>
+                    <clip x="634" y="81" w="14" h="13"/>
+                    <clip x="634" y="81" w="14" h="13"/>
+                </clips>
+                <animation_length value="2"/>
+                <animation_speed value="20"/>
+                <direction_offset down="2" right="0" left="4" up="6"/>
+            </render_component>
+            <collision_component/>
+            <movable_component speed="50"/>
+            <player_input_component/>
+            <score_component/>
+            <lives_component lives="3"/>
+        </red_ghost>
+        <pink_ghost>
+            <position_component/>
+            <render_component x_render_offset="0.3" y_render_offset="0.3">
+                <clips total="18">
+                    <clip x="457" y="81" w="14" h="13"/>
+                    <clip x="473" y="81" w="14" h="13"/>
+                    <clip x="553" y="81" w="14" h="13"/>
+                    <clip x="569" y="81" w="14" h="13"/>
+                    <clip x="489" y="81" w="14" h="13"/>
+                    <clip x="505" y="81" w="14" h="13"/>
+                    <clip x="521" y="81" w="14" h="13"/>
+                    <clip x="537" y="81" w="14" h="13"/>
+                    <clip x="585" y="65" w="14" h="13"/>
+                    <clip x="601" y="65" w="14" h="13"/>
+                    <clip x="586" y="81" w="14" h="13"/>
+                    <clip x="586" y="81" w="14" h="13"/>
+                    <clip x="601" y="81" w="14" h="13"/>
+                    <clip x="601" y="81" w="14" h="13"/>
+                    <clip x="617" y="81" w="14" h="13"/>
+                    <clip x="617" y="81" w="14" h="13"/>
+                    <clip x="634" y="81" w="14" h="13"/>
+                    <clip x="634" y="81" w="14" h="13"/>
+                </clips>
+                <animation_length value="2"/>
+                <animation_speed value="20"/>
+                <direction_offset down="2" right="0" left="4" up="6"/>
+            </render_component>
+            <collision_component/>
+            <movable_component speed="50"/>
+            <ai_component type="PINK">
+                <score_before_leave value="0"/>
+                <scatter_target x="3" y="1"/>
+                <leave_home_target x="13" y="11"/>
+            </ai_component>
+            <points_component points="250"/>
+        </pink_ghost>
+        <blue_ghost>
+            <position_component/>
+            <render_component x_render_offset="0.3" y_render_offset="0.3">
+                <clips total="18">
+                    <clip x="457" y="97" w="14" h="13"/>
+                    <clip x="473" y="97" w="14" h="13"/>
+                    <clip x="553" y="97" w="14" h="13"/>
+                    <clip x="569" y="97" w="14" h="13"/>
+                    <clip x="489" y="97" w="14" h="13"/>
+                    <clip x="505" y="97" w="14" h="13"/>
+                    <clip x="521" y="97" w="14" h="13"/>
+                    <clip x="537" y="97" w="14" h="13"/>
+                    <clip x="585" y="65" w="14" h="13"/>
+                    <clip x="601" y="65" w="14" h="13"/>
+                    <clip x="586" y="81" w="14" h="13"/>
+                    <clip x="586" y="81" w="14" h="13"/>
+                    <clip x="601" y="81" w="14" h="13"/>
+                    <clip x="601" y="81" w="14" h="13"/>
+                    <clip x="617" y="81" w="14" h="13"/>
+                    <clip x="617" y="81" w="14" h="13"/>
+                    <clip x="634" y="81" w="14" h="13"/>
+                    <clip x="634" y="81" w="14" h="13"/>
+                </clips>
+                <animation_length value="2"/>
+                <animation_speed value="20"/>
+                <direction_offset down="2" right="0" left="4" up="6"/>
+            </render_component>
+            <collision_component/>
+            <movable_component speed="50"/>
+            <ai_component type="BLUE">
+                <score_before_leave value="3000"/>
+                <scatter_target x="23" y="29"/>
+                <leave_home_target x="13" y="11"/>
+            </ai_component>
+            <points_component points="250"/>
+        </blue_ghost>
+        <orange_ghost>
+            <position_component/>
+            <render_component x_render_offset="0.3" y_render_offset="0.3">
+                <clips total="18">
+                    <clip x="457" y="113" w="14" h="13"/>
+                    <clip x="473" y="113" w="14" h="13"/>
+                    <clip x="553" y="113" w="14" h="13"/>
+                    <clip x="569" y="113" w="14" h="13"/>
+                    <clip x="489" y="113" w="14" h="13"/>
+                    <clip x="505" y="113" w="14" h="13"/>
+                    <clip x="521" y="113" w="14" h="13"/>
+                    <clip x="537" y="113" w="14" h="13"/>
+                    <clip x="585" y="65" w="14" h="13"/>
+                    <clip x="601" y="65" w="14" h="13"/>
+                    <clip x="586" y="81" w="14" h="13"/>
+                    <clip x="586" y="81" w="14" h="13"/>
+                    <clip x="601" y="81" w="14" h="13"/>
+                    <clip x="601" y="81" w="14" h="13"/>
+                    <clip x="617" y="81" w="14" h="13"/>
+                    <clip x="617" y="81" w="14" h="13"/>
+                    <clip x="634" y="81" w="14" h="13"/>
+                    <clip x="634" y="81" w="14" h="13"/>
+                </clips>
+                <animation_length value="2"/>
+                <animation_speed value="20"/>
+                <direction_offset down="2" right="0" left="4" up="6"/>
+            </render_component>
+            <collision_component/>
+            <movable_component speed="50"/>
+            <ai_component type="ORANGE">
+                <score_before_leave value="18300"/>
+                <scatter_target x="3" y="29"/>
+                <leave_home_target x="13" y="11"/>
+            </ai_component>
+            <points_component points="250"/>
+        </orange_ghost>
+    </entities>
+</pacman>

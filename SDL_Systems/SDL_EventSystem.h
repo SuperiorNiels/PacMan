@@ -12,6 +12,7 @@
 
 class SDL_EventSystem : public EventSystem {
 public:
+    explicit SDL_EventSystem(std::map<events_numbers, bool> *events) : EventSystem(events) {};
     void update() override;
 };
 

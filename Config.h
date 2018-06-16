@@ -22,7 +22,8 @@ public:
     int getFps() const;
     int getScreen_x() const;
     int getScreen_y() const;
-    const std::string &getCollision_map() const;
+
+    const std::string &getWorld_map() const;
     const std::string &getSprites_sheet() const;
     AbstractFactory *getFactory() const;
     Entity* createEntity(std::string entity_name, int tile_width, int x=0, int y=0);

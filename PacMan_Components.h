@@ -135,8 +135,6 @@ class TextComponent : public Component
 public:
     TextComponent() { type = TEXT_COMPONENT; };
     std::string text;
-    int x_pos = 0;
-    int y_pos = 0;
 };
 
 

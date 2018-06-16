@@ -21,7 +21,8 @@ class SDL_Factory : public AbstractFactory
 public:
     SDL_Factory() = delete;
     explicit SDL_Factory(Config* config) { SDL_Factory::config = config; };
-    EventSystem* createEventSystem() override;
+
+    EventSystem *createEventSystem(std::map<events_numbers, bool> *events) override;
     TimerSystem* createTimerSystem(int fps) override;
     std::vector<Entity *> createWorldEntities(World *world) override;
     RenderSystem* createRenderSystem(World* world, int screen_width, int screen_height, TimerSystem* timer) override;

@@ -21,9 +21,10 @@ namespace ECS
         void registerEntity(Entity* e);
         void unregisterEntity(Entity* e);
         void clearEntities();
+
+        int entitiesWithComponent(ComponentTypes type);
         void removeSystem(System* s);
         ~SystemManager();
-    private:
         std::vector<System*> systems = std::vector<System*>();
         std::map<entityID, Entity*> entities;
     };

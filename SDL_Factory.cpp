@@ -4,49 +4,41 @@
 
 #include "SDL_Factory.h"
 
-std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
-{
-    std::vector<Entity*> entities = std::vector<Entity*>();
+std::vector<Entity *> SDL_Factory::createWorldEntities(World *world) {
+    std::vector<Entity *> entities = std::vector<Entity *>();
 
     int **map = world->getWorld();
     int tile_width = renderSystem->getTile_width();
-    std::vector<Entity*> walls = std::vector<Entity*>();
-    std::vector<Entity*> points = std::vector<Entity*>();
-    std::vector<Entity*> players = std::vector<Entity*>();
-    std::vector<Entity*> ais = std::vector<Entity*>();
 
-    for(int x=0;x<world->getWidth();x++)
-    {
-        for(int y=0;y<world->getHeight();y++)
-        {
-            switch(map[y][x])
-            {
+    for (int x = 0; x < world->getWidth(); x++) {
+        for (int y = 0; y < world->getHeight(); y++) {
+            switch (map[y][x]) {
                 case 1:
-                    walls.push_back(config->createEntity("wall_tile",tile_width, x, y));
+                    entities.push_back(config->createEntity("wall_tile", tile_width, x, y));
                     break;
                 case 2:
-                    walls.push_back(config->createEntity("player_only_wall",tile_width, x, y));
+                    entities.push_back(config->createEntity("player_only_wall", tile_width, x, y));
                     break;
                 case 3:
-                    points.push_back(config->createEntity("point",tile_width, x, y));
+                    entities.push_back(config->createEntity("point", tile_width, x, y));
                     break;
                 case 4:
-                    points.push_back(config->createEntity("big_point",tile_width, x, y));
+                    entities.push_back(config->createEntity("big_point", tile_width, x, y));
                     break;
                 case 5:
-                    players.push_back(config->createEntity("player", tile_width, x, y));
+                    entities.push_back(config->createEntity("player", tile_width, x, y));
                     break;
                 case 6:
-                    ais.push_back(config->createEntity("red_ghost", tile_width,x,y));
+                    entities.push_back(config->createEntity("red_ghost", tile_width, x, y));
                     break;
                 case 7:
-                    ais.push_back(config->createEntity("blue_ghost", tile_width,x,y));
+                    entities.push_back(config->createEntity("blue_ghost", tile_width, x, y));
                     break;
                 case 8:
-                    ais.push_back(config->createEntity("pink_ghost", tile_width,x,y));
+                    entities.push_back(config->createEntity("pink_ghost", tile_width, x, y));
                     break;
                 case 9:
-                    ais.push_back(config->createEntity("orange_ghost", tile_width,x,y));
+                    entities.push_back(config->createEntity("orange_ghost", tile_width, x, y));
                     break;
                 default:
                     break;
@@ -54,21 +46,22 @@ std::vector<Entity*> SDL_Factory::createWorldEntities(World *world)
         }
     }
 
-    if(!players.empty())
-    {
-        for(auto ai : ais)
-        {
-            auto* aic = ai->getComponentByType<AIComponent>(AI_COMPONENT);
-            aic->player = players[0];
+    if (!entities.empty()) {
+        Entity *player = nullptr;
+        for (auto *e : entities) {
+            if (e->hasComponentType(PLAYER_INPUT_COMPONENT))
+                player = e;
+        }
+
+        if (player != nullptr) {
+            for (auto *e : entities) {
+                if (e->hasComponentType(AI_COMPONENT)) {
+                    auto *ac = e->getComponentByType<AIComponent>(AI_COMPONENT);
+                    ac->player = player;
+                }
+            }
         }
     }
-
-    entities.insert(entities.begin(),ais.begin(),ais.end());
-    entities.insert(entities.begin(),players.begin(),players.end());
-    entities.insert(entities.begin(),walls.begin(),walls.end());
-    entities.insert(entities.begin(),points.begin(),points.end());
-
-    walls.clear(); points.clear(); players.clear(); ais.clear();
 
     return entities;
 }
@@ -81,9 +74,8 @@ RenderSystem* SDL_Factory::createRenderSystem(World* world, int screen_width, in
     return res;
 }
 
-EventSystem* SDL_Factory::createEventSystem()
-{
-    return new SDL_EventSystem();
+EventSystem *SDL_Factory::createEventSystem(std::map<events_numbers, bool> *events) {
+    return new SDL_EventSystem(events);
 }
 
 TimerSystem* SDL_Factory::createTimerSystem(int fps)
@@ -148,7 +140,7 @@ ScoreComponent *SDL_Factory::createScoreComponent()
     auto* color = new SDL_Color();
     color->r = 0xff; color->g = 0xff; color->b = 0xff; color->a = 0xff;
     sc->color = color;
-    int font_size = (int) std::round(renderSystem->getTile_width() * 1.3);
+    auto font_size = (int) std::round(renderSystem->getTile_width() * 1.3);
     sc->texture = new SDL_Text(font,font_size,renderSystem->renderer);
     return sc;
 }
@@ -159,7 +151,7 @@ LivesComponent *SDL_Factory::createLivesComponent()
     auto* color = new SDL_Color();
     color->r = 0xff; color->g = 0xff; color->b = 0xff; color->a = 0xff;
     lc->color = color;
-    int font_size = (int) std::round(renderSystem->getTile_width() * 1.3);
+    auto font_size = (int) std::round(renderSystem->getTile_width() * 1.3);
     lc->texture = new SDL_Text(font,font_size,renderSystem->renderer);
     return lc;
 }
@@ -170,7 +162,7 @@ TextComponent *SDL_Factory::createTextComponent()
     auto* color = new SDL_Color();
     color->r = 0xff; color->g = 0xff; color->b = 0xff; color->a = 0xff;
     lc->color = color;
-    int font_size = (int) std::round(renderSystem->getTile_width() * 1.8);
+    auto font_size = (int) std::round(renderSystem->getTile_width() * 1.45);
     lc->texture = new SDL_Text(font,font_size,renderSystem->renderer);
     return lc;
 }

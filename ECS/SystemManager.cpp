@@ -108,6 +108,15 @@ namespace ECS
         }
     }
 
+    int SystemManager::entitiesWithComponent(ComponentTypes type) {
+        int result = 0;
+        for (auto e : entities) {
+            if (e.second->hasComponentType(type))
+                result++;
+        }
+        return result;
+    }
+
     SystemManager::~SystemManager()
     {
         for(auto it : entities)

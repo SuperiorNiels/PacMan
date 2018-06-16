@@ -183,7 +183,7 @@ int Config::getScreen_y() const
     return screen_y;
 }
 
-const std::string &Config::getCollision_map() const
+const std::string &Config::getWorld_map() const
 {
     return collision_map;
 }
