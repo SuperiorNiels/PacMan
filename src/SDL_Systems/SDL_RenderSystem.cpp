@@ -160,10 +160,9 @@ namespace SDL_Systems
         // If a death component exists, use death clips, if the animation has finished send an event to reset the game
         if (e->hasComponentType(DEATH_COMPONENT))
         {
-            printf("death component found\n");
             if (!rc->death_clips.empty())
             {
-                if (rc->clips.size() != 1)
+                if (rc->death_clips.size() != 1)
                 {
                     if (rc->count > rc->animation_speed * 8)
                     {

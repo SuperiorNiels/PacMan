@@ -25,6 +25,9 @@ namespace Pacman
         {
             for (auto &c : clips)
                 delete c;
+
+            for (auto &c : death_clips)
+                delete c;
         };
     };
 
