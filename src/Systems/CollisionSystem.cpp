@@ -4,32 +4,40 @@
 
 #include "../../include/Systems/CollisionSystem.h"
 
-namespace Systems {
+namespace Systems
+{
 
-    CollisionSystem::CollisionSystem(std::map<events_numbers, bool> *events) {
+    CollisionSystem::CollisionSystem(std::map<events_numbers, bool> *events)
+    {
         component_types = {COLLISION_COMPONENT};
         CollisionSystem::events = events;
     }
 
-    void CollisionSystem::addEntity(Entity *e) {
-        if (e->hasComponentType(PLAYER_COMPONENT) && !entityInSystem(e->id)) {
+    void CollisionSystem::addEntity(Entity *e)
+    {
+        if (e->hasComponentType(PLAYER_COMPONENT) && !entityInSystem(e->id))
+        {
             players[e->id] = e;
             return;
         }
-        if (e->hasComponentType(AI_COMPONENT) && !entityInSystem(e->id)) {
+        if (e->hasComponentType(AI_COMPONENT) && !entityInSystem(e->id))
+        {
             ghosts[e->id] = e;
             return;
         }
         System::addEntity(e);
     }
 
-    void CollisionSystem::removeEntity(entityID id) {
-        if (players.find(id) != players.end()) {
+    void CollisionSystem::removeEntity(entityID id)
+    {
+        if (players.find(id) != players.end())
+        {
             auto it = players.find(id);
             players.erase(it);
             return;
         }
-        if (ghosts.find(id) != ghosts.end()) {
+        if (ghosts.find(id) != ghosts.end())
+        {
             auto it = ghosts.find(id);
             ghosts.erase(it);
             return;
@@ -37,7 +45,8 @@ namespace Systems {
         System::removeEntity(id);
     }
 
-    bool CollisionSystem::entityInSystem(entityID id) {
+    bool CollisionSystem::entityInSystem(entityID id)
+    {
         if (players.find(id) != players.end())
             return true;
         if (ghosts.find(id) != ghosts.end())
@@ -45,8 +54,10 @@ namespace Systems {
         return System::entityInSystem(id);
     }
 
-    void CollisionSystem::update() {
-        for (auto p_it : players) {
+    void CollisionSystem::update()
+    {
+        for (auto p_it : players)
+        {
             auto *player = p_it.second;
             auto *mc = player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
             auto *pc = player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
@@ -62,28 +73,37 @@ namespace Systems {
 
             std::vector<Entity *> to_remove = std::vector<Entity *>();
 
-            for (auto it : entities) {
+            for (auto it : entities)
+            {
                 auto entity = it.second; // get entity
                 auto *pc2 = entity->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-                if (!(entity->hasComponentType(POINTS_COMPONENT) || entity->hasComponentType(ENERGIZER_COMPONENT))) {
+                if (!(entity->hasComponentType(POINTS_COMPONENT) || entity->hasComponentType(ENERGIZER_COMPONENT)))
+                {
                     if (wanted_x == pc2->x && wanted_y == pc2->y)
                         wanted_possible = false;
 
                     if (new_x == pc2->x && new_y == pc2->y)
                         current_possible = false;
-                } else {
-                    if (pc->x == pc2->x && pc->y == pc2->y) {
-                        if (entity->hasComponentType(POINTS_COMPONENT)) {
+                }
+                else
+                {
+                    if (pc->x == pc2->x && pc->y == pc2->y)
+                    {
+                        if (entity->hasComponentType(POINTS_COMPONENT))
+                        {
                             auto *pp = entity->getComponentByType<PointsComponent>(POINTS_COMPONENT);
                             player_component->score += pp->points;
                         }
-                        if (entity->hasComponentType(ENERGIZER_COMPONENT)) {
+                        if (entity->hasComponentType(ENERGIZER_COMPONENT))
+                        {
                             auto *ec = entity->getComponentByType<EnergizerComponent>(ENERGIZER_COMPONENT);
                             player_component->score += ec->points;
-                            for (auto g_it : ghosts) {
+                            for (auto g_it : ghosts)
+                            {
                                 auto *ghost = g_it.second;
                                 auto *ac = ghost->getComponentByType<AIComponent>(AI_COMPONENT);
-                                if (ac->state == CHASE || ac->state == SCATTER) {
+                                if (ac->state == CHASE || ac->state == SCATTER)
+                                {
                                     ac->state = FLEE;
                                     ac->timer->resetTimer();
                                     ac->timer->startTimer();
@@ -96,36 +116,47 @@ namespace Systems {
                 }
             }
 
-            for (auto *e : to_remove) {
+            for (auto *e : to_remove)
+            {
                 e->clearComponents();
                 removeEntity(e->id);
             }
 
             if (wanted_possible)
                 mc->current_dir = mc->wanted_dir;
-            if (!wanted_possible && !current_possible) {
+            if (!wanted_possible && !current_possible)
+            {
                 mc->wanted_dir = STOP;
                 mc->current_dir = STOP;
             }
 
-            for (auto &it : ghosts) {
+            for (auto &it : ghosts)
+            {
                 auto *ghost = it.second;
 
                 auto *ac = ghost->getComponentByType<AIComponent>(AI_COMPONENT);
-                if (ac->state != RETURN) {
+                if (ac->state != RETURN)
+                {
                     auto *pc2 = ghost->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-                    if (pc->x == pc2->x && pc->y == (pc2->y)) {
-                        if (ac->state == FLEE) {
-                            if (ghost->hasComponentType(POINTS_COMPONENT)) {
+                    if (pc->x == pc2->x && pc->y == (pc2->y))
+                    {
+                        if (ac->state == FLEE)
+                        {
+                            if (ghost->hasComponentType(POINTS_COMPONENT))
+                            {
                                 auto *sc = player->getComponentByType<PlayerComponent>(PLAYER_COMPONENT);
                                 auto *pp = ghost->getComponentByType<PointsComponent>(POINTS_COMPONENT);
                                 sc->score += pp->points;
                             }
                             ac->state = RETURN;
-                        } else {
+                        }
+                        else
+                        {
                             mc->wanted_dir = STOP;
                             mc->current_dir = STOP;
-                            events->operator[](RESET) = true;
+                            auto *dc = new DeathComponent();
+                            player->addComponent(dc);
+                            events->operator[](DEATH) = true;
                         }
                     }
                 }

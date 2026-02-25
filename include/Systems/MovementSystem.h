@@ -5,25 +5,26 @@
 #ifndef ECS_MOVEMENTSYSTEM_H
 #define ECS_MOVEMENTSYSTEM_H
 
-
 #include "../Pacman/PacMan_Components.h"
 #include "../Pacman/World.h"
 
 using namespace Pacman;
 
-namespace Systems {
-    class MovementSystem : public System {
+namespace Systems
+{
+    class MovementSystem : public System
+    {
     public:
         MovementSystem() = delete;
 
-        explicit MovementSystem(World *world);
+        explicit MovementSystem(World *world, std::map<events_numbers, bool> *events);
 
         void update() override;
 
     private:
         World *world = nullptr;
+        std::map<events_numbers, bool> *events = nullptr;
     };
 };
 
-
-#endif //ECS_MOVEMENTSYSTEM_H
+#endif // ECS_MOVEMENTSYSTEM_H

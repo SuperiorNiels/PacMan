@@ -4,42 +4,49 @@
 
 #include "../include/Config.h"
 
-Config::Config(std::string path) {
+Config::Config(std::string path)
+{
     doc.LoadFile(path.c_str());
     doc.FirstChildElement("pacman")->FirstChildElement("game")->QueryIntAttribute("fps", &fps);
     doc.FirstChildElement("pacman")->FirstChildElement("game")->QueryIntAttribute("window_width", &screen_x);
     doc.FirstChildElement("pacman")->FirstChildElement("game")->QueryIntAttribute("window_height", &screen_y);
     collision_map = doc.FirstChildElement("pacman")->FirstChildElement("game")->FirstChildElement(
-            "collision")->GetText();
+                                                                                  "collision")
+                        ->GetText();
     sprites_sheet = doc.FirstChildElement("pacman")->FirstChildElement("game")->FirstChildElement(
-            "sprites")->GetText();
+                                                                                  "sprites")
+                        ->GetText();
     doc.FirstChildElement("pacman")->FirstChildElement("game")->FirstChildElement("sprites")->QueryIntAttribute(
-            "tile_width", &sprite_tile_width);
+        "tile_width", &sprite_tile_width);
     std::string graphics = doc.FirstChildElement("pacman")->FirstChildElement("game")->FirstChildElement(
-            "graphics")->GetText();
-    if (graphics == "SDL") {
+                                                                                         "graphics")
+                               ->GetText();
+    if (graphics == "SDL")
+    {
         // Create SDL factory
         factory = new SDL_Factory(this);
     }
     int movement = 0;
-    doc.FirstChildElement("pacman")->FirstChildElement("game")->FirstChildElement("graphics")->QueryIntAttribute(
-            "smooth_movement", &movement);
+    doc.FirstChildElement("pacman")->FirstChildElement("game")->FirstChildElement("graphics")->QueryIntAttribute("smooth_movement", &movement);
     smooth_movement = movement == 1;
 }
 
-Entity *Config::createEntity(std::string entity_name, int tile_width, int x, int y) {
-    auto *entity_config = doc.FirstChildElement("pacman")->FirstChildElement("entities")->FirstChildElement(
-            entity_name.c_str());
-    if (entity_config != nullptr) {
+Entity *Config::createEntity(std::string entity_name, int tile_width, int x, int y)
+{
+    auto *entity_config = doc.FirstChildElement("pacman")->FirstChildElement("entities")->FirstChildElement(entity_name.c_str());
+    if (entity_config != nullptr)
+    {
         auto *e = new Entity();
-        if (entity_config->FirstChildElement("position_component") != nullptr) {
+        if (entity_config->FirstChildElement("position_component") != nullptr)
+        {
             auto *pc = new PositionComponent();
             pc->x = x;
             pc->y = y;
             e->addComponent(pc);
         }
 
-        if (entity_config->FirstChildElement("collision_component") != nullptr) {
+        if (entity_config->FirstChildElement("collision_component") != nullptr)
+        {
             auto *cc = new CollisionComponent();
             cc->collision_box.x = 0;
             cc->collision_box.y = 0;
@@ -48,79 +55,119 @@ Entity *Config::createEntity(std::string entity_name, int tile_width, int x, int
             e->addComponent(cc);
         }
 
-        if (entity_config->FirstChildElement("render_component") != nullptr) {
+        if (entity_config->FirstChildElement("render_component") != nullptr)
+        {
             std::vector<clip> clips = std::vector<clip>();
+            std::vector<clip> death_clips = std::vector<clip>();
+
             auto *render_config = entity_config->FirstChildElement("render_component");
-            if (render_config->FirstChildElement("clips") != nullptr) {
+            if (render_config->FirstChildElement("clips") != nullptr)
+            {
                 auto *clip_config = render_config->FirstChildElement("clips");
                 int total;
                 clip_config->QueryIntAttribute("total", &total);
-                for (int i = 0; i < total; i++) {
+                for (int i = 0; i < total; i++)
+                {
                     clip c;
                     if (i == 0)
                         clip_config = clip_config->FirstChildElement("clip");
                     else
                         clip_config = clip_config->NextSiblingElement();
-                    if (clip_config != nullptr) {
+                    if (clip_config != nullptr)
+                    {
                         clip_config->QueryIntAttribute("x", &c.x);
                         clip_config->QueryIntAttribute("y", &c.y);
                         clip_config->QueryIntAttribute("w", &c.w);
                         clip_config->QueryIntAttribute("h", &c.h);
-                        if (c.x == -1) c.x = x * sprite_tile_width;
-                        if (c.y == -1) c.y = y * sprite_tile_width;
-                        if (c.h == -1) c.h = sprite_tile_width;
-                        if (c.w == -1) c.w = sprite_tile_width;
+                        if (c.x == -1)
+                            c.x = x * sprite_tile_width;
+                        if (c.y == -1)
+                            c.y = y * sprite_tile_width;
+                        if (c.h == -1)
+                            c.h = sprite_tile_width;
+                        if (c.w == -1)
+                            c.w = sprite_tile_width;
                         clips.push_back(c);
                     }
                 }
             }
-            auto *rc = factory->createRenderComponent(sprites_sheet, clips);
+            if (render_config->FirstChildElement("death_clips") != nullptr)
+            {
+                auto *death_clip_config = render_config->FirstChildElement("death_clips");
+                int total;
+                death_clip_config->QueryIntAttribute("total", &total);
+                for (int i = 0; i < total; i++)
+                {
+                    clip c;
+                    if (i == 0)
+                        death_clip_config = death_clip_config->FirstChildElement("clip");
+                    else
+                        death_clip_config = death_clip_config->NextSiblingElement();
+                    if (death_clip_config != nullptr)
+                    {
+                        death_clip_config->QueryIntAttribute("x", &c.x);
+                        death_clip_config->QueryIntAttribute("y", &c.y);
+                        death_clip_config->QueryIntAttribute("w", &c.w);
+                        death_clip_config->QueryIntAttribute("h", &c.h);
+                        if (c.x == -1)
+                            c.x = x * sprite_tile_width;
+                        if (c.y == -1)
+                            c.y = y * sprite_tile_width;
+                        if (c.h == -1)
+                            c.h = sprite_tile_width;
+                        if (c.w == -1)
+                            c.w = sprite_tile_width;
+                        death_clips.push_back(c);
+                    }
+                }
+            }
+            auto *rc = factory->createRenderComponent(sprites_sheet, clips, death_clips);
             render_config->QueryDoubleAttribute("x_render_offset", &rc->x_render_offset);
             render_config->QueryDoubleAttribute("y_render_offset", &rc->y_render_offset);
             if (render_config->FirstChildElement("animation_length") != nullptr)
-                render_config->FirstChildElement("animation_length")->QueryIntAttribute("value",
-                                                                                        &rc->animation_length);
+                render_config->FirstChildElement("animation_length")->QueryIntAttribute("value", &rc->animation_length);
             if (render_config->FirstChildElement("animation_speed") != nullptr)
-                render_config->FirstChildElement("animation_speed")->QueryIntAttribute("value",
-                                                                                       &rc->animation_speed);
-            if (render_config->FirstChildElement("direction_offset") != nullptr) {
-                render_config->FirstChildElement("direction_offset")->QueryIntAttribute("left",
-                                                                                        &rc->direction_offsets[0]);
-                render_config->FirstChildElement("direction_offset")->QueryIntAttribute("right",
-                                                                                        &rc->direction_offsets[1]);
-                render_config->FirstChildElement("direction_offset")->QueryIntAttribute("up",
-                                                                                        &rc->direction_offsets[2]);
-                render_config->FirstChildElement("direction_offset")->QueryIntAttribute("down",
-                                                                                        &rc->direction_offsets[3]);
+                render_config->FirstChildElement("animation_speed")->QueryIntAttribute("value", &rc->animation_speed);
+            if (render_config->FirstChildElement("direction_offset") != nullptr)
+            {
+                render_config->FirstChildElement("direction_offset")->QueryIntAttribute("left", &rc->direction_offsets[0]);
+                render_config->FirstChildElement("direction_offset")->QueryIntAttribute("right", &rc->direction_offsets[1]);
+                render_config->FirstChildElement("direction_offset")->QueryIntAttribute("up", &rc->direction_offsets[2]);
+                render_config->FirstChildElement("direction_offset")->QueryIntAttribute("down", &rc->direction_offsets[3]);
             }
-            rc->scale = tile_width / (double) sprite_tile_width;
+            rc->scale = tile_width / (double)sprite_tile_width;
             e->addComponent(rc);
         }
 
-        if (entity_config->FirstChildElement("points_component") != nullptr) {
+        if (entity_config->FirstChildElement("points_component") != nullptr)
+        {
             auto *pp = new PointsComponent();
             entity_config->FirstChildElement("points_component")->QueryIntAttribute("points", &pp->points);
             e->addComponent(pp);
         }
 
-        if (entity_config->FirstChildElement("energizer_component") != nullptr) {
+        if (entity_config->FirstChildElement("energizer_component") != nullptr)
+        {
             auto *ec = new EnergizerComponent();
             entity_config->FirstChildElement("energizer_component")->QueryIntAttribute("points", &ec->points);
             e->addComponent(ec);
         }
 
-        if (entity_config->FirstChildElement("movable_component") != nullptr) {
+        if (entity_config->FirstChildElement("movable_component") != nullptr)
+        {
             auto *mc = new MovableComponent();
             entity_config->FirstChildElement("movable_component")->QueryDoubleAttribute("speed", &mc->speed);
             mc->animate = smooth_movement;
             e->addComponent(mc);
         }
 
-        if (entity_config->FirstChildElement("player_input_component") != nullptr) {
+        if (entity_config->FirstChildElement("player_input_component") != nullptr)
+        {
             e->addComponent(new PlayerInputComponent());
         }
 
-        if (entity_config->FirstChildElement("ai_component") != nullptr) {
+        if (entity_config->FirstChildElement("ai_component") != nullptr)
+        {
             auto *ac = new AIComponent();
             ac->timer = factory->createTimerSystem(fps);
 
@@ -134,22 +181,18 @@ Entity *Config::createEntity(std::string entity_name, int tile_width, int x, int
             else if (type == "ORANGE")
                 ac->ai_type = ORANGE;
 
-            entity_config->FirstChildElement("ai_component")->FirstChildElement(
-                    "score_before_leave")->QueryIntAttribute("value", &ac->score_before_leave);
-            entity_config->FirstChildElement("ai_component")->FirstChildElement(
-                    "scatter_target")->QueryIntAttribute("x", &ac->scatter_x);
-            entity_config->FirstChildElement("ai_component")->FirstChildElement(
-                    "scatter_target")->QueryIntAttribute("y", &ac->scatter_y);
-            entity_config->FirstChildElement("ai_component")->FirstChildElement(
-                    "leave_home_target")->QueryIntAttribute("x", &ac->leave_x);
-            entity_config->FirstChildElement("ai_component")->FirstChildElement(
-                    "leave_home_target")->QueryIntAttribute("y", &ac->leave_y);
+            entity_config->FirstChildElement("ai_component")->FirstChildElement("score_before_leave")->QueryIntAttribute("value", &ac->score_before_leave);
+            entity_config->FirstChildElement("ai_component")->FirstChildElement("scatter_target")->QueryIntAttribute("x", &ac->scatter_x);
+            entity_config->FirstChildElement("ai_component")->FirstChildElement("scatter_target")->QueryIntAttribute("y", &ac->scatter_y);
+            entity_config->FirstChildElement("ai_component")->FirstChildElement("leave_home_target")->QueryIntAttribute("x", &ac->leave_x);
+            entity_config->FirstChildElement("ai_component")->FirstChildElement("leave_home_target")->QueryIntAttribute("y", &ac->leave_y);
             ac->home_x = x;
             ac->home_y = y;
             e->addComponent(ac);
         }
 
-        if (entity_config->FirstChildElement("player_component") != nullptr) {
+        if (entity_config->FirstChildElement("player_component") != nullptr)
+        {
             auto *lc = factory->createPlayerComponent();
             entity_config->FirstChildElement("player_component")->QueryIntAttribute("lives", &lc->lives);
             lc->start_x = x;
@@ -163,27 +206,32 @@ Entity *Config::createEntity(std::string entity_name, int tile_width, int x, int
     return nullptr;
 }
 
-int Config::getFps() const {
+int Config::getFps() const
+{
     return fps;
 }
 
-int Config::getScreen_x() const {
+int Config::getScreen_x() const
+{
     return screen_x;
 }
 
-int Config::getScreen_y() const {
+int Config::getScreen_y() const
+{
     return screen_y;
 }
 
-const std::string &Config::getWorld_map() const {
+const std::string &Config::getWorld_map() const
+{
     return collision_map;
 }
 
-const std::string &Config::getSprites_sheet() const {
+const std::string &Config::getSprites_sheet() const
+{
     return sprites_sheet;
 }
 
-AbstractFactory *Config::getFactory() const {
+AbstractFactory *Config::getFactory() const
+{
     return factory;
 }
-

@@ -71,6 +71,20 @@
                 <animation_length value="3"/>
                 <animation_speed value="2"/>
                 <direction_offset left="3" right="0" up="6" down="9"/>
+                <death_clips total="12">
+                    <clip x="489" y="1" w="13" h="13"/>
+                    <clip x="505" y="1" w="13" h="13"/>
+                    <clip x="521" y="1" w="13" h="13"/>
+                    <clip x="537" y="1" w="13" h="13"/>
+                    <clip x="553" y="1" w="13" h="13"/>
+                    <clip x="569" y="1" w="13" h="13"/>
+                    <clip x="585" y="1" w="13" h="13"/>
+                    <clip x="601" y="1" w="13" h="13"/>
+                    <clip x="617" y="1" w="13" h="13"/>
+                    <clip x="634" y="1" w="13" h="13"/>
+                    <clip x="650" y="1" w="13" h="13"/>
+                    <clip x="666" y="1" w="13" h="13"/>
+                </death_clips>
             </render_component>
             <collision_component/>
             <movable_component speed="80"/>

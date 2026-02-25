@@ -5,8 +5,10 @@
 #ifndef ECS_PACMAN_CONSTANTS_H
 #define ECS_PACMAN_CONSTANTS_H
 
-namespace Pacman {
-    enum direction {
+namespace Pacman
+{
+    enum direction
+    {
         STOP,
         LEFT,
         RIGHT,
@@ -14,12 +16,14 @@ namespace Pacman {
         DOWN
     };
 
-    enum entity_movable_state {
+    enum entity_movable_state
+    {
         IDLE,
         MOVING
     };
 
-    enum ai_states {
+    enum ai_states
+    {
         HOME,
         LEAVE,
         RETURN,
@@ -28,28 +32,32 @@ namespace Pacman {
         FLEE
     };
 
-    enum ghost_type {
+    enum ghost_type
+    {
         RED,
         PINK,
         BLUE,
         ORANGE
     };
 
-    enum events_numbers {
+    enum events_numbers
+    {
         PAUSE_GAME,
         RESTART,
+        DEATH, // To play death animation
         RESET, // when pacman dies
         TEST
     };
 
     // enum direction gives location of the move vector
-    static const int movement_vector[5][2] = {{0,  0},
+    static const int movement_vector[5][2] = {{0, 0},
                                               {-1, 0},
-                                              {1,  0},
-                                              {0,  -1},
-                                              {0,  1}};
+                                              {1, 0},
+                                              {0, -1},
+                                              {0, 1}};
 
-    struct clip {
+    struct clip
+    {
         int x = 0;
         int y = 0;
         int w = 0;
@@ -57,4 +65,4 @@ namespace Pacman {
     };
 };
 
-#endif //ECS_PACMAN_CONSTANTS_H
+#endif // ECS_PACMAN_CONSTANTS_H

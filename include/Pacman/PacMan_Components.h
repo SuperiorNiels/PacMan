@@ -13,8 +13,10 @@
 
 using namespace ECS;
 
-namespace Pacman {
-    enum ComponentTypes {
+namespace Pacman
+{
+    enum ComponentTypes
+    {
         POSITION_COMPONENT,
         MOVABLE_COMPONENT,
         PLAYER_INPUT_COMPONENT,
@@ -24,17 +26,20 @@ namespace Pacman {
         ENERGIZER_COMPONENT,
         POINTS_COMPONENT,
         TEXT_COMPONENT,
-        PLAYER_COMPONENT
+        PLAYER_COMPONENT,
+        DEATH_COMPONENT
     };
 
-    class PositionComponent : public Component {
+    class PositionComponent : public Component
+    {
     public:
         PositionComponent() { type = POSITION_COMPONENT; };
         int x = 0;
         int y = 0;
     };
 
-    class MovableComponent : public Component {
+    class MovableComponent : public Component
+    {
     public:
         MovableComponent() { type = MOVABLE_COMPONENT; };
         direction current_dir = STOP;
@@ -47,12 +52,14 @@ namespace Pacman {
         bool animate = false;
     };
 
-    class PlayerInputComponent : public Component {
+    class PlayerInputComponent : public Component
+    {
     public:
         PlayerInputComponent() { type = PLAYER_INPUT_COMPONENT; };
     };
 
-    class AIComponent : public Component {
+    class AIComponent : public Component
+    {
     public:
         AIComponent() { type = AI_COMPONENT; };
         ai_states state = HOME;
@@ -73,7 +80,8 @@ namespace Pacman {
         ghost_type ai_type = RED;
     };
 
-    class RenderComponent : public Component {
+    class RenderComponent : public Component
+    {
     public:
         RenderComponent() { type = RENDER_COMPONENT; };
         bool visible = true;
@@ -88,25 +96,29 @@ namespace Pacman {
         double y_render_offset = 0;
     };
 
-    class CollisionComponent : public Component {
+    class CollisionComponent : public Component
+    {
     public:
         CollisionComponent() { type = COLLISION_COMPONENT; };
         clip collision_box; // x_offset, y_offset, width, height
     };
 
-    class PointsComponent : public Component {
+    class PointsComponent : public Component
+    {
     public:
         PointsComponent() { type = POINTS_COMPONENT; };
         int points = 0;
     };
 
-    class EnergizerComponent : public Component {
+    class EnergizerComponent : public Component
+    {
     public:
         EnergizerComponent() { type = ENERGIZER_COMPONENT; };
         int points = 400;
     };
 
-    class PlayerComponent : public Component {
+    class PlayerComponent : public Component
+    {
     public:
         PlayerComponent() { type = PLAYER_COMPONENT; }
 
@@ -117,11 +129,19 @@ namespace Pacman {
         int level = 1;
     };
 
-    class TextComponent : public Component {
+    class TextComponent : public Component
+    {
     public:
         TextComponent() { type = TEXT_COMPONENT; };
         std::string text;
     };
+
+    class DeathComponent : public Component
+    {
+    public:
+        DeathComponent() { type = DEATH_COMPONENT; };
+        int current_frame = 0;
+    };
 };
 
-#endif //ECS_PACMAN_COMPONENTS_H
+#endif // ECS_PACMAN_COMPONENTS_H

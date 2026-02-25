@@ -12,26 +12,32 @@
 #include "PacMan_Components.h"
 #include "SDL_Text.h"
 
-namespace Pacman {
-    class SDL_RenderComponent : public RenderComponent {
+namespace Pacman
+{
+    class SDL_RenderComponent : public RenderComponent
+    {
     public:
         SDL_Texture *texture = nullptr; // Textures get destroyed by the factory!
         std::vector<SDL_Rect *> clips = std::vector<SDL_Rect *>();
+        std::vector<SDL_Rect *> death_clips = std::vector<SDL_Rect *>();
 
-        ~SDL_RenderComponent() override {
+        ~SDL_RenderComponent() override
+        {
             for (auto &c : clips)
                 delete c;
         };
     };
 
-    class SDL_PlayerComponent : public PlayerComponent {
+    class SDL_PlayerComponent : public PlayerComponent
+    {
     public:
         SDL_Text *lives_texture = nullptr;
         SDL_Text *score_texture = nullptr;
         SDL_Text *level_texture = nullptr;
         SDL_Color *color = nullptr;
 
-        ~SDL_PlayerComponent() override {
+        ~SDL_PlayerComponent() override
+        {
             delete lives_texture;
             delete score_texture;
             delete level_texture;
@@ -39,16 +45,18 @@ namespace Pacman {
         };
     };
 
-    class SDL_TextComponent : public TextComponent {
+    class SDL_TextComponent : public TextComponent
+    {
     public:
         SDL_Text *texture = nullptr;
         SDL_Color *color = nullptr;
 
-        ~SDL_TextComponent() override {
+        ~SDL_TextComponent() override
+        {
             delete texture;
             delete color;
         };
     };
 };
 
-#endif //ECS_SDL_COMPONENTS_H
+#endif // ECS_SDL_COMPONENTS_H

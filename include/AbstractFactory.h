@@ -15,12 +15,13 @@
 
 using namespace Pacman;
 
-class AbstractFactory {
+class AbstractFactory
+{
 public:
     AbstractFactory() = default;
 
     virtual Systems::RenderSystem *
-    createRenderSystem(World *world, int screen_width, int screen_height, Systems::TimerSystem *timer) = 0;
+    createRenderSystem(World *world, int screen_width, int screen_height, Systems::TimerSystem *timer, std::map<events_numbers, bool> *events) = 0;
 
     virtual Systems::EventSystem *createEventSystem(std::map<events_numbers, bool> *events) = 0;
 
@@ -28,7 +29,7 @@ public:
 
     virtual PlayerComponent *createPlayerComponent() = 0;
 
-    virtual RenderComponent *createRenderComponent(std::string path, std::vector<clip> clips) = 0;
+    virtual RenderComponent *createRenderComponent(std::string path, std::vector<clip> clips, std::vector<clip> death_clips) = 0;
 
     virtual TextComponent *createTextComponent() = 0;
 
@@ -37,5 +38,4 @@ public:
     virtual ~AbstractFactory() = default;
 };
 
-
-#endif //ECS_ABSTRACTFACTORY_H
+#endif // ECS_ABSTRACTFACTORY_H

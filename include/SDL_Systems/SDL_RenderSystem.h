@@ -14,10 +14,12 @@
 
 using namespace Pacman;
 
-namespace SDL_Systems {
-    class SDL_RenderSystem : public Systems::RenderSystem {
+namespace SDL_Systems
+{
+    class SDL_RenderSystem : public Systems::RenderSystem
+    {
     public:
-        SDL_RenderSystem(Pacman::World *world, int screen_width, int screen_height, Systems::TimerSystem *timer);
+        SDL_RenderSystem(Pacman::World *world, int screen_width, int screen_height, Systems::TimerSystem *timer, std::map<events_numbers, bool> *events);
 
         void update() override;
 
@@ -30,6 +32,7 @@ namespace SDL_Systems {
         ~SDL_RenderSystem() override;
 
         SDL_Renderer *renderer = nullptr;
+
     private:
         void renderPlayerComponent(Entity *e);
 
@@ -45,5 +48,4 @@ namespace SDL_Systems {
     };
 };
 
-
-#endif //ECS_SDL_RENDERSYSTEM_H
+#endif // ECS_SDL_RENDERSYSTEM_H

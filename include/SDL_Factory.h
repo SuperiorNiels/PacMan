@@ -18,7 +18,8 @@ class Config;
 
 using namespace SDL_Systems;
 
-class SDL_Factory : public AbstractFactory {
+class SDL_Factory : public AbstractFactory
+{
 public:
     SDL_Factory() = delete;
 
@@ -30,9 +31,9 @@ public:
 
     std::vector<Entity *> createWorldEntities(World *world) override;
 
-    RenderSystem *createRenderSystem(World *world, int screen_width, int screen_height, TimerSystem *timer) override;
+    RenderSystem *createRenderSystem(World *world, int screen_width, int screen_height, TimerSystem *timer, std::map<events_numbers, bool> *events) override;
 
-    RenderComponent *createRenderComponent(std::string path, std::vector<clip> clips) override;
+    RenderComponent *createRenderComponent(std::string path, std::vector<clip> clips, std::vector<clip> death_clips) override;
 
     PlayerComponent *createPlayerComponent() override;
 
@@ -49,5 +50,4 @@ private:
     std::string font = "../data/Joystix.TTF"; // fixme: in config file?
 };
 
-
-#endif //ECS_SDL_FACTORY_H
+#endif // ECS_SDL_FACTORY_H
