@@ -3,6 +3,39 @@
 //
 
 #include "../../include/Systems/AISystem.h"
+#include <algorithm>
+
+namespace {
+    int directionPriority(direction d) {
+        switch (d) {
+            case UP:
+                return 0;
+            case LEFT:
+                return 1;
+            case DOWN:
+                return 2;
+            case RIGHT:
+                return 3;
+            default:
+                return 4;
+        }
+    }
+
+    bool isOppositeDirection(direction next, direction previous) {
+        switch (next) {
+            case LEFT:
+                return previous == RIGHT;
+            case RIGHT:
+                return previous == LEFT;
+            case UP:
+                return previous == DOWN;
+            case DOWN:
+                return previous == UP;
+            default:
+                return false;
+        }
+    }
+}
 
 namespace Systems {
 
@@ -25,7 +58,12 @@ namespace Systems {
                     auto *ac = e->getComponentByType<AIComponent>(AI_COMPONENT);
                     auto *pc = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
 
-                    std::multimap<double, direction> best_dirs = std::multimap<double, direction>();
+                    struct DirectionCandidate {
+                        double distance;
+                        direction dir;
+                    };
+
+                    std::vector<DirectionCandidate> best_dirs;
 
                     for (int i = 1; i < 5; i++) {
                         int new_x = pc->x + movement_vector[i][0];
@@ -48,39 +86,31 @@ namespace Systems {
                             else if (i == 4)
                                 wanted_dir = DOWN;
 
-                            best_dirs.emplace(distance, wanted_dir);
+                            best_dirs.push_back({distance, wanted_dir});
                         }
                     }
 
-                    for (auto &best_dir : best_dirs) {
-                        bool change = false;
-                        switch (best_dir.second) {
-                            case LEFT:
-                                if (ac->previous != RIGHT)
-                                    change = true;
-                                break;
-                            case RIGHT:
-                                if (ac->previous != LEFT)
-                                    change = true;
-                                break;
-                            case UP:
-                                if (ac->previous != DOWN)
-                                    change = true;
-                                break;
-                            case DOWN:
-                                if (ac->previous != UP)
-                                    change = true;
-                                break;
-                            default:
-                                break;
-                        }
+                    std::sort(best_dirs.begin(), best_dirs.end(), [](const DirectionCandidate &a, const DirectionCandidate &b) {
+                        if (a.distance != b.distance)
+                            return a.distance < b.distance;
+                        return directionPriority(a.dir) < directionPriority(b.dir);
+                    });
 
-                        if (change) {
-                            mc->wanted_dir = best_dir.second;
-                            mc->current_dir = best_dir.second;
-                            ac->previous = best_dir.second;
+                    direction chosen_dir = STOP;
+                    if (!best_dirs.empty())
+                        chosen_dir = best_dirs.front().dir;
+
+                    for (const auto &best_dir : best_dirs) {
+                        if (!isOppositeDirection(best_dir.dir, ac->previous)) {
+                            chosen_dir = best_dir.dir;
                             break;
                         }
+                    }
+
+                    if (chosen_dir != STOP) {
+                        mc->wanted_dir = chosen_dir;
+                        mc->current_dir = chosen_dir;
+                        ac->previous = chosen_dir;
                     }
                 }
             }
@@ -209,39 +239,48 @@ namespace Systems {
     }
 
     void AISystem::calculateBlueTarget(Entity *e) {
-        auto *pc = e->getComponentByType<PositionComponent>(POSITION_COMPONENT);
         auto *ac = e->getComponentByType<AIComponent>(AI_COMPONENT);
         auto *player_pos = ac->player->getComponentByType<PositionComponent>(POSITION_COMPONENT);
-
-        double distance = sqrt(calculateDistance(pc->x, pc->y, player_pos->x, player_pos->y));
-
-        if (distance < 8.) {
-            ac->target_x = ac->scatter_x;
-            ac->target_y = ac->scatter_y;
-            return;
-        }
-
         auto *player_mov = ac->player->getComponentByType<MovableComponent>(MOVABLE_COMPONENT);
-        int new_x = player_pos->x;
-        int new_y = player_pos->y;
+        int ahead_x = player_pos->x;
+        int ahead_y = player_pos->y;
+
         switch (player_mov->current_dir) {
             case LEFT:
-                new_x -= 4;
+                ahead_x -= 2;
                 break;
             case RIGHT:
-                new_x += 4;
+                ahead_x += 2;
                 break;
             case UP:
-                new_y -= 4;
+                ahead_y -= 2;
                 break;
             case DOWN:
-                new_y += 4;
+                ahead_y += 2;
                 break;
             default:
                 break;
         }
-        ac->target_x = new_x;
-        ac->target_y = new_y;
+
+        int red_x = ahead_x;
+        int red_y = ahead_y;
+        for (const auto &it : entities) {
+            auto *ghost = it.second;
+            if (!ghost->hasComponentTypes({AI_COMPONENT, POSITION_COMPONENT}))
+                continue;
+
+            auto *other_ac = ghost->getComponentByType<AIComponent>(AI_COMPONENT);
+            if (other_ac->ai_type != RED)
+                continue;
+
+            auto *red_pos = ghost->getComponentByType<PositionComponent>(POSITION_COMPONENT);
+            red_x = red_pos->x;
+            red_y = red_pos->y;
+            break;
+        }
+
+        ac->target_x = ahead_x + (ahead_x - red_x);
+        ac->target_y = ahead_y + (ahead_y - red_y);
     }
 
     double AISystem::calculateDistance(int x1, int y1, int x2, int y2) {
